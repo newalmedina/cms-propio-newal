@@ -35,26 +35,13 @@ class AdminRolesPremissionSeeder  extends BaseSeeder
                 'name' => Str::slug('admin-roles-list'),
                 'description' => 'Roles - lista'
             ],
-            [
-                'display_name' => 'Roles - crear',
-                'name' => Str::slug('admin-roles-create'),
-                'description' => 'Roles - crear'
-            ],
+
             [
                 'display_name' => 'Roles - actualizar',
                 'name' => Str::slug('admin-roles-update'),
                 'description' => 'Roles - actualizar'
             ],
-            [
-                'display_name' => 'Roles - borrar',
-                'name' => Str::slug('admin-roles-delete'),
-                'description' => 'Roles - borrar'
-            ],
-            [
-                'display_name' => 'Roles - ver',
-                'name' => Str::slug('admin-roles-read'),
-                'description' => 'Roles - ver'
-            ]
+
         ];
 
         $MenuChild = $this->insertPermissions($permissions, $this->childAdmin, $this->a_permission_admin);

@@ -14,6 +14,7 @@ return [
     'inactive' => 'Inactive',
     'yes' => 'Yes',
     'no' => 'NO',
+    'back' => 'Back',
 
     'delete' => 'Delete',
     'delete_ok' => 'Record deleted',

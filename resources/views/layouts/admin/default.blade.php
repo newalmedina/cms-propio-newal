@@ -38,6 +38,12 @@
 
     <!-- Head Libs -->
     <script src="{{ asset('assets/admin/vendor/modernizr/modernizr.js')}}"></script>
+    <style>
+        .dataTables_filter{
+            margin-right: 54px !important;
+            margin-bottom: 30px !important;
+        }
+    </style>
     @livewireStyles
     
     @yield('head_page')

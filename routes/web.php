@@ -45,7 +45,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
 
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
-    Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.updateProfile");
+    Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
     Route::post('/profile/store', [AdminUserProfileController::class, 'store'])->name("admin.updateProfile");
 
     //Admin Categories
@@ -59,10 +59,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::patch('/roles/permissions/{id}', [AdminRoleController::class, 'updatePermissions'])->name('admin.permissions.update');
 
     //admin users
-    Route::resource("users", AdminUserController::class);
     Route::get('/users', [AdminUserController::class, 'index']);
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::get('/users/change-state/{id}', [AdminUserController::class, 'changeState'])->name('admin.users.changeState');
     Route::patch('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
-    Route::get('/users/permissions/{id}', [AdminUserController::class, 'editPermissions'])->name('admin.users.editPermissions');
-    //Route::patch('/roles/permissions/{id}', [AdminUserController::class, 'updatePermissions'])->name('admin.permissions.update');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::post('/users/list', [AdminUserController::class, 'getData'])->name('admin.users.getData');
+    Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::get('/users/roles/{id}', [AdminUserController::class, 'editRoles'])->name('admin.users.editRoles');
+    Route::patch('/users/roles/{id}', [AdminUserController::class, 'updateRoles'])->name('admin.users.updateRoles');
 });

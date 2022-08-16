@@ -14,6 +14,10 @@ class AdminRoleController extends Controller
 
     public function index()
     {
+        if (!auth()->user()->isAbleTo('admin-roles')) {
+            app()->abort(403);
+        }
+
         $pageTitle = trans('roles/admin_lang.roles');
         $title = trans('roles/admin_lang.list');
         $roles = Role::orderBy('id', 'asc')->get();
@@ -23,6 +27,9 @@ class AdminRoleController extends Controller
 
     public function edit($id)
     {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
         $pageTitle = trans('roles/admin_lang.roles');
         $title = trans('roles/admin_lang.list');
         $role = Role::find($id);
@@ -30,10 +37,16 @@ class AdminRoleController extends Controller
         return view('roles.admin_edit', compact('pageTitle', 'title', "role"))
             ->with('tab', $tab);
     }
+
     public function update(AdminRoleRequest $request, $id)
     {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+
         $role = Role::find($id);
         $role->display_name = $request->display_name;
+        $role->description = $request->description;
         $role->save();
         return redirect()->route('admin.roles.edit', [$role->id])
             ->with('success', trans('general/admin_lang.save_ok'));
@@ -41,6 +54,10 @@ class AdminRoleController extends Controller
 
     public function editPermissions($id)
     {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+
         $pageTitle = trans('roles/admin_lang.roles');
         $title = trans('roles/admin_lang.list');
 
@@ -65,6 +82,10 @@ class AdminRoleController extends Controller
 
     public function updatePermissions(Request $request, $id)
     {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+
         $idpermissions = explode(",", $request->input('results'));
 
 

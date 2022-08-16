@@ -28,10 +28,11 @@ class AdminProfileRequest extends FormRequest
 
         return [
             'email' => 'required|email|unique:users,email,' . $user_id,
+            'active' => 'required',
             'user_profile.first_name' => 'required',
             'user_profile.last_name' => 'required',
 
-            'password' => 'nullable|confirmed|min:8',
+            'password' => 'nullable|same:password_confirm|min:8',
         ];
     }
 
@@ -46,11 +47,12 @@ class AdminProfileRequest extends FormRequest
         return [
             'user_profile.first_name.required' => trans('profile/admin_lang.fields.first_name_required'),
             'user_profile.last_name.required' => trans('profile/admin_lang.fields.last_name_required'),
+            'active.required' => trans('profile/admin_lang.fields.active_required'),
             'email.required' => trans('profile/admin_lang.fields.email_required'),
             'email.email' => trans('profile/admin_lang.fields.email_incorrect_format'),
             'email.unique' => trans('profile/admin_lang.fields.email_unique'),
             'password.required' => trans('profile/admin_lang.fields.password_required'),
-            'password.confirmed' => trans('profile/admin_lang.fields.password_confirmed'),
+            'password.same' => trans('profile/admin_lang.fields.password_confirmed'),
             'password.min' => trans('profile/admin_lang.fields.password_min'),
         ];
     }

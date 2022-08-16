@@ -30,15 +30,19 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="last_name"> {{ trans('roles/admin_lang.fields.description') }}</label>
-                            <textarea class="form-control" name="description" id="description" disabled cols="30" rows="10">{{ $role->description }}</textarea>
+                            <textarea class="form-control" name="description" id="description"  cols="30" rows="10">{{ $role->description }}</textarea>
                          </div>
                     </div>               
                 </div>
 
                 
             </div>
-            <div class="card-footer text-end">
-                <button type="submit" class="btn btn-success">{{ trans('general/admin_lang.save') }}</button>   
+            <div class="card-footer row ">
+                <div class="col-12 mt-2 d-flex justify-content-between">
+                    <a href="{{ url('admin/roles') }}" class="btn btn-default">{{ trans('general/admin_lang.back') }}</a>
+                    
+                    <button type="submit" class="btn btn-success">{{ trans('general/admin_lang.save') }}</button>   
+                </div>
             </div>
         </form>
     </div>

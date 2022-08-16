@@ -97,8 +97,12 @@
                 </div>
             </div>
             
-            <div class="card-footer text-end mt-2">
-                <button type="button" onclick="sendInfo()" class="btn btn-success">{{ trans('general/admin_lang.save') }}</button>
+            <div class="card-footer row mt-2">
+                <div class="col-12  d-flex justify-content-between">
+
+                    <a href="{{ url('admin/roles') }}" class="btn btn-default">{{ trans('general/admin_lang.back') }}</a>    
+                    <button type="button" onclick="sendInfo()" class="btn btn-success">{{ trans('general/admin_lang.save') }}</button>
+                </div>
             </div>
         </form>
     </div>

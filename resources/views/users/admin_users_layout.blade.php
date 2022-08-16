@@ -17,14 +17,16 @@
 <section role="main" class="content-body card-margin">      
     <div class="mt-2">
         @include('layouts.admin.includes.success')
-        @include('layouts.admin.includes.errors')
+        @include('layouts.admin.includes.errors')        
     </div>
    @if (!empty( $user->id))
         <div class="row">
             <div class="col-12 text-end">
-                <h3> <span class="badge badge-primary p-2"><b>{{ $user->display_name }}</b></span></h3>
+                <h3> <span class="badge badge-primary p-2"><b>{{ $user->userProfile->fullName }}</b></span></h3>
             </div>
         </div>
+    @else
+        <div class="col-12 mb-5"></div>
     @endif
 
     <div class="row mt-2">
@@ -72,12 +74,12 @@
                     </li>
             
                 
-                    @if (!empty($user->id))
+                    @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
                         <li class="nav-item @if ($tab == 'tab_2') active @endif">
                             <a id="tab_2" class="nav-link" data-bs-target="#tab_2-2"
-                            data-bs-toggle="tabajax" href="{{ url('admin/users/permissions/'.$user->id) }}" data-target="#tab_2-2"
+                            data-bs-toggle="tabajax" href="{{ url('admin/users/roles/'.$user->id) }}" data-target="#tab_2-2"
                             aria-controls="tab_2-2" aria-selected="true" >
-                                {{ trans('users/admin_lang.permissions') }}
+                                {{ trans('users/admin_lang.roles') }}
                             </a>
                         </li>
                     
@@ -89,12 +91,10 @@
                         @yield('tab_content_1')
                     </div>
             
-                    @if (!empty($user->id))
+                    @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
                         <div id="tab_2-2" class="tab-pane  @if ($tab == 'tab_2') active @endif">
                             @yield('tab_content_2')
                         </div>
-                    
-            
                     @endif
             
                 </div>

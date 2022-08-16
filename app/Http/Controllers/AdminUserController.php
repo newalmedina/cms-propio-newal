@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdmiUserRequest;
+use App\Http\Requests\AdminUserRequest;
 use App\Models\PermissionsTree;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class AdminUserController extends Controller
 {
@@ -14,6 +19,10 @@ class AdminUserController extends Controller
 
     public function index()
     {
+        if (!auth()->user()->isAbleTo('admin-users')) {
+            app()->abort(403);
+        }
+
         $pageTitle = trans('users/admin_lang.users');
         $title = trans('users/admin_lang.list');
         $users = User::orderBy('id', 'asc')->get();
@@ -21,75 +30,247 @@ class AdminUserController extends Controller
         return view('users.admin_index', compact('pageTitle', 'title', "users"));
     }
 
-    public function edit($id)
+    public function create()
     {
-        $pageTitle = trans('users/admin_lang.users');
+        if (!auth()->user()->isAbleTo('admin-users-create')) {
+            app()->abort(403);
+        }
+        $pageTitle = trans('users/admin_lang.new');
         $title = trans('users/admin_lang.list');
-        $user = User::with('userProfile')->find($id);
+        $user = new User();;
         $tab = 'tab_1';
 
         return view('users.admin_edit', compact('pageTitle', 'title', "user"))
             ->with('tab', $tab);
     }
-    public function update(AdmiUserRequest $request, $id)
+
+    public function edit($id)
     {
-        $user = User::find($id);
-        $user->display_name = $request->display_name;
-        $user->save();
-        return redirect()->route('admin.users.edit', [$user->id])
-            ->with('success', trans('general/admin_lang.save_ok'));
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        $user = User::with('userProfile')->find($id);
+
+        if (empty($user)) {
+            app()->abort(404);
+        }
+
+        $pageTitle = trans('users/admin_lang.edit');
+        $title = trans('users/admin_lang.list');
+        $tab = 'tab_1';
+
+        return view('users.admin_edit', compact('pageTitle', 'title', "user"))
+            ->with('tab', $tab);
     }
 
-    public function editPermissions($id)
+    public function update(AdminUserRequest $request, $id)
     {
-        $pageTitle = trans('users/admin_lang.users');
-        $title = trans('users/admin_lang.list');
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
 
-        $permissionsTree = PermissionsTree::withDepth()->with('permission')->get()->sortBy('_lft');
+        try {
+            DB::beginTransaction();
+
+            $user = User::with('userProfile')->find($id);
+
+            $user->email = $request->input('email');
+            $user->active = $request->input('active', 0);
+
+            if (!empty($request->input('password'))) {
+                $user->password = Hash::make($request->input('password'));
+            }
+            $user->userProfile->first_name = $request->input('user_profile.first_name');
+            $user->userProfile->last_name = $request->input('user_profile.last_name');
+            $user->push();
+
+            DB::commit();
+            return redirect()->route('admin.users.edit', [$user->id])
+                ->with('success', trans('general/admin_lang.save_ok'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect('admin/users/create/' . $user->id)
+                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+        }
+    }
+
+    public function store(AdminUserRequest $request)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-create')) {
+            app()->abort(403);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user = new User();
+
+            $user->email = $request->input('email');
+            $user->active = $request->input('active', 0);
+
+            if (!empty($request->input('password'))) {
+                $user->password = Hash::make($request->input('password'));
+            }
+            $user->save();
+
+            if (!empty($user->id)) {
+
+                $userProfile = new UserProfile();
+
+                $userProfile->user_id = $user->id;
+                $userProfile->first_name = $request->input('user_profile.first_name');
+                $userProfile->last_name = $request->input('user_profile.last_name');
+                $userProfile->save();
+            }
+
+            DB::commit();
+            return redirect()->route('admin.users.edit', [$user->id])
+                ->with('success', trans('general/admin_lang.save_ok'));
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollBack();
+
+            return redirect('admin/users/create')
+                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+        }
+    }
+
+    public function getData()
+    {
+        if (!auth()->user()->isAbleTo('admin-users-list')) {
+            app()->abort(403);
+        }
+        $query = User::select([
+            'users.id',
+            'users.email',
+            'users.active',
+            'user_profiles.first_name',
+            'user_profiles.last_name',
+        ])
+            ->leftJoin("user_profiles", "user_profiles.user_id", "=", "users.id");
+
+        $table = DataTables::of($query);
+
+        $table->editColumn('active', function ($data) {
+            $permision = "";
+            if (!auth()->user()->isAbleTo('admin-users-update')) {
+                $permision = "disabled";
+            }
+
+            $state = $data->active ? "checked" : "";
+
+            return  '<div class="form-check form-switch text-center">
+                <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
+            </div>';
+        });
+
+        $table->editColumn('actions', function ($data) {
+            $actions = '';
+            if (auth()->user()->isAbleTo("admin-users-update")) {
+                $actions .= '<a  class="btn btn-info btn-sm" href="' . route('admin.users.edit', $data->id) . '" ><i
+                class="fa fa-marker fa-lg"></i></a> ';
+            }
+
+            if (auth()->user()->isAbleTo("admin-users-delete")) {
+
+                $actions .= '<button class="btn btn-danger btn-sm" onclick="javascript:deleteElement(\'' .
+                    url('admin/users/' . $data->id) . '\');" data-content="' .
+                    trans('general/admin_lang.borrar') . '" data-placement="left" data-toggle="popover">
+                        <i class="fa fa-trash" aria-hidden="true"></i></button>';
+            }
+
+            return $actions;
+        });
+
+        $table->removeColumn('id');
+        $table->rawColumns(['actions', 'active']);
+        return $table->make();
+    }
+
+    public function destroy($id)
+    {
+        // Si no tiene permisos para modificar lo echamos
+        if (!auth()->user()->isAbleTo('admin-users-delete')) {
+            app()->abort(403);
+        }
+        $user = User::find($id);
+        if (empty($user)) {
+            app()->abort(404);
+        }
+
+        $user->delete();
+
+        return response()->json(array(
+            'success' => true,
+            'msg' => trans("general/admin_lang.delete_ok"),
+        ));
+    }
+
+    public function changeState($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
 
         $user = User::find($id);
-        $a_arrayPermisos = $user->getArrayPermissions();
 
+        if (!empty($user)) {
+            $user->active = !$user->active;
+            return $user->save() ? 1 : 0;
+        }
+
+        return 0;
+    }
+
+    public function editRoles($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        $user = User::find($id);
         if (is_null($user)) {
             app()->abort(500);
         }
+        $pageTitle = trans('users/admin_lang.users');
+        $title = trans('users/admin_lang.list');
+
+
+        $roles = Role::active()->get();
         $tab = "tab_2";
-        return view('users.admin_edit_permissions', compact(
+        return view('users.admin_edit_roles', compact(
             'pageTitle',
             'title',
-            'a_arrayPermisos',
-            'permissionsTree',
-            "User"
+            "user",
+            'roles'
         ))
             ->with('tab', $tab);
     }
 
-    public function updatePermissions(Request $request, $id)
+    public function updateRoles(Request $request, $id)
     {
-        $idpermissions = explode(",", $request->input('results'));
 
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
 
-        // Compruebo que el rol al que se quieren asignar datos existe
         $user = User::find($id);
 
         if (is_null($user)) {
             app()->abort(500);
         }
+        $idroles = explode(",", $request->input('role_ids'));
         try {
             DB::beginTransaction();
-
-            // Asigno el array de permisos al rol
-            $user->syncPermissions($idpermissions);
-
+            $user->syncRoles($idroles);
             DB::commit();
-
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/users/permissions/' . $user->id)
+            return redirect()->to('/admin/users/roles/' . $user->id)
                 ->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->to('/admin/users/permissions/' . $user->id)
+            return redirect()->to('/admin/users/roles/' . $user->id)
                 ->with('error', trans('general/admin_lang.save_ko'));
         }
     }

@@ -21,6 +21,7 @@
       <div class="modal-body">     
              
         @include('layouts.admin.includes.errors')
+
         @include('livewire.categories.form')              
       </div>
       <div class="modal-footer d-flex justify-content-between">

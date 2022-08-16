@@ -3,12 +3,14 @@
 
 return [
     'users' => 'usuarios',
+    'roles' => 'Roles',
     'todos' => 'Todos los usuarios',
     'usuario' => 'usuario',
     'list' => 'Listado usuarios',
     'new' => 'Nuevo usuario',
     'edit' => 'Editar usuario',
     'users_management' => 'Gestión de usuarios',
+    'generate_password' => 'Generar contraseña',
 
     'fields' => [
         'id' => 'Id',
@@ -25,6 +27,10 @@ return [
         'email_helper' => 'Introduce correo',
         'email_required' => 'El campo correo es obligatorio',
 
+        'active' => '¿Activo?',
+        'active_helper' => 'Introduce activo',
+        'active_required' => 'El campo activo es obligatorio',
+
         'password' => 'Contraseña',
         'password_helper' => 'Introduce contraseña',
         'password_required' => 'El campo contraseña es obligatorio',
@@ -36,4 +42,5 @@ return [
         'password_confirm_required' => 'El campo rçepetir contraseña es obligatorio',
 
     ],
+
 ];

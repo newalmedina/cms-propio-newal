@@ -24,13 +24,12 @@ class AdminUserRequest extends FormRequest
      */
     public function rules()
     {
-
-
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email_name' => 'required',
-            'password' => 'nullable|confirmed|min:8',
+            'email' => 'required|email',
+            'user_profile.first_name' => 'required',
+            'user_profile.last_name' => 'required',
+
+            'password' => 'nullable|same:password_confirm|min:8',
         ];
     }
 
@@ -43,10 +42,10 @@ class AdminUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => trans('users/admin_lang.fields.first_name_required'),
-            'last_name.required' => trans('users/admin_lang.fields.last_name_required'),
+            'user_profile.first_name.required' => trans('users/admin_lang.fields.first_name_required'),
+            'user_profile.last_name.required' => trans('users/admin_lang.fields.last_name_required'),
             'email.required' => trans('users/admin_lang.fields.email_required'),
-            'password.confirmed' => trans('users/admin_lang.fields.password_confirmed'),
+            'password.same' => trans('users/admin_lang.fields.password_confirmed'),
             'password.min' => trans('users/admin_lang.fields.password_min'),
 
         ];

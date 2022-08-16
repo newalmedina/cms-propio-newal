@@ -10,10 +10,13 @@ return [
     'close' => 'Cerrar',
     'update' => 'Actualizar',
     'visualizar' => 'Visualizar',
+    'corregir_errores' => 'Corrigue los siguientes errores',
     'active' => 'Activo',
     'inactive' => 'Inactivo',
     'yes' => 'Si',
     'no' => 'NO',
+    'back' => 'Regresar',
+    'warning' => 'Aviso',
     'delete' => 'Eliminar',
     'delete_ok' => 'Registro eliminado correctamente',
     'delete_question' => '¿Seguro que quieres eliminar este registro?',
@@ -29,7 +32,8 @@ return [
     'lock_profile' => 'Bloquear perfil',
     'go_web' => 'Ir a la web',
 
-    'dont_permissions' => 'No tienes Permisos para ver esta sección'
+    'dont_permissions' => 'No tienes Permisos para ver esta sección',
+    'errorajax' => 'Error al intentar ejecutar petición'
 
 
 ];
