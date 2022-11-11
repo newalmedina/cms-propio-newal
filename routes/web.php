@@ -29,7 +29,7 @@ Route::get('/register/verify/{confirmation_code}', [FrontRegisterUserController:
     ->middleware('guest');
 /** end -- de autenticacion */
 
-Route::group(array('prefix' => '', 'middleware' => ['verified']), function () {
+Route::group(array('prefix' => ''), function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     //   Route::resource('alarms', 'FrontAlarmsController');
