@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
 
         // Permisos generales
         $adminRole = new Permission();
-        $adminRole->display_name = 'Administrador';
+        $adminRole->display_name = 'Administración';
         $adminRole->name = Str::slug('admin');
         $adminRole->description = 'Acceso a Administración';
         $adminRole->save();
