@@ -43,6 +43,14 @@
             margin-right: 54px !important;
             margin-bottom: 30px !important;
         }
+        .toggle-switch{
+            width: 55px !important;
+            height: 25px !important;
+        }
+        .general-check{
+            width: 18px !important;
+            height: 18px !important;
+        }
     </style>
     @livewireStyles
     

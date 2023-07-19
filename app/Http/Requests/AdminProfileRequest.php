@@ -28,7 +28,7 @@ class AdminProfileRequest extends FormRequest
 
         return [
             'email' => 'required|email|unique:users,email,' . $user_id,
-            'active' => 'required',
+            //'active' => 'required',
             'user_profile.first_name' => 'required',
             'user_profile.last_name' => 'required',
 

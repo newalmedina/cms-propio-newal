@@ -6,7 +6,11 @@
 @stop
 
 @section('tab_breadcrumb')
-    <li class="breadcrumb-item active"><a href="#">{{ $pageTitle }}</a></li>
+    <li class="breadcrumb-item active">
+        <span>
+            {{ $pageTitle }} 
+          </span>
+    </li>
 @stop
 
 @section('tab_content_1')
@@ -78,7 +82,7 @@
                         <div class="form-group">
                             <label for="active"> {{ trans('users/admin_lang.fields.active') }}</label><span class="text-danger">*</span>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" @if($user->active==1) checked @endif value="1" name="active" type="checkbox" id="active">
+                                <input class="form-check-input toggle-switch" @if($user->active==1) checked @endif value="1" name="active" type="checkbox" id="active">
                             </div>                           
                         </div>
                     </div>                    
