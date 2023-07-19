@@ -49,7 +49,7 @@
                       </ul>
                     </li>
                     @auth
-                    <li><a href="{{ url('/admin/categories') }}" class="nav-link">{{ trans('frontlayout/front_lang.menu_items.administration') }}</a></li>
+                    <li><a href="{{ url('/admin/users') }}" class="nav-link">{{ trans('frontlayout/front_lang.menu_items.administration') }}</a></li>
                    
                     <li>
                       <a role="menuitem" tabindex="-1" href="{{ route('logout') }}"

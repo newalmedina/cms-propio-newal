@@ -48,8 +48,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
     Route::post('/profile/store', [AdminUserProfileController::class, 'store'])->name("admin.updateProfile");
 
-    //Admin Categories
-    Route::get('/categories', [AdminCategoryController::class, 'index']);
 
     //Admin Roles
     Route::get('/roles', [AdminRoleController::class, 'index']);

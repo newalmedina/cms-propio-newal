@@ -54,15 +54,7 @@
                         </li>
                     @endif
                     
-                    @if(Auth::user()->isAbleTo("admin-categories"))
-                        <li  @if (Request::is('admin/categories*')) class=" nav-expanded nav-active" @endif>
-                        
-                            <a class="nav-link" href="{{ url('admin/categories') }}">
-                                <i class="fas fa-list" aria-hidden="true"></i>
-                                <span>{{ trans('categories/admin_lang.categories') }}</span>
-                            </a>                        
-                        </li>
-                    @endif
+                  
                     <li >
                        
                         <a class="nav-link" href="{{ url('/') }}">
