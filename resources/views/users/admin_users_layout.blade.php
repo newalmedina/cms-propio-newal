@@ -8,7 +8,7 @@
 @stop
 
 @section('breadcrumb')
-<li><span>{{ $title }}</span></li>
+<li><a href="{{ url('admin/users') }}">{{ $title }}</a></li>
 @yield('tab_breadcrumb')
 @stop
 

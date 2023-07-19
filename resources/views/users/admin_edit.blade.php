@@ -6,7 +6,11 @@
 @stop
 
 @section('tab_breadcrumb')
-    <li class="breadcrumb-item active"><a href="#">{{ $pageTitle }}</a></li>
+    <li class="breadcrumb-item active">
+        <span>
+            {{ $pageTitle }} 
+          </span>
+    </li>
 @stop
 
 @section('tab_content_1')
