@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(AdminUsersPremissionSeeder::class);
         $this->call(AdminRolesPremissionSeeder::class);
+        $this->call(AdminCentersPremissionSeeder::class);
 
 
         $this->call(InsertProvinceMunicipDataSeeder::class);

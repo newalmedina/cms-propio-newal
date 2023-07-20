@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminCenterController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminUserProfileController;
@@ -66,6 +67,16 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::post('/users/list', [AdminUserController::class, 'getData'])->name('admin.users.getData');
     Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 
-    Route::get('/users/roles/{id}', [AdminUserController::class, 'editRoles'])->name('admin.users.editRoles');
-    Route::patch('/users/roles/{id}', [AdminUserController::class, 'updateRoles'])->name('admin.users.updateRoles');
+    //admin centers
+    Route::get('/centers', [AdminCenterController::class, 'index']);
+    Route::get('/centers/create', [AdminCenterController::class, 'create'])->name('admin.centers.create');
+    Route::get('/centers/{id}/edit', [AdminCenterController::class, 'edit'])->name('admin.centers.edit');
+    Route::get('/centers/change-state/{id}', [AdminCenterController::class, 'changeState'])->name('admin.centers.changeState');
+    Route::patch('/centers/{id}', [AdminCenterController::class, 'update'])->name('admin.centers.update');
+    Route::post('/centers', [AdminCenterController::class, 'store'])->name('admin.centers.store');
+    Route::post('/centers/list', [AdminCenterController::class, 'getData'])->name('admin.centers.getData');
+    Route::delete('/centers/{id}', [AdminCenterController::class, 'destroy'])->name('admin.centers.destroy');
+
+    Route::get('/centers/roles/{id}', [AdminCenterController::class, 'editRoles'])->name('admin.centers.editRoles');
+    Route::patch('/centers/roles/{id}', [AdminCenterController::class, 'updateRoles'])->name('admin.centers.updateRoles');
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMunicipiosTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,19 @@ class CreateMunicipiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('municipios', function (Blueprint $table) {
+        Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("province_id")->nullable();
-            $table->string("slug")->unique();
+
             $table->string("name");
-            $table->string("api_code", 10)->nullable();
+            $table->text("description");
+            $table->string("address");
+            $table->string("phone");
+            $table->string("email");
+            $table->text("specialities");
+            $table->string("schedule");
+
+            $table->unsignedBigInteger("province_id")->nullable();
+            $table->unsignedBigInteger("municipio_id")->nullable();
             $table->string("active")->default(0);
             $table->timestamps();
             $table->softDeletes();
@@ -26,6 +33,11 @@ class CreateMunicipiosTable extends Migration
             $table->foreign('province_id')
                 ->references('id')
                 ->on('provinces')
+                ->onDelete('cascade');
+
+            $table->foreign('municipio_id')
+                ->references('id')
+                ->on('municipios')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +49,6 @@ class CreateMunicipiosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipios');
+        Schema::dropIfExists('centers');
     }
-}
+};

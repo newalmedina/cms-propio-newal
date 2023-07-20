@@ -54,6 +54,14 @@
                         </li>
                     @endif
                     
+                    @if(Auth::user()->isAbleTo("admin-users")  )
+                        <li>
+                            <a class="nav-link"  href="{{ url('/admin/centers') }}">
+                                <i class="fas fa-hospital" aria-hidden="true"></i>
+                                <span>{{ trans('centers/admin_lang.centers') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
                   
                     <li >
                        
