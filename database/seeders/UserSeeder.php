@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\UserProfile;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
         $user->email = "nmedina@gmail.com";
         $user->password = Hash::make("Secret15");
 
+        $user->email_verified_at = Carbon::now();
         $user->active = true;
 
         // Guardamos el usuario
