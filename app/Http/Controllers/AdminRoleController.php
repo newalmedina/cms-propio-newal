@@ -48,8 +48,9 @@ class AdminRoleController extends Controller
         $role->display_name = $request->display_name;
         $role->description = $request->description;
         $role->save();
-        return redirect()->route('admin.roles.edit', [$role->id])
-            ->with('success', trans('general/admin_lang.save_ok'));
+        toastr()->success(trans('general/admin_lang.save_ok'));
+
+        return redirect()->route('admin.roles.edit', [$role->id]); // ->with('success-alert', trans('general/admin_lang.save_ok'));
     }
 
     public function editPermissions($id)
@@ -102,15 +103,15 @@ class AdminRoleController extends Controller
             $role->syncPermissions($idpermissions);
 
             DB::commit();
-
+            toastr()->success(trans('general/admin_lang.save_ok'));
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/roles/permissions/' . $role->id)
-                ->with('success', trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/roles/permissions/' . $role->id); // ->with('success-alert', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->to('/admin/roles/permissions/' . $role->id)
-                ->with('error', trans('general/admin_lang.save_ko'));
+            toastr()->error(trans('general/admin_lang.save_ko'));
+            return redirect()->to('/admin/roles/permissions/' . $role->id);
+            // ->with('error-alert', trans('general/admin_lang.save_ko'));
         }
     }
 }

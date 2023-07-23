@@ -10,8 +10,10 @@
 </div>
 
 <script>
-    $(".successSaved").modal("hide");
-    $("#modalConfirmDelete").modal("hide");
+    //   $(document).ready(function() {
+    //     $(".successSaved").modal("hide");
+    //     $("#modalConfirmDelete").modal("hide");
+    // });
 </script>
 
 @endif

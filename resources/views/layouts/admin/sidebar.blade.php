@@ -54,7 +54,7 @@
                         </li>
                     @endif
                     
-                    @if(Auth::user()->isAbleTo("admin-users")  )
+                    @if(Auth::user()->isAbleTo("admin-centers")  )
                         <li>
                             <a class="nav-link"  href="{{ url('/admin/centers') }}">
                                 <i class="fas fa-hospital" aria-hidden="true"></i>

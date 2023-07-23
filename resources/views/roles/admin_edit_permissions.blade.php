@@ -47,7 +47,7 @@
                         @endif
             
                         @if($value->isRoot())
-                            <input type='checkbox' id="root" value='root' />
+                            <input type='checkbox' class="general-check" id="root" value='root' />
                             <i class="fas fa-folder text-warning" style="font-size: 18px; margin-left: 5px; margin-right: 5px;"></i>
                             {{ trans('roles/admin_lang.todos') }}
                             @if($value->descendants()->count()>0)
@@ -57,7 +57,7 @@
                             @endif
                         @else
                             @if($value->descendants()->count()>0)
-                                <input type='checkbox' value="{{ $value->permission["id"] }}" @if(in_array($value->permission["id"], $a_arrayPermisos)) checked @endif />
+                                <input type='checkbox' class="general-check" value="{{ $value->permission["id"] }}" @if(in_array($value->permission["id"], $a_arrayPermisos)) checked @endif />
                                 <i class="fas fa-folder text-warning text-tree-icon"></i>
             
                                {{-- @if(config("general.admin.allow_remove_permission_tree", false))
@@ -69,7 +69,7 @@
                                 {{ $value->permission["display_name"] }}
                                 {!! "<ol>" !!}
                             @else
-                                <input type='checkbox' value='{{ $value->permission["id"] }}' @if(in_array($value->permission["id"], $a_arrayPermisos)) checked @endif />
+                                <input type='checkbox' class="general-check" value='{{ $value->permission["id"] }}' @if(in_array($value->permission["id"], $a_arrayPermisos)) checked @endif />
                                 <i class="fas fa-key text-success text-tree-icon-med"></i>
             
                                {{-- @if(config("general.admin.allow_remove_permission_tree", false))

@@ -16,7 +16,7 @@ class CreateMunicipiosTable extends Migration
         Schema::create('municipios', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("province_id")->nullable();
-            $table->string("slug")->unique();
+            // $table->string("slug")->unique();
             $table->string("name");
             $table->string("api_code", 10)->nullable();
             $table->string("active")->default(0);

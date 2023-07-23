@@ -17,16 +17,17 @@ return new class extends Migration
             $table->id();
 
             $table->string("name");
-            $table->text("description");
-            $table->string("address");
-            $table->string("phone");
-            $table->string("email");
-            $table->text("specialities");
-            $table->string("schedule");
+            $table->string("image")->nullable();
+            $table->string("address")->nullable();
+            $table->string("phone")->nullable();
+            $table->string("email")->nullable();
+            $table->text("specialities")->nullable();
+            $table->string("schedule")->nullable();
 
             $table->unsignedBigInteger("province_id")->nullable();
             $table->unsignedBigInteger("municipio_id")->nullable();
             $table->string("active")->default(0);
+            $table->string("default")->default(0);
             $table->timestamps();
             $table->softDeletes();
 

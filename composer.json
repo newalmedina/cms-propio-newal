@@ -14,9 +14,11 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1",
         "proengsoft/laravel-jsvalidation": "^4.6",
-        "santigarcor/laratrust": "^7.1",        
-        "yajra/laravel-datatables-oracle": "^9.18"
+        "santigarcor/laratrust": "^7.1",
+        "yajra/laravel-datatables-oracle": "^9.18",
+        "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",

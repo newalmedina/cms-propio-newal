@@ -24,8 +24,9 @@ class AdminUserRequest extends FormRequest
      */
     public function rules()
     {
+        $user_id = $this->route()->id ? $this->route()->id : null;
         return [
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . $user_id,
             'user_profile.first_name' => 'required',
             'user_profile.last_name' => 'required',
 

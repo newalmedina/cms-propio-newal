@@ -20,7 +20,10 @@ return [
     'delete' => 'Eliminar',
     'delete_ok' => 'Registro eliminado correctamente',
     'delete_question' => '¿Seguro que quieres eliminar este registro?',
+    'delete_question_image' => '¿Seguro que quieres eliminar esta imagen?',
     'yes_delete' => 'Si, eliminar',
+    'not_permission' => 'No tienes permisos necesarios para ver esta sección',
+
     'lang' => [
         'lang' => 'Idiomas',
         'es' => 'Español',
@@ -33,7 +36,8 @@ return [
     'go_web' => 'Ir a la web',
 
     'dont_permissions' => 'No tienes Permisos para ver esta sección',
-    'errorajax' => 'Error al intentar ejecutar petición'
+    'errorajax' => 'Error al intentar ejecutar petición',
+    'exports' => 'Exportaciones'
 
 
 ];

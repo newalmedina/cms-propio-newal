@@ -68,32 +68,28 @@ class AdminUserProfileController extends Controller
         try {
             DB::beginTransaction();
 
-            $files = $request->file('profile_image', []);
+            $file = $request->file('profile_image');
 
+            if (!is_null($file)) {
+                $myServiceSPW->deleteFile($user->userProfile->photo, '');
 
-            foreach ($files as $file) {
-                if (!is_null($file)) {
-                    $myServiceSPW->deleteFile($user->userProfile->photo, '');
+                $filename = $myServiceSPW->saveFile($file, '');
 
-                    $filename = $myServiceSPW->saveFile($file, '');
-
-                    $user->userProfile->photo = $filename;
-                }
+                $user->userProfile->photo = $filename;
             }
             $user->push();
             // Redirect to the new user page
             DB::commit();
+            toastr()->info("Guardado")->success(trans('general/admin_lang.save_ok'));
 
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect('admin/profile')
-                ->with('success', trans('general/admin_lang.save_ok'));
+            return redirect('admin/profile'); // ->with('success-alert', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             // Woopsy
             dd($e);
             DB::rollBack();
-
-            return redirect('profile')
-                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+            toastr()->error(trans('general/admin_lang.save_ko'));
+            return redirect('profile'); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }
     public function getPhoto($photo)

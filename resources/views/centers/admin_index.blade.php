@@ -48,10 +48,15 @@
 
                     <div class="card-body">  
                         <div class="row">
-                            <div class="col-12">
-                                <table id="table_users" class="table table-bordered table-striped" aria-hidden="true">
+                            <div class="col-12 table-responsive">
+                                @if ( Auth::user()->isAbleTo("admin-centers-list") ) 
+                                <table id="table_users" class="table table-bordered table-striped" style="width: 100%" aria-hidden="true">
                                     <thead>
                                         <tr>
+                                            <th scope="col">
+                                            <th scope="col">
+                                            <th scope="col">
+                                            <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
@@ -68,15 +73,48 @@
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
+                                            <th scope="col">
+                                            <th scope="col">
+                                            <th scope="col">
+                                            <th scope="col">
                                         </tr>                               
                                     </tfoot>
                                 </table>
+                                @else
+                                    <h2 class="text-warning">{!! trans('general/admin_lang.not_permission') !!}</h2>
+                                @endif
                             </div>
                         </div>                       
                     </div>
                 </section>
             </div>
         </div>
+        @if ( Auth::user()->isAbleTo("admin-centers-list") ) 
+        <div class="row">
+            <div class="col">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
+                        </div>
+
+                        <h2 class="card-title">{!! trans('general/admin_lang.exports') !!}</h2>
+                    </header>
+                   
+                    <div class="card-body">  
+                        <div class="row">
+                            <div class="col-12 ">
+                                <a href="{{ url('admin/centers/export-excel') }}" class="text-success">
+                                    <i class="far fa-file-excel fa-4x"></i>
+                                </a>
+                            </div>
+                        </div>                       
+                    </div>
+                </section>
+            </div>
+        </div>
+        @endif
     <!-- end: page -->
 </section>   
 @endsection
@@ -90,115 +128,147 @@
 <script>
 
     var oTable = '';
-        
-    $(function() {
-        oTable = $('#table_users').DataTable({
-            "stateSave": true,
-            "stateDuration": 60,
-            "processing": true,
-            "serverSide": true,
-            "pageLength": 50,
-            ajax: {
-                "headers": {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    @if ( Auth::user()->isAbleTo("admin-centers-list") )    
+        $(function() {
+            oTable = $('#table_users').DataTable({
+                "stateSave": true,
+                "stateDuration": 60,
+                "processing": true,
+                "serverSide": true,
+                "pageLength": 50,
+                ajax: {
+                    "headers": {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    url: "{{ url('admin/centers/list') }}",
+                    type: "POST"
                 },
-                url: "{{ url('admin/centers/list') }}",
-                type: "POST"
-            },
-           /* order: [
-                [2, "asc"]
-            ],*/
-            columns: [
-                {
-                    "title": "{!! trans('general/admin_lang.active') !!}",
-                    orderable: true,
-                    searchable: true,
-                    data: 'active',
-                    name: 'active',
-                    sWidth: '80px'
+            /* order: [
+                    [2, "asc"]
+                ],*/
+                columns: [
+                    {
+                        "title": "{!! trans('general/admin_lang.active') !!}",
+                        orderable: false,
+                        searchable: false,
+                        data: 'active',
+                        name: 'active',
+                        sWidth: '80px'
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.image2') !!}",
+                        orderable: false,
+                        searchable: false,
+                        data: 'image',
+                        name: 'image',
+                        sWidth: '80px'
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.name') !!}",
+                        orderable: true,
+                        searchable: true,
+                        data: 'name',
+                        name: 'centers.name',
+                        sWidth: ''
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.phone') !!}",
+                        orderable: true,
+                        searchable: true,
+                        data: 'phone',
+                        name: 'centers.phone',
+                        sWidth: ''
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.email') !!}",
+                        orderable: true,
+                        searchable: true,
+                        data: 'email',
+                        name: 'centers.email',
+                        sWidth: ''
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.province_id') !!}",
+                        orderable: true,
+                        searchable: true,
+                        data: 'province',
+                        name: 'provinces.name',
+                        sWidth: ''
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.municipio_id') !!}",
+                        orderable: true,
+                        searchable: true,
+                        data: 'municipio',
+                        name: 'municipios.name',
+                        sWidth: ''
+                    },
+                    {
+                        "title": "{!! trans('centers/admin_lang.fields.default') !!}",
+                        orderable: false,
+                        searchable: false,
+                        sWidth: '50px',
+                        data: 'default'
+                    },
+                    {
+                        "title": "{!! trans('general/admin_lang.actions') !!}",
+                        orderable: false,
+                        searchable: false,
+                        sWidth: '100px',
+                        data: 'actions'
+                    }
+
+                ],
+                "fnDrawCallback": function(oSettings) {
+                    $('[data-bs-toggle="popover"]').mouseover(function() {
+                        $(this).popover("show");
+                    });
+
+                    $('[data-bs-toggle="popover"]').mouseout(function() {
+                        $(this).popover("hide");
+                    });
                 },
-                {
-                    "title": "{!! trans('centers/admin_lang.fields.first_name') !!}",
-                    orderable: true,
-                    searchable: true,
-                    data: 'first_name',
-                    name: 'user_profiles.first_name',
-                    sWidth: ''
-                },
-                {
-                    "title": "{!! trans('centers/admin_lang.fields.last_name') !!}",
-                    orderable: true,
-                    searchable: true,
-                    data: 'last_name',
-                    name: 'user_profiles.last_name',
-                    sWidth: ''
-                },
-                {
-                    "title": "{!! trans('centers/admin_lang.fields.email') !!}",
-                    orderable: true,
-                    searchable: true,
-                    data: 'email',
-                    name: 'users.email',
-                    sWidth: ''
-                },
-                {
-                    "title": "{!! trans('general/admin_lang.actions') !!}",
-                    orderable: false,
-                    searchable: false,
-                    sWidth: '100px',
-                    data: 'actions'
+                oLanguage: {!! json_encode(trans('datatable/lang')) !!}
+
+            });
+
+            var state = oTable.state.loaded();
+            $('tfoot th', $('#table_users')).each(function(colIdx) {
+                var title = $('tfoot th', $('#table_users')).eq($(this).index()).text();
+                if (oTable.settings()[0]['aoColumns'][$(this).index()]['bSearchable']) {
+                    var defecto = "";
+                    if (state) defecto = state.columns[colIdx].search.search;
+
+                    $(this).html(
+                        '<input style="width: 99.9%" type="text" class="form-control input-small input-inline" placeholder="' +
+                        oTable.context[0].aoColumns[colIdx].title + ' ' + title + '" value="' +
+                        defecto + '" />');
                 }
+            });
 
-            ],
-            "fnDrawCallback": function(oSettings) {
-                $('[data-bs-toggle="popover"]').mouseover(function() {
-                    $(this).popover("show");
-                });
-
-                $('[data-bs-toggle="popover"]').mouseout(function() {
-                    $(this).popover("hide");
-                });
-            },
-            oLanguage: {!! json_encode(trans('datatable/lang')) !!}
+            $('#table_users').on('keyup change', 'tfoot input', function(e) {
+                oTable
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
+                    .draw();
+            });
 
         });
+        function changeState(id){
+            $.ajax({
+                url     : "{{ url('admin/centers/change-state/') }}/"+id,
+                type    : 'GET',
+                success : function(data) {
+                    console.log("estado actalizado");           
+                },
+                error : function(data) {
+                    console.log("Error al actualizar "+error);           
+                }
+            });
+        }
 
-        var state = oTable.state.loaded();
-        $('tfoot th', $('#table_users')).each(function(colIdx) {
-            var title = $('tfoot th', $('#table_users')).eq($(this).index()).text();
-            if (oTable.settings()[0]['aoColumns'][$(this).index()]['bSearchable']) {
-                var defecto = "";
-                if (state) defecto = state.columns[colIdx].search.search;
-
-                $(this).html(
-                    '<input type="text" class="form-control input-small input-inline" placeholder="' +
-                    oTable.context[0].aoColumns[colIdx].title + ' ' + title + '" value="' +
-                    defecto + '" />');
-            }
-        });
-
-        $('#table_users').on('keyup change', 'tfoot input', function(e) {
-            oTable
-                .column($(this).parent().index() + ':visible')
-                .search(this.value)
-                .draw();
-        });
-
-    });
-
-    function changeState(id){
-        $.ajax({
-            url     : "{{ url('admin/centers/change-state/') }}/"+id,
-            type    : 'GET',
-            success : function(data) {
-                console.log("estado actalizado");           
-            },
-            error : function(data) {
-                console.log("Error al actualizar "+error);           
-            }
-        });
-    }
-
+   
+    @endif 
     function deleteElement(url) {
         var strBtn = "";
 
@@ -235,5 +305,7 @@
         });
         return false;
     }
+
+   
 </script>
 @stop

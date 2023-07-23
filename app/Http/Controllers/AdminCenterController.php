@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminUserRequest;
+use App\Exports\CentersExport;
+use App\Http\Requests\AdminCenterRequest;
+use App\Models\Center;
+use App\Models\Municipio;
 use App\Models\PermissionsTree;
+use App\Models\Province;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\StoragePathWork;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminCenterController extends Controller
 {
@@ -23,9 +31,9 @@ class AdminCenterController extends Controller
 
         $pageTitle = trans('centers/admin_lang.centers');
         $title = trans('centers/admin_lang.list');
-        $users = User::orderBy('id', 'asc')->get();
 
-        return view('centers.admin_index', compact('pageTitle', 'title', "users"));
+
+        return view('centers.admin_index', compact('pageTitle', 'title'));
     }
 
     public function create()
@@ -35,65 +43,17 @@ class AdminCenterController extends Controller
         }
         $pageTitle = trans('centers/admin_lang.new');
         $title = trans('centers/admin_lang.list');
-        $user = new User();;
+        $center = new Center();
         $tab = 'tab_1';
 
-        return view('centers.admin_edit', compact('pageTitle', 'title', "user"))
+        $provincesList = Province::active()->get();
+        $municipiosList = Municipio::active()->where("province_id", $center->province_id)->get();
+
+        return view('centers.admin_edit', compact('pageTitle', 'title', "center", "provincesList", 'municipiosList'))
             ->with('tab', $tab);
     }
 
-    public function edit($id)
-    {
-        if (!auth()->user()->isAbleTo('admin-centers-update')) {
-            app()->abort(403);
-        }
-        $user = User::with('userProfile')->find($id);
-
-        if (empty($user)) {
-            app()->abort(404);
-        }
-
-        $pageTitle = trans('centers/admin_lang.edit');
-        $title = trans('centers/admin_lang.list');
-        $tab = 'tab_1';
-
-        return view('centers.admin_edit', compact('pageTitle', 'title', "user"))
-            ->with('tab', $tab);
-    }
-
-    public function update(AdminUserRequest $request, $id)
-    {
-        if (!auth()->user()->isAbleTo('admin-centers-update')) {
-            app()->abort(403);
-        }
-
-        try {
-            DB::beginTransaction();
-
-            $user = User::with('userProfile')->find($id);
-
-            $user->email = $request->input('email');
-            $user->active = $request->input('active', 0);
-
-            if (!empty($request->input('password'))) {
-                $user->password = Hash::make($request->input('password'));
-            }
-            $user->userProfile->first_name = $request->input('user_profile.first_name');
-            $user->userProfile->last_name = $request->input('user_profile.last_name');
-            $user->push();
-
-            DB::commit();
-            return redirect()->route('admin.centers.edit', [$user->id])
-                ->with('success', trans('general/admin_lang.save_ok'));
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return redirect('admin/centers/create/' . $user->id)
-                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
-        }
-    }
-
-    public function store(AdminUserRequest $request)
+    public function store(AdminCenterRequest $request)
     {
         if (!auth()->user()->isAbleTo('admin-centers-create')) {
             app()->abort(403);
@@ -102,29 +62,13 @@ class AdminCenterController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = new User();
+            $center = new Center();
 
-            $user->email = $request->input('email');
-            $user->active = $request->input('active', 0);
-
-            if (!empty($request->input('password'))) {
-                $user->password = Hash::make($request->input('password'));
-            }
-            $user->save();
-
-            if (!empty($user->id)) {
-
-                $userProfile = new UserProfile();
-
-                $userProfile->user_id = $user->id;
-                $userProfile->first_name = $request->input('user_profile.first_name');
-                $userProfile->last_name = $request->input('user_profile.last_name');
-                $userProfile->save();
-            }
+            $this->saveCenter($center, $request);
 
             DB::commit();
-            return redirect()->route('admin.centers.edit', [$user->id])
-                ->with('success', trans('general/admin_lang.save_ok'));
+            toastr()->success(trans('general/admin_lang.save_ok'));
+            return redirect()->route('admin.centers.edit', [$center->id]); // ->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
@@ -134,19 +78,73 @@ class AdminCenterController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-centers-update')) {
+            app()->abort(403);
+        }
+        $center = Center::find($id);
+
+        if (empty($center)) {
+            app()->abort(404);
+        }
+
+        $pageTitle = trans('centers/admin_lang.edit');
+        $title = trans('centers/admin_lang.list');
+        $tab = 'tab_1';
+        $provincesList = Province::active()->get();
+        $municipiosList = Municipio::active()->where("province_id", $center->province_id)->get();
+
+
+        return view('centers.admin_edit', compact('pageTitle', 'title', "center", 'provincesList', 'municipiosList'))
+            ->with('tab', $tab);
+    }
+
+    public function update(AdminCenterRequest $request, $id)
+    {
+        if (!auth()->user()->isAbleTo('admin-centers-update')) {
+            app()->abort(403);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $center = Center::find($id);
+
+            $this->saveCenter($center, $request);
+
+            DB::commit();
+            toastr()->success(trans('general/admin_lang.save_ok'));
+            return redirect()->route('admin.centers.edit', [$center->id]); // ->with('success', trans('general/admin_lang.save_ok'));
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollBack();
+
+            return redirect('admin/centers/create/' . $center->id)
+                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+        }
+    }
+
+
+
     public function getData()
     {
         if (!auth()->user()->isAbleTo('admin-centers-list')) {
             app()->abort(403);
         }
-        $query = User::select([
-            'users.id',
-            'users.email',
-            'users.active',
-            'user_profiles.first_name',
-            'user_profiles.last_name',
+        $query = Center::select([
+            'centers.active',
+            'centers.id',
+            'centers.name',
+            'centers.image',
+            'centers.default',
+            'centers.phone',
+            'centers.email',
+            'provinces.name as province',
+            'municipios.name as municipio',
         ])
-            ->leftJoin("user_profiles", "user_profiles.user_id", "=", "users.id");
+            ->leftJoin("provinces", "centers.province_id", "=", "provinces.id")
+            ->leftJoin("municipios", "centers.municipio_id", "=", "municipios.id");
 
         $table = DataTables::of($query);
 
@@ -158,9 +156,24 @@ class AdminCenterController extends Controller
 
             $state = $data->active ? "checked" : "";
 
-            return  '<div class="form-check form-switch text-center">
-                <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
+            return  '<div class="form-check form-switch ">
+                <input class="form-check-input" nclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
             </div>';
+        });
+
+        $table->editColumn('image', function ($data) {
+            if (empty($data->image)) {
+                return "";
+            }
+
+            return  '<center><img width="40" class="rounded-circle" src="' . url('admin/centers/get-image/' . $data->image) . '" alt="imagen"> </center>';
+        });
+        $table->editColumn('default', function ($data) {
+
+            if ($data->default) {
+                return '<center><i class="fa fa-check text-success" aria-hidden="true"></i></center>';
+            }
+            return '<center><i class="fa fa-times text-danger" aria-hidden="true"></i></center>';
         });
 
         $table->editColumn('actions', function ($data) {
@@ -182,7 +195,7 @@ class AdminCenterController extends Controller
         });
 
         $table->removeColumn('id');
-        $table->rawColumns(['actions', 'active']);
+        $table->rawColumns(['actions', 'active', 'image', 'default']);
         return $table->make();
     }
 
@@ -192,12 +205,17 @@ class AdminCenterController extends Controller
         if (!auth()->user()->isAbleTo('admin-centers-delete')) {
             app()->abort(403);
         }
-        $user = User::find($id);
-        if (empty($user)) {
+        $center = Center::find($id);
+        if (empty($center)) {
             app()->abort(404);
         }
+        $myServiceSPW = new StoragePathWork("centers");
 
-        $user->delete();
+        if (!empty($center->image)) {
+            $myServiceSPW->deleteFile($center->image, '');
+            $center->image = "";
+        }
+        $center->delete();
 
         return response()->json(array(
             'success' => true,
@@ -211,65 +229,152 @@ class AdminCenterController extends Controller
             app()->abort(403);
         }
 
-        $user = User::find($id);
+        $center = Center::find($id);
 
-        if (!empty($user)) {
-            $user->active = !$user->active;
-            return $user->save() ? 1 : 0;
+        if (!empty($center)) {
+            $center->active = !$center->active;
+            return $center->save() ? 1 : 0;
         }
 
         return 0;
     }
 
-    public function editRoles($id)
+    public function editAditionalInfo($id)
     {
         if (!auth()->user()->isAbleTo('admin-centers-update')) {
             app()->abort(403);
         }
-        $user = User::find($id);
-        if (is_null($user)) {
+
+        $center = Center::find($id);
+        if (is_null($center)) {
             app()->abort(500);
         }
-        $pageTitle = trans('centers/admin_lang.users');
+        $pageTitle = trans('centers/admin_lang.edit');
         $title = trans('centers/admin_lang.list');
 
 
-        $roles = Role::active()->get();
         $tab = "tab_2";
-        return view('centers.admin_edit_roles', compact(
+        return view('centers.admin_edit_aditional_info', compact(
             'pageTitle',
             'title',
-            "user",
-            'roles'
+            "center"
         ))
             ->with('tab', $tab);
     }
 
-    public function updateRoles(Request $request, $id)
+    public function updateAditionalInfo(Request $request, $id)
     {
 
         if (!auth()->user()->isAbleTo('admin-centers-update')) {
             app()->abort(403);
         }
 
-        $user = User::find($id);
+        $center = Center::find($id);
 
-        if (is_null($user)) {
+        if (is_null($center)) {
             app()->abort(500);
         }
-        $idroles = explode(",", $request->input('role_ids'));
+
         try {
             DB::beginTransaction();
-            $user->syncRoles($idroles);
+            $center->specialities = $request->input('specialities');
+            $center->schedule = $request->input('schedule');
+
+            $center->save();
             DB::commit();
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/centers/roles/' . $user->id)
-                ->with('success', trans('general/admin_lang.save_ok'));
+            toastr()->success(trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/centers/aditional-info/' . $center->id); // ->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->to('/admin/centers/roles/' . $user->id)
-                ->with('error', trans('general/admin_lang.save_ko'));
+            toastr()->error(trans('general/admin_lang.save_ko'));
+            return redirect()->to('/admin/centers/aditional-info/' . $center->id);
+            // ->with('error', trans('general/admin_lang.save_ko'));
         }
+    }
+
+    public function getImage($photo)
+    {
+        $myServiceSPW = new StoragePathWork("centers");
+        return $myServiceSPW->showFile($photo, '/centers');
+    }
+
+    public function deleteImage($id)
+    {
+        $myServiceSPW = new StoragePathWork("centers");
+        $center = Center::find($id);
+
+        if (!empty($center->image)) {
+            $myServiceSPW->deleteFile($center->image, '');
+            $center->image = "";
+        }
+        $center->save();
+
+        return response()->json(array(
+            'success' => true,
+            'msg' => trans("general/admin_lang.delete_ok"),
+        ));
+    }
+
+    public function exportExcel()
+    {
+        if (!auth()->user()->isAbleTo('admin-centers-list')) {
+            app()->abort(403);
+        }
+        $query = Center::select([
+            'centers.active',
+            'centers.id',
+            'centers.name',
+            'centers.image',
+            'centers.default',
+            'centers.phone',
+            'centers.email',
+            'centers.address',
+            'centers.schedule',
+            'centers.specialities',
+            'provinces.name as province',
+            'municipios.name as municipio',
+        ])
+            ->leftJoin("provinces", "centers.province_id", "=", "provinces.id")
+            ->leftJoin("municipios", "centers.municipio_id", "=", "municipios.id");
+        return Excel::download(new CentersExport($query), trans('centers/admin_lang.centers') . Carbon::now()->format("dmYHis") . '.xlsx');
+    }
+
+
+    private function saveCenter($center, $request)
+    {
+        $center->name = $request->input('name');
+        $center->phone = $request->input('phone');
+        $center->email = $request->input('email');
+        $center->province_id = $request->input('province_id');
+        $center->municipio_id = $request->input('municipio_id');
+        $center->address = $request->input('address');
+        $center->default = $request->input('default', 0);
+        $center->active = $request->input('active', 0);
+
+        $image = $request->file('image');
+
+        if (!is_null($image)) {
+            $myServiceSPW = new StoragePathWork("centers");
+
+            if (!empty($center->image)) {
+                $myServiceSPW->deleteFile($center->image, '');
+                $center->image = "";
+            }
+
+            $filename = $myServiceSPW->saveFile($image, '');
+            $center->image = $filename;
+        }
+
+        if ($request->input('default')) {
+            DB::table('centers')
+                ->update([
+                    'default' => 0
+                ]);
+            $center->default = $request->input('default');
+        }
+
+        $center->save();
     }
 }

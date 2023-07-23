@@ -71,8 +71,8 @@ class FrontRegisterUserController extends Controller
             dd($e);
             return redirect()->back()
                 ->withInput($request->except('password'))
-                ->with('error', $e->getMessage());
-            // ->with('error', trans('users/lang.error_en_accion'));
+                ->with('error-alert', $e->getMessage());
+            // ->with('error-alert', trans('users/lang.error_en_accion'));
         }
 
         Auth::login($user);

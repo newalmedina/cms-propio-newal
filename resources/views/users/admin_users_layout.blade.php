@@ -44,13 +44,7 @@
                                     <img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" alt="{{ Auth::user()->userProfile->fullName }}">
                                 @endif
                             </div>
-
-
-                            
                         </div>
-
-                        
-
                         <hr class="dotted short">
 
                         <h5 class="mb-2 mt-3">  {{ trans('profile/admin_lang.acerca_de') }}</h5>

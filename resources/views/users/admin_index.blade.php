@@ -48,29 +48,34 @@
 
                     <div class="card-body">  
                         <div class="row">
-                            <div class="col-12">
-                                <table id="table_users" class="table table-bordered table-striped" aria-hidden="true">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                        </tr>                               
-                                    </tfoot>
-                                </table>
+                            <div class="col-12 table-responsive">
+                                @if ( Auth::user()->isAbleTo("admin-users-list") ) 
+                                    <table id="table_users" class="table table-bordered table-striped" aria-hidden="true">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                            </tr>                               
+                                        </tfoot>
+                                    </table>
+                                @else
+                                    <h2 class="text-warning">{!! trans('general/admin_lang.not_permission') !!}</h2>
+                                @endif
                             </div>
                         </div>                       
                     </div>
@@ -111,8 +116,8 @@
             columns: [
                 {
                     "title": "{!! trans('general/admin_lang.active') !!}",
-                    orderable: true,
-                    searchable: true,
+                    orderable: false,
+                    searchable: false,
                     data: 'active',
                     name: 'active',
                     sWidth: '80px'

@@ -30,15 +30,15 @@ class InsertProvinceMunicipDataSeeder extends Seeder
 
                 foreach ($data["data"] as $key => $value) {
 
-                    $province = Province::where("api_code", $value["code"])->first();
-                    if (empty($province->id)) {
-                        $province = new Province();
-                        $province->api_code = $value["code"];
-                        $province->name = $value["name"];
-                        $province->slug =  Str::slug($value["name"]);
-                        $province->active = 1;
-                        $province->save();
-                    }
+                    //$province = Province::where("api_code", $value["code"])->first();
+                    //if (empty($province->id)) {
+                    $province = new Province();
+                    $province->api_code = $value["code"];
+                    $province->name = $value["name"];
+                    // $province->slug =  Str::slug($value["name"]);
+                    $province->active = 1;
+                    $province->save();
+                    //}
                 }
             }
             $httpMunicipe = $client->get('https://api.digital.gob.do/v1/territories/municipalities');
@@ -51,12 +51,12 @@ class InsertProvinceMunicipDataSeeder extends Seeder
 
                     $province = Province::where("api_code", $value["provinceCode"])->first();
 
-                    $municipio = Municipio::where("api_code", $value["code"])->first();
+                    //$municipio = Municipio::where("api_code", $value["code"])->first();
 
                     $municipio = new Municipio();
                     $municipio->api_code = $value["code"];
                     $municipio->name = $value["name"];
-                    $municipio->slug =  Str::slug($value["name"]);
+                    //$municipio->slug =  Str::slug($value["name"]);
                     $municipio->province_id =   $province->id;
                     $municipio->active = 1;
                     $municipio->save();
