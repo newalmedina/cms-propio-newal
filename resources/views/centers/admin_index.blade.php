@@ -25,9 +25,73 @@
     </div>
     <!-- start: page -->
    
+    <div class="row">
+        <div class="col">
+            <form id="formData" enctype="multipart/form-data" action=" {{ route("admin.centers.saveFilter") }}" method="post"  novalidate="false">
+                @csrf
+                @method("post")
+            <section class="card card-featured-top card-featured-primary">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
+                    </div>
+                    <h2 class="card-title">{!! trans('general/admin_lang.filters_exports') !!}</h2>
+                </header>
+            
+                <div class="card-body py-4">  
+                    <div class="row">
+                        <div class="col-12 col-md-4">                     
+                            <div class="form-group">
+                                <label for="province_id"> {{ trans('centers/admin_lang.fields.province_id') }}</label>
+                                <select class="form-control select2" name="province_id" id="province_id">
+                                    <option value="">{{ trans('centers/admin_lang.fields.province_id_helper') }}</option>   
+                                    @foreach ($provincesList as $province)
+                                        <option value="{{ $province->id }}" @if( $province->id==$filtProvinceId)  selected @endif >{{ $province->name }}</option>
+                                    @endforeach 
+                                </select>    
+                            
+                            </div>
+                        </div>   
+                        <div class="col-12 col-md-4">                     
+                            <div class="form-group">
+                                <label for="municipio_id"> {{ trans('centers/admin_lang.fields.municipio_id') }}</label><span class="text-danger">*</span>
+                                <select class="form-control select2" name="municipio_id" id="municipio_id">
+                                    <option value="">{{ trans('centers/admin_lang.fields.municipio_id_helper') }}</option>   
+                                    @foreach ($municipiosList as $municipio)
+                                        <option value="{{ $municipio->id }}"  @if( $municipio->id==$filtMunicipioId)  selected @endif >{{ $municipio->name }}</option>
+                                    @endforeach 
+                                </select>   
+                                
+                            </div>
+                        </div>   
+                    </div>                       
+                </div>
+                <div class="card-footer">  
+                    <div class="row ">
+                        <div class="col-12 col-md-6 d-flex justify-content-start">
+                            <button class="btn btn-success btn-xs " type="submit"> {!! trans('general/admin_lang.filter') !!}</button>
+                            <a href="{{ url('admin/centers/remove-filter') }}" class="ms-2 btn btn-danger btn-xs">
+                                {!! trans('general/admin_lang.clean_filter') !!}
+                            </a>
+                        </div>
+                        @if ( Auth::user()->isAbleTo("admin-centers-list") ) 
+                        <div class="col-12 col-md-6 d-flex justify-content-end">
+                            <a href="{{ url('admin/centers/export-excel') }}" class="text-success">
+                                <i class="far fa-file-excel fa-2x"></i>
+                            </a>
+                        </div>
+                        @endif
+                    </div>                       
+                </div>
+            </section>
+            </form>
+        </div>
+    </div>
+
         <div class="row">
             <div class="col">
-                <section class="card">
+                <section class="card card-featured-top card-featured-primary">
                     <header class="card-header">
                         <div class="card-actions">
                             <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
@@ -89,32 +153,32 @@
                 </section>
             </div>
         </div>
-        @if ( Auth::user()->isAbleTo("admin-centers-list") ) 
-        <div class="row">
-            <div class="col">
-                <section class="card">
-                    <header class="card-header">
-                        <div class="card-actions">
-                            <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
-                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
-                        </div>
-
-                        <h2 class="card-title">{!! trans('general/admin_lang.exports') !!}</h2>
-                    </header>
-                   
-                    <div class="card-body">  
-                        <div class="row">
-                            <div class="col-12 ">
-                                <a href="{{ url('admin/centers/export-excel') }}" class="text-success">
-                                    <i class="far fa-file-excel fa-4x"></i>
-                                </a>
+        {{-- @if ( Auth::user()->isAbleTo("admin-centers-list") ) 
+            <div class="row">
+                <div class="col">
+                    <section class="card card-featured-top card-featured-primary">
+                        <header class="card-header">
+                            <div class="card-actions">
+                                <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
+                                <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
                             </div>
-                        </div>                       
-                    </div>
-                </section>
+
+                            <h2 class="card-title">{!! trans('general/admin_lang.exports') !!}</h2>
+                        </header>
+                    
+                        <div class="card-body">  
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <a href="{{ url('admin/centers/export-excel') }}" class="text-success">
+                                        <i class="far fa-file-excel fa-4x"></i>
+                                    </a>
+                                </div>
+                            </div>                       
+                        </div>
+                    </section>
+                </div>
             </div>
-        </div>
-        @endif
+        @endif --}}
     <!-- end: page -->
 </section>   
 @endsection
@@ -126,7 +190,10 @@
     <script src="{{ asset('/assets/admin/vendor/datatables.net/js/responsive.bootstrap4.min.js') }}"></script>
 
 <script>
-
+    $(document).ready(function() {
+        $('.select2').select2();
+      
+    });
     var oTable = '';
     @if ( Auth::user()->isAbleTo("admin-centers-list") )    
         $(function() {

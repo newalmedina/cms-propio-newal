@@ -18,7 +18,7 @@
    
         <div class="row">
             <div class="col">
-                <section class="card">
+                <section class="card card-featured-top card-featured-primary">
                     <header class="card-header">
                         <div class="card-actions">
                             <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>

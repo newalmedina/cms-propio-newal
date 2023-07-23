@@ -23,6 +23,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AdminCenterController extends Controller
 {
+    public $filtProvinceId;
+    public $filtMunicipioId;
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->filtMunicipioId = ($request->session()->has('center_filter_municipio_id')) ? ($request->session()->get('center_filter_municipio_id')) : "";
+            $this->filtProvinceId = ($request->session()->has('center_filter_province_id')) ? ($request->session()->get('center_filter_province_id')) : "";
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         if (!auth()->user()->isAbleTo('admin-centers')) {
@@ -31,9 +42,15 @@ class AdminCenterController extends Controller
 
         $pageTitle = trans('centers/admin_lang.centers');
         $title = trans('centers/admin_lang.list');
+        $provincesList = Province::active()->get();
+        // $municipiosList = Municipio::active()->where("province_id", $center->province_id)->get();
+        $municipiosList = Municipio::active()->get();
 
-
-        return view('centers.admin_index', compact('pageTitle', 'title'));
+        return view('centers.admin_index', compact('pageTitle', 'title', 'provincesList', 'municipiosList'))
+            ->with([
+                'filtProvinceId' => $this->filtProvinceId,
+                'filtMunicipioId' => $this->filtMunicipioId,
+            ]);
     }
 
     public function create()
@@ -125,7 +142,38 @@ class AdminCenterController extends Controller
         }
     }
 
+    public function saveFilter(Request $request)
+    {
+        $this->clearSesions($request);
+        if (!empty($request->province_id))
+            $request->session()->put('center_filter_province_id', $request->province_id);
+        if (!empty($request->municipio_id))
+            $request->session()->put('center_filter_municipio_id', $request->municipio_id);
 
+        return redirect('admin/centers');
+    }
+    public function removeFilter(Request $request)
+    {
+        $this->clearSesions($request);
+        return redirect('admin/centers');
+    }
+
+    private function addFilter(&$query)
+    {
+
+        if (!empty($this->filtProvinceId)) {
+            $query->where("provinces.id", $this->filtProvinceId);
+        }
+        if (!empty($this->filtMunicipioId)) {
+            $query->where("municipios.id", $this->filtMunicipioId);
+        }
+    }
+
+    private function clearSesions($request)
+    {
+        $request->session()->forget('center_filter_province_id');
+        $request->session()->forget('center_filter_municipio_id');
+    }
 
     public function getData()
     {
@@ -145,6 +193,7 @@ class AdminCenterController extends Controller
         ])
             ->leftJoin("provinces", "centers.province_id", "=", "provinces.id")
             ->leftJoin("municipios", "centers.municipio_id", "=", "municipios.id");
+        $this->addFilter($query);
 
         $table = DataTables::of($query);
 
