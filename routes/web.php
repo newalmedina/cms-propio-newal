@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminCenterController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
@@ -26,19 +27,21 @@ use Illuminate\Support\Facades\Route;
 /** begin -- de autenticacion */
 Auth::routes(['verify' => true]);
 
-Route::post('/register', [FrontRegisterUserController::class, 'create'])
-    ->middleware('guest');
+// Route::post('/register', [FrontRegisterUserController::class, 'create'])
+//     ->middleware('guest');
 Route::get('/register/verify/{confirmation_code}', [FrontRegisterUserController::class, 'verify'])
     ->middleware('guest');
 /** end -- de autenticacion */
 
-Route::group(array('prefix' => ''), function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    //   Route::resource('alarms', 'FrontAlarmsController');
+// Route::group(array('prefix' => ''), function () {
+//     // Route::get('/', [HomeController::class, 'index']);
+//     // Route::get('/home', [HomeController::class, 'index'])->name('home');
+//     //   Route::resource('alarms', 'FrontAlarmsController');
+// });
+
+Route::get('/', function () {
+    return redirect()->route('admin.dashboard');
 });
-
-
 //change language
 Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 
@@ -46,6 +49,7 @@ Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 //General Routes
 Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), function () {
 
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
     Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
@@ -60,7 +64,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::patch('/roles/permissions/{id}', [AdminRoleController::class, 'updatePermissions'])->name('admin.permissions.update');
 
     //admin users
-    Route::get('/users', [AdminUserController::class, 'index']);
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::get('/users/change-state/{id}', [AdminUserController::class, 'changeState'])->name('admin.users.changeState');

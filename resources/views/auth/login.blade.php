@@ -9,12 +9,12 @@
             <div class="col-md-12 align-self-center p-static order-2 text-center">
                 <h1 class="font-weight-bold text-dark">{{ trans('auth/login/front_lang.login') }}</h1>
             </div>
-            <div class="col-md-12 align-self-center order-1">
+            {{-- <div class="col-md-12 align-self-center order-1">
                 <ul class="breadcrumb d-block text-center">
                     <li><a href="#">{{ trans('auth/login/front_lang.home') }}</a></li>
                     <li class="active">{{ trans('auth/login/front_lang.login') }}</li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>

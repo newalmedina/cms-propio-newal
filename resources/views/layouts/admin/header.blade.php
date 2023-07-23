@@ -13,9 +13,9 @@
 
     <!-- start: search & user box -->
     <div class="header-right">
-        <span class="separator"></span>
+        {{-- <span class="separator"></span>
                   @include('layouts.admin.includes.locale')
-      
+       --}}
         <span class="separator"></span>
 
         <div id="userbox" class="userbox">
