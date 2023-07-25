@@ -74,6 +74,8 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/users/roles/{id}', [AdminUserController::class, 'editRoles'])->name('admin.users.editRoles');
     Route::patch('/users/roles/{id}', [AdminUserController::class, 'updateRoles'])->name('admin.users.updateRoles');
+    Route::get('/users/centers/{id}', [AdminUserController::class, 'editCenters'])->name('admin.users.editCenters');
+    Route::patch('/users/centers/{id}', [AdminUserController::class, 'updateCenters'])->name('admin.users.updateCenters');
     //admin centers
     Route::get('/centers', [AdminCenterController::class, 'index']);
     Route::get('/centers/create', [AdminCenterController::class, 'create'])->name('admin.centers.create');

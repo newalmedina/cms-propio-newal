@@ -4,6 +4,9 @@
 return [
     'users' => 'usuarios',
     'roles' => 'Roles',
+    'centers' => 'Centros',
+    'centers_asigned' => 'Centros Asignados',
+    'centers_helper' => 'Seleccione centros',
     'todos' => 'Todos los usuarios',
     'usuario' => 'usuario',
     'list' => 'Listado usuarios',

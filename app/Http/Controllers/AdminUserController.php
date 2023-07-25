@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminUserRequest;
+use App\Models\Center;
 use App\Models\PermissionsTree;
 use App\Models\Role;
 use App\Models\User;
@@ -22,6 +23,7 @@ class AdminUserController extends Controller
         if (!auth()->user()->isAbleTo('admin-users')) {
             app()->abort(403);
         }
+
 
         $pageTitle = trans('users/admin_lang.users');
         $title = trans('users/admin_lang.list');
@@ -164,6 +166,12 @@ class AdminUserController extends Controller
                 <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
             </div>';
         });
+        $table->editColumn('centers', function ($data) {
+
+            $centers = DB::table("user_centers")->join("centers", "centers.id", "=", "user_centers.center_id")->where("user_centers.user_id", 1)->pluck("centers.name")->toArray();
+
+            return implode(", ", $centers);
+        });
 
         $table->editColumn('actions', function ($data) {
             $actions = '';
@@ -184,7 +192,7 @@ class AdminUserController extends Controller
         });
 
         $table->removeColumn('id');
-        $table->rawColumns(['actions', 'active']);
+        $table->rawColumns(['actions', 'active', 'centers']);
         return $table->make();
     }
 
@@ -273,6 +281,68 @@ class AdminUserController extends Controller
             dd($e);
             toastr()->error(trans('general/admin_lang.save_ko'));
             return redirect()->to('/admin/users/roles/' . $user->id);
+            // ->with('error-alert', trans('general/admin_lang.save_ko'));
+        }
+    }
+
+    public function editCenters($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        $user = User::find($id);
+        if (is_null($user)) {
+            app()->abort(500);
+        }
+        $pageTitle = trans('users/admin_lang.users');
+        $title = trans('users/admin_lang.list');
+        $selected_center = [];
+        foreach ($user->centers as $center) {
+            $selected_center[] = $center->id;
+        }
+        $centers = Center::active()->get();
+
+        $tab = "tab_3";
+
+        return view('users.admin_centers', compact(
+            'pageTitle',
+            'title',
+            "user",
+            'centers',
+            'selected_center'
+        ))
+            ->with('tab', $tab);
+    }
+
+    public function updateCenters(Request $request, $id)
+    {
+
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+
+
+        $user = User::find($id);
+
+        if (is_null($user)) {
+            app()->abort(500);
+        }
+
+        try {
+            DB::beginTransaction();
+            $user->centers()->sync($request->center_id);
+
+
+            DB::commit();
+            toastr()->success(trans('general/admin_lang.save_ok'));
+
+            // Y Devolvemos una redirección a la acción show para mostrar el usuario
+            return redirect()->to('/admin/users/centers/' . $user->id); // ->with('success-alert', trans('general/admin_lang.save_ok'));
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            dd($e);
+            toastr()->error(trans('general/admin_lang.save_ko'));
+            return redirect()->to('/admin/users/centers/' . $user->id);
             // ->with('error-alert', trans('general/admin_lang.save_ko'));
         }
     }

@@ -59,12 +59,14 @@
                                                 <th scope="col">
                                                 <th scope="col">
                                                 <th scope="col">
+                                                <th scope="col">
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <th scope="col">
                                                 <th scope="col">
                                                 <th scope="col">
                                                 <th scope="col">
@@ -145,6 +147,12 @@
                     data: 'email',
                     name: 'users.email',
                     sWidth: ''
+                },
+                {
+                    "title": "{!! trans('users/admin_lang.centers') !!}",
+                    orderable: false,
+                    searchable: false,
+                    data: 'centers'
                 },
                 {
                     "title": "{!! trans('general/admin_lang.actions') !!}",

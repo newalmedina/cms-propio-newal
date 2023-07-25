@@ -16,7 +16,7 @@
 
 <div class="row">
     <div class="col-12">
-        <form id="frm_Permission_Role" action="{{ route("admin.permissions.update",$role->id) }}" method="post"  novalidate="false">
+        <form id="frm_Permission_Role" action="{{ route("admin.permissions.update",$user->id) }}" method="post"  novalidate="false">
             @csrf
             @method('patch')
             <input type="hidden" name="results" id="results">
