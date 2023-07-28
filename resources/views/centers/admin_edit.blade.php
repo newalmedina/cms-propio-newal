@@ -37,7 +37,7 @@
                         </div>
                     </div>      
                 </div>
-                <div class="row form-group mb-3"">                         
+                {{-- <div class="row form-group mb-3"">                         
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="image"> {{ trans('centers/admin_lang.fields.image') }}</label>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row form-group mb-3">
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">

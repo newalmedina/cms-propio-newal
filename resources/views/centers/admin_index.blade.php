@@ -117,7 +117,7 @@
                                 <table id="table_users" class="table table-bordered table-striped" style="width: 100%" aria-hidden="true">
                                     <thead>
                                         <tr>
-                                            <th scope="col">
+                                            {{-- <th scope="col"> --}}
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
@@ -132,7 +132,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th scope="col">
+                                            {{-- <th scope="col"> --}}
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
@@ -222,14 +222,14 @@
                         name: 'active',
                         sWidth: '80px'
                     },
-                    {
-                        "title": "{!! trans('centers/admin_lang.fields.image2') !!}",
-                        orderable: false,
-                        searchable: false,
-                        data: 'image',
-                        name: 'image',
-                        sWidth: '80px'
-                    },
+                    // {
+                    //     "title": "{!! trans('centers/admin_lang.fields.image2') !!}",
+                    //     orderable: false,
+                    //     searchable: false,
+                    //     data: 'image',
+                    //     name: 'image',
+                    //     sWidth: '80px'
+                    // },
                     {
                         "title": "{!! trans('centers/admin_lang.fields.name') !!}",
                         orderable: true,

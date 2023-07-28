@@ -31,7 +31,7 @@
     @endif
 
     <div class="row mt-2">
-        @if (!empty( $center->id))
+        {{-- @if (!empty( $center->id))
             <div class="col-12 col-md-3">
                 <section class="card">
                 
@@ -55,8 +55,8 @@
                     </div>
                 </section>
             </div>
-        @endif
-        <div class="col-12   @if (!empty( $center->id)) col-md-9 @endif">
+        @endif --}}
+        <div class="col-12   ">
             <div class="tabs tabs-primary">
                 <ul class="nav nav-tabs" id="custom-tabs">
             
@@ -104,13 +104,13 @@
       
     });
     function deleteElement() {
-        @if(empty($center->image))
-        $('#fileOutput').html('<img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" alt="{{ Auth::user()->userProfile->fullName }}">');
-        $("#remove").css("display","none");
-        $('#nombrefichero').val("");
-        $('#center_image').val("");
-        return false;
-        @endif
+        // @if(empty($center->image))
+        // $('#fileOutput').html('<img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" alt="{{ Auth::user()->userProfile->fullName }}">');
+        // $("#remove").css("display","none");
+        // $('#nombrefichero').val("");
+        // $('#center_image').val("");
+        // return false;
+        // @endif
         var strBtn = "";
         $("#confirmModalLabel").html("{{ trans('general/admin_lang.delete') }}");
         $("#confirmModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-question-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i><label style='font-size: 18px'>{{ trans('general/admin_lang.delete_question_image') }}</label></div>");

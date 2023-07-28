@@ -184,7 +184,7 @@ class AdminCenterController extends Controller
             'centers.active',
             'centers.id',
             'centers.name',
-            'centers.image',
+            // 'centers.image',
             'centers.default',
             'centers.phone',
             'centers.email',
@@ -210,13 +210,13 @@ class AdminCenterController extends Controller
             </div>';
         });
 
-        $table->editColumn('image', function ($data) {
-            if (empty($data->image)) {
-                return "";
-            }
+        // $table->editColumn('image', function ($data) {
+        //     if (empty($data->image)) {
+        //         return "";
+        //     }
 
-            return  '<center><img width="40" class="rounded-circle" src="' . url('admin/centers/get-image/' . $data->image) . '" alt="imagen"> </center>';
-        });
+        //     return  '<center><img width="40" class="rounded-circle" src="' . url('admin/centers/get-image/' . $data->image) . '" alt="imagen"> </center>';
+        // });
         $table->editColumn('default', function ($data) {
 
             if ($data->default) {
@@ -244,7 +244,7 @@ class AdminCenterController extends Controller
         });
 
         $table->removeColumn('id');
-        $table->rawColumns(['actions', 'active', 'image', 'default']);
+        $table->rawColumns(['actions', 'active',  'default']);
         return $table->make();
     }
 
@@ -375,7 +375,7 @@ class AdminCenterController extends Controller
             'centers.active',
             'centers.id',
             'centers.name',
-            'centers.image',
+            // 'centers.image',
             'centers.default',
             'centers.phone',
             'centers.email',
@@ -402,19 +402,19 @@ class AdminCenterController extends Controller
         $center->default = $request->input('default', 0);
         $center->active = $request->input('active', 0);
 
-        $image = $request->file('image');
+        // $image = $request->file('image');
 
-        if (!is_null($image)) {
-            $myServiceSPW = new StoragePathWork("centers");
+        // if (!is_null($image)) {
+        //     $myServiceSPW = new StoragePathWork("centers");
 
-            if (!empty($center->image)) {
-                $myServiceSPW->deleteFile($center->image, '');
-                $center->image = "";
-            }
+        //     if (!empty($center->image)) {
+        //         $myServiceSPW->deleteFile($center->image, '');
+        //         $center->image = "";
+        //     }
 
-            $filename = $myServiceSPW->saveFile($image, '');
-            $center->image = $filename;
-        }
+        //     $filename = $myServiceSPW->saveFile($image, '');
+        //     $center->image = $filename;
+        // }
 
         if ($request->input('default')) {
             DB::table('centers')
