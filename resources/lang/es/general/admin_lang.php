@@ -5,6 +5,7 @@ return [
     'actions' => 'acciones',
     'save_ok' => 'Registro guardado correctamente',
     'save_ko' => 'Error al intentar guardar registro',
+    'cancel' => 'Cancelar',
     'edit' => 'Editar',
     'save' => 'Guardar',
     'close' => 'Cerrar',

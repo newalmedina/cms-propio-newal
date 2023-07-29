@@ -85,6 +85,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), f
     Route::get('/centers/change-state/{id}', [AdminCenterController::class, 'changeState'])->name('admin.centers.changeState');
     Route::get('/centers/remove-filter', [AdminCenterController::class, 'removeFilter'])->name('admin.centers.removeFilter');
     Route::patch('/centers/{id}', [AdminCenterController::class, 'update'])->name('admin.centers.update');
+    Route::post('/centers/change-center', [AdminCenterController::class, 'changeCenter'])->name('admin.centers.changeCenterUpdate');
     Route::post('/centers', [AdminCenterController::class, 'store'])->name('admin.centers.store');
     Route::post('/centers/save-filter', [AdminCenterController::class, 'saveFilter'])->name('admin.centers.saveFilter');
     Route::post('/centers/list', [AdminCenterController::class, 'getData'])->name('admin.centers.getData');

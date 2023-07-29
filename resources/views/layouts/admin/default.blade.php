@@ -92,8 +92,8 @@
                     <a class="sidebar-right-toggle" ></a>
                 </div>
             </header>
+          
             @yield('content')
-           
         </div>
 
     </section>
@@ -128,5 +128,6 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/admin/vendor/select2//select2.min.js')}}"></script>
+    @include('centers.admin_change_center')
     @yield('foot_page')
 </body></html>

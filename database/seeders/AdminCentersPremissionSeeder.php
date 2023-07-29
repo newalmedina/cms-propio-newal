@@ -54,6 +54,11 @@ class AdminCentersPremissionSeeder  extends BaseSeeder
                 'display_name' => 'Centros - ver',
                 'name' => Str::slug('admin-centers-read'),
                 'description' => 'Centros - ver'
+            ],
+            [
+                'display_name' => 'Centros - cambiar',
+                'name' => Str::slug('admin-centers-change'),
+                'description' => 'Centros - cambiar'
             ]
         ];
         $MenuChild = $this->insertPermissions($permissions, $this->childAdmin, $this->a_permission_admin);

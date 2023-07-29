@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\CentersExport;
 use App\Http\Requests\AdminCenterRequest;
+use App\Http\Requests\AdminChangeCenterRequest;
 use App\Models\Center;
 use App\Models\Municipio;
 use App\Models\PermissionsTree;
@@ -14,6 +15,7 @@ use App\Models\UserProfile;
 use App\Services\StoragePathWork;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
@@ -390,6 +392,15 @@ class AdminCenterController extends Controller
         return Excel::download(new CentersExport($query), strtolower(trans('centers/admin_lang.centers')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
     }
 
+    public function changeCenter(AdminChangeCenterRequest $request)
+    {
+
+        $profile = UserProfile::where("user_id", Auth::user()->id)->first();
+        $profile->selected_center = $request->center_id;
+        $profile->save();
+        toastr()->success(trans('centers/admin_lang.changed'));
+        return redirect()->back();
+    }
 
     private function saveCenter($center, $request)
     {

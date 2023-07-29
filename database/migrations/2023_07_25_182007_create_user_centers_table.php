@@ -29,7 +29,7 @@ return new class extends Migration
 
         Schema::table('user_profiles', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('selected_center')->nullable();
+            $table->unsignedBigInteger('selected_center')->after("user_id")->nullable();
             $table->foreign('selected_center', "user_fk_selected_center")
                 ->references('id')->on('centers')
                 ->onDelete('cascade');

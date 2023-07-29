@@ -12,8 +12,10 @@ return [
     'general_info' => 'Información general',
     'additional_info' => 'Información adicional',
     'centers_management' => 'Gestión de dentros',
+    'change_centers' => 'Cambiar Centro',
     'created_at' => 'Creado el:',
 
+    'changed' => 'Centro Cambiado Correctamente',
     'quit_image' => 'Quitar imagen',
     'fields' => [
         'id' => 'Id',
@@ -73,6 +75,8 @@ return [
         'active_required' => 'El campo activo es obligatorio',
 
         'image_format' => 'Formato de la imagen no es correcto',
+        'center_id_required' => 'El campo centro es obligatorio',
+        'center_id_helper' => 'Seleccione centro',
 
     ],
 

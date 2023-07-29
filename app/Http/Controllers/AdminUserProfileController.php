@@ -80,7 +80,7 @@ class AdminUserProfileController extends Controller
             $user->push();
             // Redirect to the new user page
             DB::commit();
-            toastr()->info("Guardado")->success(trans('general/admin_lang.save_ok'));
+            toastr()->success(trans('general/admin_lang.save_ok'));
 
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
             return redirect('admin/profile'); // ->with('success-alert', trans('general/admin_lang.save_ok'));

@@ -16,6 +16,10 @@ class UserProfile extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function center()
+    {
+        return $this->belongsTo('App\Models\Center', "selected_center", "id");
+    }
 
     public function scopeUsers($query)
     {
