@@ -48,7 +48,7 @@ Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 
 
 //General Routes
-Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), function () {
+Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active']), function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");
