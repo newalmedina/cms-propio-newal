@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminUserProfileController;
 use App\Http\Controllers\Auth\FrontRegisterUserController;
@@ -50,6 +51,7 @@ Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified']), function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
     Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");

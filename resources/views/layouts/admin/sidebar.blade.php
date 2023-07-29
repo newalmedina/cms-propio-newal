@@ -67,6 +67,14 @@
                             </a>                        
                         </li>
                     @endif
+                    @if(Auth::user()->isAbleTo("admin-settings")  )
+                        <li class="@if (Request::is('admin/settings*') ) nav-active @endif">
+                            <a class="nav-link" @if (Request::is('admin/settings*')) style="color:{{ $activeColor }}" @endif  href="{{ url('/admin/settings') }}">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                                <span>{{ trans('settings/admin_lang.settings') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
                   
                     {{-- <li >
                        
