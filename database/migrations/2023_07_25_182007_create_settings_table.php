@@ -9,29 +9,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table): void {
-            $table->id();
 
-            $table->string("site_name");
-            $table->string("site_active")->default(1);
-            // $table->string("image")->nullable();
-            $table->string("address")->nullable();
-            $table->string("phone")->nullable();
-            $table->string("email")->nullable();
-
-            $table->unsignedBigInteger("province_id")->nullable();
-            $table->unsignedBigInteger("municipio_id")->nullable();
-
+            $table->increments('id');
+            $table->string('key')->unique();
+            $table->text('value')->nullable();
+            $table->string('group_slug');
             $table->timestamps();
-
-            $table->foreign('province_id')
-                ->references('id')
-                ->on('provinces')
-                ->onDelete('cascade');
-
-            $table->foreign('municipio_id')
-                ->references('id')
-                ->on('municipios')
-                ->onDelete('cascade');
+            $table->unique(['key', 'group_slug'], 'settings_unique_fields');
         });
     }
 

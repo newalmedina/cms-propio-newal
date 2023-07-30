@@ -53,6 +53,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
 
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");
+    Route::patch('/settings', [AdminSettingsController::class, 'update'])->name("admin.settings.update");
+    Route::get('/settings/get-image/{image}', [AdminSettingsController::class, 'getImage'])->name("admin.settings-get-image");
+    Route::delete('/settings/delete-image/{image}', [AdminSettingsController::class, 'deleteImage'])->name("admin.settings.deleteImage");
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
     Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
