@@ -14,6 +14,9 @@ class AdminCenterRequest extends FormRequest
      */
     public function authorize()
     {
+        if (!auth()->user()->isAbleTo('admin-centers-create') && !auth()->user()->isAbleTo('admin-centers-update')) {
+            return false;
+        }
         return true;
     }
 

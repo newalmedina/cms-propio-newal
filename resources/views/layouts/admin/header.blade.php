@@ -68,7 +68,7 @@
                         <a role="menuitem" tabindex="-1" href="{{ url('admin/profile') }}"><i class="bx bx-user-circle"></i> {{ trans('general/admin_lang.my_profile') }}</a>
                     </li>
                    
-                    @if(Auth::user()->isAbleTo("admin-centers-change")  )
+                    @if(Auth::user()->isAbleTo("admin-users-change-center")  )
                     <li>
                         <a role="menuitem" tabindex="-1" href="#" data-bs-toggle="modal" data-bs-target="#modalChangeCenter"><i class="bx bx-building"></i> {{ trans('centers/admin_lang.change_centers') }}</a>
                           

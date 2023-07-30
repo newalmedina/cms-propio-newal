@@ -27,26 +27,27 @@ class RolesSeeders extends Seeder
         $adminRole->description = 'Administradores';
 
         $adminRole->active = true;
+        $adminRole->can_delete = false;
         $adminRole->save();
         $rolAdmin = $adminRole->id;
 
 
 
-        $userRole = new Role;
-        $userRole->display_name = 'Usuario front';
-        $userRole->name = Str::slug('usuario-front');
-        $userRole->description = 'Usuario de front-End';
+        // $userRole = new Role;
+        // $userRole->display_name = 'Usuario front';
+        // $userRole->name = Str::slug('usuario-front');
+        // $userRole->description = 'Usuario de front-End';
 
-        $userRole->active = true;
-        $userRole->save();
+        // $userRole->active = true;
+        // $userRole->save();
 
-        $apiRole = new Role;
-        $apiRole->display_name = 'Usuario Api';
-        $apiRole->name = Str::slug('usuario-api');
-        $apiRole->description = 'Usuario de Api';
+        // $apiRole = new Role;
+        // $apiRole->display_name = 'Usuario Api';
+        // $apiRole->name = Str::slug('usuario-api');
+        // $apiRole->description = 'Usuario de Api';
 
-        $apiRole->active = true;
-        $apiRole->save();
+        // $apiRole->active = true;
+        // $apiRole->save();
 
         // Asignamos a cada usuario un role de manera aleatoria
         $users = User::get();

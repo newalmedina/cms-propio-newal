@@ -17,7 +17,7 @@ class CreateProvincesTable extends Migration
             $table->id();
             // $table->string("slug")->unique();
             $table->string("name");
-            $table->string("api_code", 10)->nullable();
+            // $table->string("api_code", 10)->nullable();
             $table->string("active")->default(0);
             $table->timestamps();
             $table->softDeletes();

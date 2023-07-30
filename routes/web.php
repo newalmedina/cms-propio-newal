@@ -61,11 +61,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
 
     //Admin Roles
     Route::get('/roles', [AdminRoleController::class, 'index']);
+    Route::post('/roles/list', [AdminRoleController::class, 'getData'])->name('admin.roles.getData');
+    Route::get('/roles/create', [AdminRoleController::class, 'create'])->name('admin.roles.create');
+    Route::post('/roles', [AdminRoleController::class, 'store'])->name('admin.roles.store');
+    Route::delete('/roles/{id}', [AdminRoleController::class, 'destroy'])->name('admin.roles.destroy');
     Route::get('/roles/{id}/edit', [AdminRoleController::class, 'edit'])->name('admin.roles.edit');
     Route::patch('/roles/{id}', [AdminRoleController::class, 'update'])->name('admin.roles.update');
     Route::get('/roles/permissions/{id}', [AdminRoleController::class, 'editPermissions'])->name('admin.roles.editPermissions');
     Route::patch('/roles/permissions/{id}', [AdminRoleController::class, 'updatePermissions'])->name('admin.permissions.update');
-
+    Route::get('/roles/change-state/{id}', [AdminRoleController::class, 'changeState'])->name('admin.roles.changeState');
     //suplanta identidad
     Route::get('/suplantar/{id}', [AdminSuplantacionController::class, 'suplantar'])->name('admin.suplantar');
     Route::get('/suplantar', [AdminSuplantacionController::class, 'revertir'])->name('admin.revertirSuplnatar');

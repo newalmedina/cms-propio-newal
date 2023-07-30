@@ -14,6 +14,9 @@ class AdminUserRequest extends FormRequest
      */
     public function authorize()
     {
+        if (!auth()->user()->isAbleTo('admin-users-create') && !auth()->user()->isAbleTo('admin-users-update')) {
+            return false;
+        }
         return true;
     }
 

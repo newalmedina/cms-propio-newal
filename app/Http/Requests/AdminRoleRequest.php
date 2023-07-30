@@ -14,6 +14,10 @@ class AdminRoleRequest extends FormRequest
      */
     public function authorize()
     {
+        if (!auth()->user()->isAbleTo('admin-roles-create') && !auth()->user()->isAbleTo('admin-roles-update')) {
+            return false;
+        }
+
         return true;
     }
 
@@ -24,9 +28,10 @@ class AdminRoleRequest extends FormRequest
      */
     public function rules()
     {
-
+        $role_id = $this->route()->id ? $this->route()->id : null;
 
         return [
+            'slug' => 'nullable|unique:roles,slug,' . $role_id,
             'display_name' => 'required',
         ];
     }
@@ -41,6 +46,7 @@ class AdminRoleRequest extends FormRequest
     {
         return [
             'display_name.required' => trans('roles/admin_lang.fields.display_name_required'),
+            'slug.unique' => trans('roles/admin_lang.fields.slug_unique'),
 
         ];
     }

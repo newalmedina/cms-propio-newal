@@ -17,5 +17,6 @@ return [
         'display_name_helper' => 'Introduce nombre',
         'display_name_required' => 'El campo nombre es obligatorio',
         'description' => 'Descripción',
+        'slug_unique' => 'Este rol ya existe en nuestros',
     ],
 ];

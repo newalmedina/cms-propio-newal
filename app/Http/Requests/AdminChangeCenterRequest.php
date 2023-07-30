@@ -14,6 +14,9 @@ class AdminChangeCenterRequest extends FormRequest
      */
     public function authorize()
     {
+        if (!auth()->user()->isAbleTo('admin-users-change-center')) {
+            return false;
+        }
         return true;
     }
 

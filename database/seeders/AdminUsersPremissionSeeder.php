@@ -56,6 +56,11 @@ class AdminUsersPremissionSeeder  extends BaseSeeder
                 'description' => 'Usuarios - ver'
             ],
             [
+                'display_name' => 'Usuarios - cambiar centro',
+                'name' => Str::slug('admin-users-change-center'),
+                'description' => 'Usuarios - cambiar centro'
+            ],
+            [
                 'display_name' => 'Usuarios - Suplantar Identidad',
                 'name' => Str::slug('admin-users-suplant-identity'),
                 'description' => 'Usuarios - Suplantar Identidad'
