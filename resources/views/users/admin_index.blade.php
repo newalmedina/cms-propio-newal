@@ -158,7 +158,7 @@
                     "title": "{!! trans('general/admin_lang.actions') !!}",
                     orderable: false,
                     searchable: false,
-                    sWidth: '100px',
+                    sWidth: '130px',
                     data: 'actions'
                 }
 

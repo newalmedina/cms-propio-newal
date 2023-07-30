@@ -15,7 +15,10 @@
 <section role="main" class="content-body card-margin">
       
     <!-- start: page -->
-   
+   <div class="mt-3">
+    
+    @include('layouts.admin.includes.errors')
+   </div>
     <div class="row">
         <div class="col-lg-6 mb-3">
             <section class="card">

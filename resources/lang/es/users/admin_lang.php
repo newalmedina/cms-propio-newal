@@ -14,6 +14,7 @@ return [
     'edit' => 'Editar usuario',
     'users_management' => 'Gestión de usuarios',
     'generate_password' => 'Generar contraseña',
+    'user_not_selected_center' => 'Debes de seleccionar un centro para poder utilizar la mayoria de funcionalidades del sistema.',
 
     'fields' => [
         'id' => 'Id',

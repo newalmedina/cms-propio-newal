@@ -19,12 +19,14 @@
             <nav id="menu" class="nav-main" role="navigation">
 
                 <ul class="nav nav-main">
-                    <li class="@if (Request::is('admin/dashboard*') ) nav-active @endif">
-                        <a class="nav-link" @if (Request::is('admin/dashboard*')) style="color:{{ $activeColor }}" @endif href="{{ url('admin/dashboard') }}">
-                            <i class="fas fa-home" aria-hidden="true"></i>
-                            <span>{{ trans('dashboard/admin_lang.dashboard') }}</span>
-                        </a>                        
-                    </li>
+                    @if(Auth::user()->isAbleTo("admin-dashboard-show") )
+                        <li class="@if (Request::is('admin/dashboard*') ) nav-active @endif">
+                            <a class="nav-link" @if (Request::is('admin/dashboard*')) style="color:{{ $activeColor }}" @endif href="{{ url('admin/dashboard') }}">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>{{ trans('dashboard/admin_lang.dashboard') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
                     @if(Auth::user()->isAbleTo("admin-roles") || Auth::user()->isAbleTo("admin-roles") )
                         <li class="nav-parent 
                             @if (Request::is('admin/users*') ||

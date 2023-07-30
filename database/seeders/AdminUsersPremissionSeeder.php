@@ -54,6 +54,11 @@ class AdminUsersPremissionSeeder  extends BaseSeeder
                 'display_name' => 'Usuarios - ver',
                 'name' => Str::slug('admin-users-read'),
                 'description' => 'Usuarios - ver'
+            ],
+            [
+                'display_name' => 'Usuarios - Suplantar Identidad',
+                'name' => Str::slug('admin-users-suplant-identity'),
+                'description' => 'Usuarios - Suplantar Identidad'
             ]
         ];
 

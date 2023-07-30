@@ -8,6 +8,7 @@ use App\Models\PermissionsTree;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -110,6 +111,7 @@ class AdminUserController extends Controller
 
             $user->email = $request->input('email');
             $user->active = $request->input('active', 0);
+            $user->email_verified_at = Carbon::now();
 
             if (!empty($request->input('password'))) {
                 $user->password = Hash::make($request->input('password'));
@@ -186,6 +188,11 @@ class AdminUserController extends Controller
                     url('admin/users/' . $data->id) . '\');" data-content="' .
                     trans('general/admin_lang.borrar') . '" data-placement="left" data-toggle="popover">
                         <i class="fa fa-trash" aria-hidden="true"></i></button>';
+            }
+            if (auth()->user()->isAbleTo("admin-users-suplant-identity") && auth()->user()->id != $data->id) {
+
+                $actions .= '<a  class="btn btn-primary btn-sm ms-1" href="' . route('admin.suplantar', $data->id) . '" ><i
+                class="fa fa-user-secret fa-lg"></i></a> ';
             }
 
             return $actions;

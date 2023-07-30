@@ -16,6 +16,16 @@
         {{-- <span class="separator"></span>
                   @include('layouts.admin.includes.locale')
        --}}
+       @if(session()->has("original-user-suplantar"))
+            <div id="userbox" class="userbox">
+        
+                <a  class="btn btn-primary btn-sm ms-1" href="{{ route('admin.revertirSuplnatar') }}" ><i
+                class="fa fa-user-secret fa-lg"></i> Quitar Suplantación
+                </a>     
+    
+            </div> 
+        @endif
+       
        @if (!empty(auth()->user()->userProfile->center ))
        <div id="userbox" class="userbox">
      

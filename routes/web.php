@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AdminSuplantacionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminUserProfileController;
 use App\Http\Controllers\Auth\FrontRegisterUserController;
@@ -48,9 +49,9 @@ Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 
 
 //General Routes
-Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active']), function () {
-
+Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active'/* , 'selected.center' */]), function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
+
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
@@ -65,7 +66,11 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/roles/permissions/{id}', [AdminRoleController::class, 'editPermissions'])->name('admin.roles.editPermissions');
     Route::patch('/roles/permissions/{id}', [AdminRoleController::class, 'updatePermissions'])->name('admin.permissions.update');
 
+    //suplanta identidad
+    Route::get('/suplantar/{id}', [AdminSuplantacionController::class, 'suplantar'])->name('admin.suplantar');
+    Route::get('/suplantar', [AdminSuplantacionController::class, 'revertir'])->name('admin.revertirSuplnatar');
     //admin users
+
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');

@@ -53,6 +53,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\UserProfile', 'user_id');
     }
 
+    public function hasSelectedCenter()
+    {
+        if (!empty($this->userProfile)) {
+            return $this->userProfile->selected_center;
+        }
+        return null;
+    }
+
     public function centers()
     {
         return $this->belongsToMany(Center::class, 'user_centers', 'user_id', 'center_id');
