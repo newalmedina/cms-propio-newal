@@ -372,7 +372,23 @@
         });
         return false;
     }
+    $("#province_id").change(function(){
+        $('#municipio_id').html("<option value='' >{{ trans('centers/admin_lang.fields.municipio_id_helper') }}</option>");
+        $.ajax({
+            url     : "{{ url('admin/municipios/municipios-list') }}/"+$(this).val(),
+            type    : 'GET',
+            "headers": {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
+            data: {_method: 'delete'},
+            success : function(data) {
+                console.log(data)
+                $.each(data, function(index, value) {
+                    $('#municipio_id').append("<option value='"+value['id']+"' >"+value['name']+"</option>");
+                   
+                });
+            }
 
+        });
+    });
    
 </script>
 @stop

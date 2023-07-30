@@ -46,7 +46,7 @@ class AdminCenterController extends Controller
         $title = trans('centers/admin_lang.list');
         $provincesList = Province::active()->get();
         // $municipiosList = Municipio::active()->where("province_id", $center->province_id)->get();
-        $municipiosList = Municipio::active()->get();
+        $municipiosList = Municipio::active()->where("province_id", $this->filtProvinceId)->get();
 
         return view('centers.admin_index', compact('pageTitle', 'title', 'provincesList', 'municipiosList'))
             ->with([
