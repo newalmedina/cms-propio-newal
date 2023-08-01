@@ -86,8 +86,8 @@ class AdminCenterController extends Controller
             $this->saveCenter($center, $request);
 
             DB::commit();
-            toastr()->success(trans('general/admin_lang.save_ok'));
-            return redirect()->route('admin.centers.edit', [$center->id]); // ->with('success', trans('general/admin_lang.save_ok'));
+
+            return redirect()->route('admin.centers.edit', [$center->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
@@ -133,8 +133,9 @@ class AdminCenterController extends Controller
             $this->saveCenter($center, $request);
 
             DB::commit();
-            toastr()->success(trans('general/admin_lang.save_ok'));
-            return redirect()->route('admin.centers.edit', [$center->id]); // ->with('success', trans('general/admin_lang.save_ok'));
+
+
+            return redirect()->route('admin.centers.edit', [$center->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
@@ -334,8 +335,8 @@ class AdminCenterController extends Controller
             $center->save();
             DB::commit();
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            toastr()->success(trans('general/admin_lang.save_ok'));
-            return redirect()->to('/admin/centers/aditional-info/' . $center->id); // ->with('success', trans('general/admin_lang.save_ok'));
+
+            return redirect()->to('/admin/centers/aditional-info/' . $center->id)->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);

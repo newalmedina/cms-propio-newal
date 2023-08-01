@@ -51,9 +51,9 @@ class AdminRoleController extends Controller
         $role->can_delete = 1;
 
         $this->saveRole($role, $request);
-        toastr()->success(trans('general/admin_lang.save_ok'));
 
-        return redirect()->route('admin.roles.edit', [$role->id]); // ->with('success-alert', trans('general/admin_lang.save_ok'));
+
+        return redirect()->route('admin.roles.edit', [$role->id])->with('success-alert', trans('general/admin_lang.save_ok'));
     }
     public function edit($id)
     {
@@ -76,9 +76,9 @@ class AdminRoleController extends Controller
 
         $role = Role::find($id);
         $this->saveRole($role, $request);
-        toastr()->success(trans('general/admin_lang.save_ok'));
 
-        return redirect()->route('admin.roles.edit', [$role->id]); // ->with('success-alert', trans('general/admin_lang.save_ok'));
+
+        return redirect()->route('admin.roles.edit', [$role->id])->with('success-alert', trans('general/admin_lang.save_ok'));
     }
 
     private function saveRole($role, $request)
@@ -141,9 +141,9 @@ class AdminRoleController extends Controller
             $role->syncPermissions($idpermissions);
 
             DB::commit();
-            toastr()->success(trans('general/admin_lang.save_ok'));
+
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/roles/permissions/' . $role->id); // ->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/roles/permissions/' . $role->id)->with('success-alert', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);

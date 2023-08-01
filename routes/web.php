@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminSuplantacionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminUserProfileController;
 use App\Http\Controllers\Auth\FrontRegisterUserController;
+use App\Http\Controllers\FrontSettingsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocalizationController;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,12 @@ Route::get('lang/{locale}', [LocalizationController::class, 'index']);
 
 
 //General Routes
-Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active'/* , 'selected.center' */]), function () {
+Route::group(array('prefix' => 'front', 'middleware' => []), function () {
+
+    Route::get('/settings/get-image/{image}', [FrontSettingsController::class, 'getImage'])->name("front.settings-get-image");
+});
+
+Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active', 'avaible.site'/* , 'selected.center' */]), function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
 
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");

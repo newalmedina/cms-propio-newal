@@ -2,7 +2,14 @@
    <header class="header">
     <div class="logo-container">
         <a href="../4.0.0" class="logo">
-            <img src="{{ asset('assets/admin/img/logo.png')}}" alt="Porto Admin" width="75" height="35">
+        @php
+              $setting =\App\Services\SettingsServices::getGeneral();
+        @endphp
+        @if(!empty($setting->image))
+                <img src='{{ url('admin/settings/get-image/'.$setting->image) }}' class="" alt="Porto Admin" width="75" height="35">
+            @else
+                <img src="{{ asset('assets/admin/img/logo.png')}}" alt="Porto Admin" width="75" height="35">
+            @endif
         </a>
         <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>

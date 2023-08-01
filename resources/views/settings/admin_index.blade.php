@@ -17,7 +17,7 @@
     <!-- start: page -->
    
     @include('layouts.admin.includes.modals')
-    @include('layouts.admin.includes.errors')       
+    @include('layouts.admin.includes.errors')        
     <div class="row mt-5">
         <div class="col-12 col-md-3">
             <section class="card">
@@ -26,7 +26,7 @@
                     
                     <div class="thumb-info mb-3">
                         <div id="fileOutput">
-                            @if($setting->image!='')
+                            @if(!empty($setting->image))
                                 <img src='{{ url('admin/settings/get-image/'.$setting->image) }}' id='image_ouptup' class="rounded img-fluid" >
                             @else
                                 <img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" >
@@ -244,11 +244,11 @@
             success : function(data) {
                 $('#modal_confirm').modal('hide');
                 if(data) {
-                    $("#modal_alert").addClass('modal-success');
-                    $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
-                    $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
-                    $("#modal_alert").modal('toggle');
-      
+                    // $("#modal_alert").addClass('modal-success');
+                    // $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
+                    // $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
+                    // $("#modal_alert").modal('toggle');
+                    toastr.success( data.msg)
                       $('#fileOutput').html('<img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" alt="{{ Auth::user()->userProfile->fullName }}">');
                          $("#remove").css("display","none");
                 } else {
@@ -262,7 +262,9 @@
         });
         return false;
     }
+
 </script>
+     
 
 {!! JsValidator::formRequest('App\Http\Requests\AdminSettingRequest')->selector('#formData') !!}
 @stop

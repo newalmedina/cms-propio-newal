@@ -20,7 +20,7 @@
 <section role="main" class="content-body card-margin">
     <div class="mt-2">
         @include('layouts.admin.includes.modals')
-        @include('layouts.admin.includes.success')
+
         @include('layouts.admin.includes.errors')        
     </div>
     <!-- start: page -->
@@ -232,10 +232,11 @@
             success : function(data) {
                 $('#modal_confirm').modal('hide');
                 if(data) {
-                    $("#modal_alert").addClass('modal-success');
-                    $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
-                    $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
-                    $("#modal_alert").modal('toggle');
+                    // $("#modal_alert").addClass('modal-success');
+                    // $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
+                    // $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
+                    // $("#modal_alert").modal('toggle');
+                    toastr.success( data.msg)
                     oTable.ajax.reload(null, false);
                 } else {
                     $("#modal_alert").addClass('modal-danger');
@@ -249,4 +250,5 @@
         return false;
     }
 </script>
+
 @stop

@@ -6,6 +6,7 @@ use App\Http\Requests\AdminSettingRequest;
 use App\Models\Municipio;
 use App\Models\Province;
 use App\Models\Setting;
+use App\Services\SettingsServices;
 use App\Services\StoragePathWork;
 
 class AdminSettingsController extends Controller
@@ -15,13 +16,7 @@ class AdminSettingsController extends Controller
         if (!auth()->user()->isAbleTo('admin-settings')) {
             app()->abort(403);
         }
-        $settings = Setting::general()->get();
-
-        $data = [];
-        foreach ($settings as $array) {
-            $data[$array->key] = $array->value;
-        }
-        $setting = (object)$data;
+        $setting = SettingsServices::getGeneral();
 
         $provincesList = Province::active()->get();
         $municipiosList = Municipio::active()->where("province_id", $setting->province_id)->get();
@@ -62,8 +57,8 @@ class AdminSettingsController extends Controller
                 $setting->save();
             }
         }
-        toastr()->success(trans('general/admin_lang.save_ok'));
-        return redirect()->back();
+
+        return redirect()->to('/admin/settings/')->with('success', trans('general/admin_lang.save_ok'));
     }
 
     public function getImage($image)

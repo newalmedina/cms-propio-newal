@@ -37,6 +37,7 @@
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/select2/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/toast/toast.min.css')}}">
     <!-- Head Libs -->
     <script src="{{ asset('assets/admin/vendor/modernizr/modernizr.js')}}"></script>
     <style>
@@ -128,6 +129,8 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/admin/vendor/select2//select2.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/vendor/toast/toast.min.js')}}"></script>
     @include('centers.admin_change_center')
+    @include('layouts.admin.includes.success')
     @yield('foot_page')
 </body></html>
