@@ -14,6 +14,8 @@ use App\Http\Controllers\Auth\FrontRegisterUserController;
 use App\Http\Controllers\FrontSettingsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Middleware\AvailableSite;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +30,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 /** begin -- de autenticacion */
-Auth::routes(['verify' => true]);
+// Rutas de autenticación generadas por Auth::routes()
+Route::middleware([AvailableSite::class])->group(function () {
+    Auth::routes(['verify' => true]);
+});
 
 // Route::post('/register', [FrontRegisterUserController::class, 'create'])
 //     ->middleware('guest');
