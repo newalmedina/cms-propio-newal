@@ -16,6 +16,10 @@ class AdminSettingsController extends Controller
         if (!auth()->user()->isAbleTo('admin-settings')) {
             app()->abort(403);
         }
+        $disabledForm = false;
+        if (!auth()->user()->isAbleTo('admin-settings-update')) {
+            $disabledForm = true;
+        }
         $setting = SettingsServices::getGeneral();
 
         $provincesList = Province::active()->get();
@@ -24,11 +28,10 @@ class AdminSettingsController extends Controller
         $pageTitle = trans('settings/admin_lang.settings');
         $title = trans('settings/admin_lang.settings');
 
-        return view('settings.admin_index', compact('pageTitle', 'title', 'setting', 'provincesList', 'municipiosList'));
+        return view('settings.admin_index', compact('pageTitle', 'title', 'setting', 'provincesList', 'municipiosList', 'disabledForm'));
     }
     public function update(AdminSettingRequest $request)
     {
-
         if (!auth()->user()->isAbleTo('admin-settings-update')) {
             app()->abort(403);
         }

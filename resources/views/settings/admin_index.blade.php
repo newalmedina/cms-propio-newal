@@ -15,7 +15,7 @@
 <section role="main" class="content-body card-margin">
       
     <!-- start: page -->
-   
+  
     @include('layouts.admin.includes.modals')
     @include('layouts.admin.includes.errors')        
     <div class="row mt-5">
@@ -32,7 +32,9 @@
                                 <img src="{{ asset("/assets/front/img/!logged-user.jpg") }}" class="rounded img-fluid" >
                             @endif
                         </div>
-                        <div id="remove"  onclick="deleteElement()" class="text-danger mt-2" style="@if($setting->image=='') display: none; @endif cursor: pointer; text-align: center;"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('settings/admin_lang.quit_image') }} </div>
+                        @if (!$disabledForm)                            
+                            <div id="remove"  onclick="deleteElement()" class="text-danger mt-2" style="@if($setting->image=='') display: none; @endif cursor: pointer; text-align: center;"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('settings/admin_lang.quit_image') }} </div>
+                        @endif
     
                     </div>
                     
@@ -65,7 +67,7 @@
                                      
                                         <div class="form-group">
                                             <label for="name"> {{ trans('settings/admin_lang.general_info_fields.site_name') }}</label><span class="text-danger">*</span>
-                                            <input value="{{!empty($setting->site_name) ? $setting->site_name :null }}" type="text" class="form-control" name="site_name"  placeholder="{{ trans('settings/admin_lang.general_info_fields.site_name_helper') }}">
+                                            <input value="{{!empty($setting->site_name) ? $setting->site_name :null }}" type="text"  @if ($disabledForm) disabled  @endif      class="form-control"    name="site_name"  placeholder="{{ trans('settings/admin_lang.general_info_fields.site_name_helper') }}">
                                         </div>
                                     </div>      
                                 </div>
@@ -73,11 +75,11 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="image"> {{ trans('settings/admin_lang.general_info_fields.image') }}</label>
-                                            <input type="file" accept="image/*" class="form-control d-none" name="image" id="setting_image" style="opacity: 0; width: 0;">
+                                            <input type="file" accept="image/*"  @if ($disabledForm) disabled  @endif      class="form-control d-none" name="image" id="setting_image" style="opacity: 0; width: 0;">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="nombrefichero" readonly>
+                                                <input type="text"       class="form-control"   id="nombrefichero" readonly>
                                                 <span class="input-group-append">
-                                                    <button id="btnSelectImage" class="btn btn-primary" type="button">{{ trans('settings/admin_lang.general_info_fields.search_image') }}</button>
+                                                    <button id="btnSelectImage"  @if ($disabledForm) disabled  @endif        class="btn btn-primary" type="button">{{ trans('settings/admin_lang.general_info_fields.search_image') }}</button>
                                                 </span>
                                             </div>
                                         </div>
@@ -87,13 +89,13 @@
                                     <div class="col-12 col-md-6">                     
                                         <div class="form-group">
                                             <label for="phone"> {{ trans('settings/admin_lang.general_info_fields.phone') }}</label><span class="text-danger">*</span>
-                                            <input value="{{!empty($setting->phone) ? $setting->phone :null }}" type="text" class="form-control" name="phone"  placeholder="{{ trans('settings/admin_lang.general_info_fields.phone_helper') }}">
+                                            <input value="{{!empty($setting->phone) ? $setting->phone :null }}" type="text"  @if ($disabledForm) disabled  @endif      class="form-control"   name="phone"  placeholder="{{ trans('settings/admin_lang.general_info_fields.phone_helper') }}">
                                         </div>
                                     </div>    
                                     <div class="col-12 col-md-6">                     
                                         <div class="form-group">
                                             <label for="email"> {{ trans('settings/admin_lang.general_info_fields.email') }}</label><span class="text-danger">*</span>
-                                            <input value="{{!empty($setting->email) ? $setting->email :null }}" type="text" class="form-control" name="email"  placeholder="{{ trans('settings/admin_lang.general_info_fields.email_helper') }}">
+                                            <input value="{{!empty($setting->email) ? $setting->email :null }}" type="text"  @if ($disabledForm) disabled  @endif      class="form-control"   name="email"  placeholder="{{ trans('settings/admin_lang.general_info_fields.email_helper') }}">
                                         </div>
                                     </div>                        
                                 </div>
@@ -104,7 +106,7 @@
                                     <div class="col-12 col-md-6">                     
                                         <div class="form-group">
                                             <label for="province_id"> {{ trans('settings/admin_lang.general_info_fields.province_id') }}</label><span class="text-danger">*</span>
-                                            <select class="form-control select2" name="province_id" id="province_id">
+                                            <select  @if ($disabledForm) disabled  @endif      class="form-control select2"   name="province_id" id="province_id">
                                                 <option value="">{{ trans('settings/admin_lang.general_info_fields.province_id_helper') }}</option>   
                                                 @foreach ($provincesList as $province)
                                                     <option value="{{ $province->id }}" @if($setting->province_id ==$province->id) selected @endif>{{ $province->name }}</option>
@@ -116,7 +118,7 @@
                                     <div class="col-12 col-md-6">                     
                                         <div class="form-group">
                                             <label for="municipio_id"> {{ trans('settings/admin_lang.general_info_fields.municipio_id') }}</label><span class="text-danger">*</span>
-                                            <select class="form-control select2" name="municipio_id" id="municipio_id">
+                                            <select  @if ($disabledForm) disabled  @endif      class="form-control select2"   name="municipio_id" id="municipio_id">
                                                 <option value="">{{ trans('settings/admin_lang.general_info_fields.municipio_id_helper') }}</option>   
                                                 @foreach ($municipiosList as $municipio)
                                                     <option value="{{ $municipio->id }}" @if($setting->municipio_id ==$municipio->id) selected @endif>{{ $municipio->name }}</option>
@@ -129,7 +131,7 @@
                                     <div class="col-12">                     
                                         <div class="form-group">
                                             <label for="address"> {{ trans('settings/admin_lang.general_info_fields.address') }}</label><span class="text-danger">*</span>
-                                            <input value="{{!empty($setting->address) ? $setting->address :null }}" type="text" class="form-control" name="address"  placeholder="{{ trans('settings/admin_lang.general_info_fields.address_helper') }}">
+                                            <input value="{{!empty($setting->address) ? $setting->address :null }}" type="text"  @if ($disabledForm) disabled  @endif      class="form-control"   name="address"  placeholder="{{ trans('settings/admin_lang.general_info_fields.address_helper') }}">
                                         </div>
                                     </div>                      
                                 </div>
@@ -150,7 +152,10 @@
                                 <div class="col-12  d-flex justify-content-between">
                 
                                     <a href="{{ url('admin/settings') }}" class="btn btn-default">{{ trans('general/admin_lang.back') }}</a>
+                                    @if ( !  $disabledForm )
                                     <button type="submit" class="btn btn-success">{{ trans('general/admin_lang.save') }}</button>   
+                                        
+                                    @endif
                                 </div>
                             </div>
                         </form>

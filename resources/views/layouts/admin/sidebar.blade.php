@@ -60,6 +60,39 @@
                             </ul>
                         </li>
                     @endif
+                    @if(Auth::user()->isAbleTo("admin-provinces") || Auth::user()->isAbleTo("admin-municipios") )
+                        <li class="nav-parent 
+                            @if (Request::is('admin/provinces*') ||
+                                Request::is('admin/municipios*')
+                            ) 
+                               nav-active
+                               nav-expanded
+                            @endif">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-table" aria-hidden="true"></i>
+                                <span>{{ trans('table_system/admin_lang.table_system')  }}</span>
+                            </a>
+                            <ul class="nav nav-children" style="">
+                                @if(Auth::user()->isAbleTo("admin-provinces"))
+                                    <li  @if (Request::is('admin/users*')) class="nav-active" @endif>                       
+                                        <a class="nav-link" href="{{ url('admin/users') }}">
+                                            <i class="fas fa-location-arrow" aria-hidden="true"></i>
+                                            <span>{{ trans('provinces/admin_lang.provinces') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-municipios"))
+                                    <li  @if (Request::is('admin/roles*')) class="nav-active" @endif>
+                            
+                                        <a class="nav-link" href="{{ url('admin/roles') }}">
+                                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                            <span>{{ trans('municipios/admin_lang.municipios') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                     
                     @if(Auth::user()->isAbleTo("admin-centers")  )
                         <li class="@if (Request::is('admin/centers*') ) nav-active @endif">
