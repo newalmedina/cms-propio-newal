@@ -90,10 +90,9 @@ class AdminUserController extends Controller
             DB::commit();
 
 
-            return redirect()->route('admin.users.edit', [$user->id]); // ->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect()->route('admin.users.edit', [$user->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             DB::rollBack();
-            toastr()->error(trans('general/admin_lang.save_ko'));
             return redirect('admin/users/create/' . $user->id); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }
@@ -131,11 +130,11 @@ class AdminUserController extends Controller
             DB::commit();
 
 
-            return redirect()->route('admin.users.edit', [$user->id])->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect()->route('admin.users.edit', [$user->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
-            toastr()->error(trans('general/admin_lang.save_ko'));
+
             return redirect('admin/users/create'); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }
@@ -282,11 +281,11 @@ class AdminUserController extends Controller
 
 
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/users/roles/' . $user->id)->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/users/roles/' . $user->id)->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            toastr()->error(trans('general/admin_lang.save_ko'));
+
             return redirect()->to('/admin/users/roles/' . $user->id);
             // ->with('error-alert', trans('general/admin_lang.save_ko'));
         }
@@ -341,14 +340,12 @@ class AdminUserController extends Controller
 
 
             DB::commit();
-
-
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/users/centers/' . $user->id)->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/users/centers/' . $user->id)->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            toastr()->error(trans('general/admin_lang.save_ko'));
+
             return redirect()->to('/admin/users/centers/' . $user->id);
             // ->with('error-alert', trans('general/admin_lang.save_ko'));
         }

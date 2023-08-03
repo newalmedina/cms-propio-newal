@@ -72,6 +72,5 @@
 @endsection
 @section('foot_page')
 @yield('tab_foot')
-@include('layouts.admin.includes.success')
 @stop
 

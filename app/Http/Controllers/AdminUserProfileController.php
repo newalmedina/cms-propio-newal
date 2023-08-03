@@ -83,12 +83,12 @@ class AdminUserProfileController extends Controller
 
 
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect('admin/profile')->with('success-alert', trans('general/admin_lang.save_ok'));
+            return redirect('admin/profile')->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             // Woopsy
             dd($e);
             DB::rollBack();
-            toastr()->error(trans('general/admin_lang.save_ko'));
+
             return redirect('profile'); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }

@@ -132,5 +132,6 @@
     <script src="{{ asset('assets/admin/vendor/toast/toast.min.js')}}"></script>
     @include('centers.admin_change_center')
     @include('layouts.admin.includes.success')
+
     @yield('foot_page')
 </body></html>

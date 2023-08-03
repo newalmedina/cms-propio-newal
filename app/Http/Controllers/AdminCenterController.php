@@ -340,7 +340,7 @@ class AdminCenterController extends Controller
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            toastr()->error(trans('general/admin_lang.save_ko'));
+
             return redirect()->to('/admin/centers/aditional-info/' . $center->id);
             // ->with('error', trans('general/admin_lang.save_ko'));
         }
@@ -399,8 +399,7 @@ class AdminCenterController extends Controller
         $profile = UserProfile::where("user_id", Auth::user()->id)->first();
         $profile->selected_center = $request->center_id;
         $profile->save();
-        toastr()->success(trans('centers/admin_lang.changed'));
-        return redirect()->back();
+        return redirect()->back()->with('success', trans('centers/admin_lang.changed'));
     }
 
     private function saveCenter($center, $request)
