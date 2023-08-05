@@ -82,9 +82,9 @@
                                     </li>
                                 @endif
                                 @if(Auth::user()->isAbleTo("admin-municipios"))
-                                    <li  @if (Request::is('admin/roles*')) class="nav-active" @endif>
+                                    <li  @if (Request::is('admin/municipios*')) class="nav-active" @endif>
                             
-                                        <a class="nav-link" href="{{ url('admin/roles') }}">
+                                        <a class="nav-link" href="{{ url('admin/municipios') }}">
                                             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                             <span>{{ trans('municipios/admin_lang.municipios') }}</span>
                                         </a>                        

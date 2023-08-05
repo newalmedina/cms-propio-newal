@@ -119,8 +119,21 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/centers/get-image/{photo}', [AdminCenterController::class, 'getimage'])->name("admin.centers.getimage");
     Route::get('/centers/export-excel', [AdminCenterController::class, 'exportExcel'])->name("admin.centers.exportExcel");
     Route::delete('/centers/delete-image/{photo}', [AdminCenterController::class, 'deleteImage'])->name("admin.centers.deleteImage");
+
     //admin municipios
     Route::get('/municipios/municipios-list/{id?}', [AdminMunicipioController::class, 'getMunicipioListByProvince']);
+    Route::get('/municipios', [AdminMunicipioController::class, 'index']);
+    Route::get('/municipios/create', [AdminMunicipioController::class, 'create'])->name('admin.municipios.create');
+    Route::get('/municipios/{id}/edit', [AdminMunicipioController::class, 'edit'])->name('admin.municipios.edit');
+    Route::get('/municipios/change-state/{id}', [AdminMunicipioController::class, 'changeState'])->name('admin.municipios.changeState');
+    Route::get('/municipios/export-excel', [AdminMunicipioController::class, 'exportExcel'])->name("admin.municipios.exportExcel");
+    Route::get('/municipios/remove-filter', [AdminMunicipioController::class, 'removeFilter'])->name('admin.municipios.removeFilter');
+    Route::patch('/municipios/{id}', [AdminMunicipioController::class, 'update'])->name('admin.municipios.update');
+    Route::post('/municipios/save-filter', [AdminMunicipioController::class, 'saveFilter'])->name('admin.municipios.saveFilter');
+    Route::post('/municipios', [AdminMunicipioController::class, 'store'])->name('admin.municipios.store');
+    Route::post('/municipios/save-filter', [AdminMunicipioController::class, 'saveFilter'])->name('admin.municipios.saveFilter');
+    Route::post('/municipios/list', [AdminMunicipioController::class, 'getData'])->name('admin.municipios.getData');
+    Route::delete('/municipios/{id}', [AdminMunicipioController::class, 'destroy'])->name('admin.municipios.destroy');
 
     //admin provincias
     Route::get('/provinces', [AdminProvinceController::class, 'index']);
