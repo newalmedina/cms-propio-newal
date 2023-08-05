@@ -2,20 +2,51 @@
    <header class="header">
     <div class="logo-container">
         <a href="../4.0.0" class="logo">
-            <img src="{{ asset('assets/admin/img/logo.png')}}" alt="Porto Admin" width="75" height="35">
+        @php
+              $setting =\App\Services\SettingsServices::getGeneral();
+        @endphp
+        @if(!empty($setting->image))
+                <img src='{{ url('admin/settings/get-image/'.$setting->image) }}' class="" alt="Porto Admin" width="75" height="35">
+            @else
+                <img src="{{ asset('assets/admin/img/logo.png')}}" alt="Porto Admin" width="75" height="35">
+            @endif
         </a>
-
         <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
         </div>
-
+        
+        
     </div>
 
     <!-- start: search & user box -->
     <div class="header-right">
-        <span class="separator"></span>
+        {{-- <span class="separator"></span>
                   @include('layouts.admin.includes.locale')
-      
+       --}}
+       @if(session()->has("original-user-suplantar"))
+            <div id="userbox" class="userbox">
+        
+                <a  class="btn btn-primary btn-sm ms-1" href="{{ route('admin.revertirSuplnatar') }}" ><i
+                class="fa fa-user-secret fa-lg"></i> Quitar Suplantación
+                </a>     
+    
+            </div> 
+        @endif
+       
+       @if (!empty(auth()->user()->userProfile->center ))
+       <div id="userbox" class="userbox">
+     
+        <b class="text-success">
+            <i class="fas fa-hospital"></i>
+               <i>
+                  {{ auth()->user()->userProfile->center->name }}
+               </i>
+           </b>        
+       
+        </div> 
+     
+       @endif
+       
         <span class="separator"></span>
 
         <div id="userbox" class="userbox">
@@ -43,9 +74,13 @@
                     <li>
                         <a role="menuitem" tabindex="-1" href="{{ url('admin/profile') }}"><i class="bx bx-user-circle"></i> {{ trans('general/admin_lang.my_profile') }}</a>
                     </li>
+                   
+                    @if(Auth::user()->isAbleTo("admin-users-change-center")  )
                     <li>
-                        <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="bx bx-lock"></i> {{ trans('general/admin_lang.lock_profile') }}</a>
+                        <a role="menuitem" tabindex="-1" href="#" data-bs-toggle="modal" data-bs-target="#modalChangeCenter"><i class="bx bx-building"></i> {{ trans('centers/admin_lang.change_centers') }}</a>
+                          
                     </li>
+                    @endif
                     <li>                      
                         <a role="menuitem" tabindex="-1" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

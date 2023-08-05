@@ -37,9 +37,19 @@ class AdminRolesPremissionSeeder  extends BaseSeeder
             ],
 
             [
+                'display_name' => 'Roles - crear',
+                'name' => Str::slug('admin-roles-create'),
+                'description' => 'Roles - crear'
+            ],
+            [
                 'display_name' => 'Roles - actualizar',
                 'name' => Str::slug('admin-roles-update'),
                 'description' => 'Roles - actualizar'
+            ],
+            [
+                'display_name' => 'Roles - eliminar',
+                'name' => Str::slug('admin-roles-delete'),
+                'description' => 'Roles - eliminar'
             ],
 
         ];

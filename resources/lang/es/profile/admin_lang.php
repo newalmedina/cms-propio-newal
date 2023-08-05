@@ -34,7 +34,8 @@ return [
 
         'profile_image' => 'Imagen de perfil',
         'search_image' => 'Seleccione imagen',
-
+        'photo_format' => 'Formato de la imagen no es correcto',
+        'photo_mimes' => 'Formato de la imagen no es correcto',
     ],
 
 

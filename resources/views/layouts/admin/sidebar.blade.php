@@ -1,9 +1,13 @@
+ @php
+     $activeColor="#0088CC";
+     
+ @endphp
  <!-- start: sidebar -->
  <aside id="sidebar-left" class="sidebar-left">
 
     <div class="sidebar-header">
         <div class="sidebar-title">
-            Navigation
+            Menú navegación
         </div>
         <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
@@ -15,17 +19,20 @@
             <nav id="menu" class="nav-main" role="navigation">
 
                 <ul class="nav nav-main">
-                    <li>
-                        <a class="nav-link" href="layouts-default.html">
-                            <i class="fas fa-home" aria-hidden="true"></i>
-                            <span>Dashboard</span>
-                        </a>                        
-                    </li>
+                    @if(Auth::user()->isAbleTo("admin-dashboard-show") )
+                        <li class="@if (Request::is('admin/dashboard*') ) nav-active @endif">
+                            <a class="nav-link" @if (Request::is('admin/dashboard*')) style="color:{{ $activeColor }}" @endif href="{{ url('admin/dashboard') }}">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>{{ trans('dashboard/admin_lang.dashboard') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
                     @if(Auth::user()->isAbleTo("admin-roles") || Auth::user()->isAbleTo("admin-roles") )
                         <li class="nav-parent 
                             @if (Request::is('admin/users*') ||
                                 Request::is('admin/roles*')
                             ) 
+                               nav-active
                                nav-expanded
                             @endif">
                             <a class="nav-link" href="#">
@@ -53,15 +60,64 @@
                             </ul>
                         </li>
                     @endif
+                    @if(Auth::user()->isAbleTo("admin-provinces") || Auth::user()->isAbleTo("admin-municipios") )
+                        <li class="nav-parent 
+                            @if (Request::is('admin/provinces*') ||
+                                Request::is('admin/municipios*')
+                            ) 
+                               nav-active
+                               nav-expanded
+                            @endif">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-table" aria-hidden="true"></i>
+                                <span>{{ trans('table_system/admin_lang.table_system')  }}</span>
+                            </a>
+                            <ul class="nav nav-children" style="">
+                                @if(Auth::user()->isAbleTo("admin-provinces"))
+                                    <li  @if (Request::is('admin/provinces*')) class="nav-active" @endif>                       
+                                        <a class="nav-link" href="{{ url('admin/provinces') }}">
+                                            <i class="fas fa-location-arrow" aria-hidden="true"></i>
+                                            <span>{{ trans('provinces/admin_lang.provinces') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-municipios"))
+                                    <li  @if (Request::is('admin/municipios*')) class="nav-active" @endif>
+                            
+                                        <a class="nav-link" href="{{ url('admin/municipios') }}">
+                                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                            <span>{{ trans('municipios/admin_lang.municipios') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                     
+                    @if(Auth::user()->isAbleTo("admin-centers")  )
+                        <li class="@if (Request::is('admin/centers*') ) nav-active @endif">
+                            <a class="nav-link" @if (Request::is('admin/centers*')) style="color:{{ $activeColor }}" @endif  href="{{ url('/admin/centers') }}">
+                                <i class="fas fa-hospital" aria-hidden="true"></i>
+                                <span>{{ trans('centers/admin_lang.centers') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
+                    @if(Auth::user()->isAbleTo("admin-settings")  )
+                        <li class="@if (Request::is('admin/settings*') ) nav-active @endif">
+                            <a class="nav-link" @if (Request::is('admin/settings*')) style="color:{{ $activeColor }}" @endif  href="{{ url('/admin/settings') }}">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                                <span>{{ trans('settings/admin_lang.settings') }}</span>
+                            </a>                        
+                        </li>
+                    @endif
                   
-                    <li >
+                    {{-- <li >
                        
                         <a class="nav-link" href="{{ url('/') }}">
                             <i class="fas fa-globe" aria-hidden="true"></i>
                             <span>{{ trans('general/admin_lang.go_web') }}</span>
                         </a>                        
-                    </li>
+                    </li> --}}
                 </ul>
             </nav>
         </div>

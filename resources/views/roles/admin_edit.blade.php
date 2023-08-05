@@ -13,9 +13,15 @@
 
 <div class="row">
     <div class="col-12">
-        <form id="formData" action="{{ route("admin.roles.update",$role->id) }}" method="post"  novalidate="false">
-            @csrf       
-            @method('patch')    
+        <form id="formData" action="{{!empty($role->id)?route("admin.roles.update",$role->id) :route("admin.roles.store") }}" method="post"  novalidate="false">
+            @csrf     
+            @if (!empty($role->id))
+             @method('patch')    
+             
+             @else
+             @method('post')    
+                
+            @endif  
             <div class="card-body">
                 <div class="row form-group mb-3">
                     <div class="col-lg-12">
@@ -34,6 +40,17 @@
                          </div>
                     </div>               
                 </div>
+                <div class="row form-group mb-3">
+                    <div class="col-12 col-md-6">                     
+                        <div class="form-group">
+                            <label for="active"> {{ trans('roles/admin_lang.fields.active') }}</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input toggle-switch" @if($role->active==1) checked @endif value="1" name="active" type="checkbox" id="active">
+                            </div>                           
+                        </div>
+                    </div>                    
+                                       
+                </div> 
 
                 
             </div>

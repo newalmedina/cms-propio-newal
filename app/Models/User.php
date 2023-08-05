@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -14,6 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -50,6 +52,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne('App\Models\UserProfile', 'user_id');
     }
+
+    public function hasSelectedCenter()
+    {
+        if (!empty($this->userProfile)) {
+            return $this->userProfile->selected_center;
+        }
+        return null;
+    }
+
+    public function centers()
+    {
+        return $this->belongsToMany(Center::class, 'user_centers', 'user_id', 'center_id');
+    }
+
     public function getCreatedAtFormattedAttribute()
     {
         try {

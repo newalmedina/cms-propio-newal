@@ -20,14 +20,14 @@
 <section role="main" class="content-body card-margin">
     <div class="mt-2">
         @include('layouts.admin.includes.modals')
-        @include('layouts.admin.includes.success')
+
         @include('layouts.admin.includes.errors')        
     </div>
     <!-- start: page -->
    
         <div class="row">
             <div class="col">
-                <section class="card">
+                <section class="card card-featured-top card-featured-primary">
                     <header class="card-header">
                         <div class="card-actions">
                             <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
@@ -48,29 +48,36 @@
 
                     <div class="card-body">  
                         <div class="row">
-                            <div class="col-12">
-                                <table id="table_users" class="table table-bordered table-striped" aria-hidden="true">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                            <th scope="col">
-                                        </tr>                               
-                                    </tfoot>
-                                </table>
+                            <div class="col-12 table-responsive">
+                                @if ( Auth::user()->isAbleTo("admin-users-list") ) 
+                                    <table id="table_users" class="table table-bordered table-striped" aria-hidden="true">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                                <th scope="col">
+                                            </tr>                               
+                                        </tfoot>
+                                    </table>
+                                @else
+                                    <h2 class="text-warning">{!! trans('general/admin_lang.not_permission') !!}</h2>
+                                @endif
                             </div>
                         </div>                       
                     </div>
@@ -111,8 +118,8 @@
             columns: [
                 {
                     "title": "{!! trans('general/admin_lang.active') !!}",
-                    orderable: true,
-                    searchable: true,
+                    orderable: false,
+                    searchable: false,
                     data: 'active',
                     name: 'active',
                     sWidth: '80px'
@@ -142,10 +149,16 @@
                     sWidth: ''
                 },
                 {
+                    "title": "{!! trans('users/admin_lang.centers') !!}",
+                    orderable: false,
+                    searchable: false,
+                    data: 'centers'
+                },
+                {
                     "title": "{!! trans('general/admin_lang.actions') !!}",
                     orderable: false,
                     searchable: false,
-                    sWidth: '100px',
+                    sWidth: '130px',
                     data: 'actions'
                 }
 
@@ -219,10 +232,11 @@
             success : function(data) {
                 $('#modal_confirm').modal('hide');
                 if(data) {
-                    $("#modal_alert").addClass('modal-success');
-                    $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
-                    $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
-                    $("#modal_alert").modal('toggle');
+                    // $("#modal_alert").addClass('modal-success');
+                    // $("#alertModalHeader").html("{{ trans('general/admin_lang.warning') }}");
+                    // $("#alertModalBody").html("<div class='d-flex align-items-center'><i class='fas fa-check-circle text-success' style='font-size: 64px; float: left; margin-right:15px;'></i> <label style='font-size: 18px'>" + data.msg+"</label></div>");
+                    // $("#modal_alert").modal('toggle');
+                    toastr.success( data.msg)
                     oTable.ajax.reload(null, false);
                 } else {
                     $("#modal_alert").addClass('modal-danger');
@@ -236,4 +250,5 @@
         return false;
     }
 </script>
+
 @stop

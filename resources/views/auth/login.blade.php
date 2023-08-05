@@ -9,19 +9,34 @@
             <div class="col-md-12 align-self-center p-static order-2 text-center">
                 <h1 class="font-weight-bold text-dark">{{ trans('auth/login/front_lang.login') }}</h1>
             </div>
-            <div class="col-md-12 align-self-center order-1">
+            {{-- <div class="col-md-12 align-self-center order-1">
                 <ul class="breadcrumb d-block text-center">
                     <li><a href="#">{{ trans('auth/login/front_lang.home') }}</a></li>
                     <li class="active">{{ trans('auth/login/front_lang.login') }}</li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>
 
-<div class="container py-4">
+<div class="container pt-2 pb-4">
 
+    <div class="row justify-content-center mt-5 mb-5">       
+
+        <div class="col-12 text-center">
+            @php
+                    $setting =\App\Services\SettingsServices::getGeneral();
+            @endphp
+             @if(!empty($setting->image))
+                <img src='{{ url('front/settings/get-image/'.$setting->image) }}' class="" alt="Porto Admin" width="150" height="150">
+            @else
+                <img src="{{ asset('assets/admin/img/logo.png')}}" alt="Porto Admin" width="150" height="80">
+            @endif
+           
+        </div>
+    </div>
     <div class="row justify-content-center mt-5 mb-5">
+        
         <div class="col-12 col-md-12 col-lg-5 mb-5 mb-lg-0 mb-5">
             <form method="POST" action="{{ route('login') }}">
                 @csrf

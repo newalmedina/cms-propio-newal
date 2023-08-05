@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminUserRequest;
+use App\Models\Center;
 use App\Models\PermissionsTree;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +24,7 @@ class AdminUserController extends Controller
         if (!auth()->user()->isAbleTo('admin-users')) {
             app()->abort(403);
         }
+
 
         $pageTitle = trans('users/admin_lang.users');
         $title = trans('users/admin_lang.list');
@@ -85,13 +88,12 @@ class AdminUserController extends Controller
             $user->push();
 
             DB::commit();
-            return redirect()->route('admin.users.edit', [$user->id])
-                ->with('success', trans('general/admin_lang.save_ok'));
+
+
+            return redirect()->route('admin.users.edit', [$user->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             DB::rollBack();
-
-            return redirect('admin/users/create/' . $user->id)
-                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+            return redirect('admin/users/create/' . $user->id); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }
 
@@ -108,6 +110,7 @@ class AdminUserController extends Controller
 
             $user->email = $request->input('email');
             $user->active = $request->input('active', 0);
+            $user->email_verified_at = Carbon::now();
 
             if (!empty($request->input('password'))) {
                 $user->password = Hash::make($request->input('password'));
@@ -125,14 +128,14 @@ class AdminUserController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('admin.users.edit', [$user->id])
-                ->with('success', trans('general/admin_lang.save_ok'));
+
+
+            return redirect()->route('admin.users.edit', [$user->id])->with('success', trans('general/admin_lang.save_ok'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();
 
-            return redirect('admin/users/create')
-                ->with('error', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+            return redirect('admin/users/create'); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
         }
     }
 
@@ -164,6 +167,12 @@ class AdminUserController extends Controller
                 <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
             </div>';
         });
+        $table->editColumn('centers', function ($data) {
+
+            $centers = DB::table("user_centers")->join("centers", "centers.id", "=", "user_centers.center_id")->where("user_centers.user_id", 1)->pluck("centers.name")->toArray();
+
+            return implode(", ", $centers);
+        });
 
         $table->editColumn('actions', function ($data) {
             $actions = '';
@@ -179,12 +188,17 @@ class AdminUserController extends Controller
                     trans('general/admin_lang.borrar') . '" data-placement="left" data-toggle="popover">
                         <i class="fa fa-trash" aria-hidden="true"></i></button>';
             }
+            if (auth()->user()->isAbleTo("admin-users-suplant-identity") && auth()->user()->id != $data->id) {
+
+                $actions .= '<a  class="btn btn-primary btn-sm ms-1" href="' . route('admin.suplantar', $data->id) . '" ><i
+                class="fa fa-user-secret fa-lg"></i></a> ';
+            }
 
             return $actions;
         });
 
         $table->removeColumn('id');
-        $table->rawColumns(['actions', 'active']);
+        $table->rawColumns(['actions', 'active', 'centers']);
         return $table->make();
     }
 
@@ -264,14 +278,76 @@ class AdminUserController extends Controller
             DB::beginTransaction();
             $user->syncRoles($idroles);
             DB::commit();
+
+
             // Y Devolvemos una redirección a la acción show para mostrar el usuario
-            return redirect()->to('/admin/users/roles/' . $user->id)
-                ->with('success', trans('general/admin_lang.save_ok'));
+            return redirect()->to('/admin/users/roles/' . $user->id)->with('success', trans('general/admin_lang.save_ok'));
         } catch (\PDOException $e) {
             DB::rollBack();
             dd($e);
-            return redirect()->to('/admin/users/roles/' . $user->id)
-                ->with('error', trans('general/admin_lang.save_ko'));
+
+            return redirect()->to('/admin/users/roles/' . $user->id);
+            // ->with('error-alert', trans('general/admin_lang.save_ko'));
+        }
+    }
+
+    public function editCenters($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        $user = User::find($id);
+        if (is_null($user)) {
+            app()->abort(500);
+        }
+        $pageTitle = trans('users/admin_lang.users');
+        $title = trans('users/admin_lang.list');
+        $selected_center = [];
+        foreach ($user->centers as $center) {
+            $selected_center[] = $center->id;
+        }
+        $centers = Center::active()->get();
+
+        $tab = "tab_3";
+
+        return view('users.admin_centers', compact(
+            'pageTitle',
+            'title',
+            "user",
+            'centers',
+            'selected_center'
+        ))
+            ->with('tab', $tab);
+    }
+
+    public function updateCenters(Request $request, $id)
+    {
+
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+
+
+        $user = User::find($id);
+
+        if (is_null($user)) {
+            app()->abort(500);
+        }
+
+        try {
+            DB::beginTransaction();
+            $user->centers()->sync($request->center_id);
+
+
+            DB::commit();
+            // Y Devolvemos una redirección a la acción show para mostrar el usuario
+            return redirect()->to('/admin/users/centers/' . $user->id)->with('success', trans('general/admin_lang.save_ok'));
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            dd($e);
+
+            return redirect()->to('/admin/users/centers/' . $user->id);
+            // ->with('error-alert', trans('general/admin_lang.save_ko'));
         }
     }
 }

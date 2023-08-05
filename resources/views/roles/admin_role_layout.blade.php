@@ -16,7 +16,7 @@
     
 <section role="main" class="content-body card-margin">      
     <div class="mt-2">
-        @include('layouts.admin.includes.success')
+     
         @include('layouts.admin.includes.errors')
 
     </div>
@@ -71,7 +71,6 @@
 </section>
 @endsection
 @section('foot_page')
-
 @yield('tab_foot')
 @stop
 

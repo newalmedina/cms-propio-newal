@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = "/admin/users";
 
     /**
      * Create a new controller instance.
@@ -36,5 +38,39 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function redirectTo()
+    {
+        return route('admin.users.index'); // Redireccionar a la ruta con nombre "dashboard"
+    }
+    protected function credentials(Request $request)
+    {
+        // Agrega la verificación de la columna "active" junto con el correo electrónico y la contraseña
+        return array_merge($request->only('email', 'password'), ['active' => 1]);
+    }
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        // Verificar si el usuario está inactivo
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if ($user && !$user->active) {
+            return redirect()->back()->withInput($request->only('email', 'remember'))
+                ->withErrors(['email' => trans('auth.failed')]);
+        }
+
+        return redirect()->back()->withInput($request->only('email', 'remember'))
+            ->withErrors(['email' => trans('auth.failed')]);
+    }
+    protected function login(Request $request)
+    {
+        $remember = $request->has('remember');
+
+        if (auth()->attempt($this->credentials($request), $remember)) {
+            // Autenticación exitosa
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        return redirect()->back()->withInput($request->only('email', 'remember'))
+            ->withErrors(['email' => trans('auth.failed')]);
     }
 }

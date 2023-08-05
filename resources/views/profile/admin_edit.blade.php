@@ -15,7 +15,7 @@
 
 <section role="main" class="content-body card-margin">
     <div class="mt-4">
-        @include('layouts.admin.includes.success')
+
         @include('layouts.admin.includes.errors')
 
     </div>
@@ -89,7 +89,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="profile_image"> {{ trans('profile/admin_lang.fields.profile_image') }}</label>
-                                        <input type="file" class="form-control" name="profile_image[]" id="profile_image" style="opacity: 0; width: 0;">
+                                        <input type="file" class="form-control d-none"  accept="image/*"name="profile_image" id="profile_image" style="opacity: 0; width: 0;">
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="nombrefichero" readonly>
                                             <span class="input-group-append">
@@ -165,9 +165,9 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#fileOutput').html("<img src='' id='image_ouptup' width='100%' alt=''>");
+                    $('#fileOutput').html("<img src='"+e.target.result+"' id='image_ouptup' width='100%' alt=''>");
                     $("#remove").css("display","block");
-                    $('#image_ouptup').attr('src', e.target.result);
+                  //  $('#image_ouptup').attr('src', e.target.result);
                 }
 
                 reader.readAsDataURL(input.files[0]);

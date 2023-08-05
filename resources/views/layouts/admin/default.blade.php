@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
     <!-- Vendor CSS -->
+
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/bootstrap/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/animate/animate.compat.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/font-awesome/css/all.min.css')}}">
@@ -35,10 +36,19 @@
 
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css')}}">
-
+    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/select2/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/toast/toast.min.css')}}">
     <!-- Head Libs -->
     <script src="{{ asset('assets/admin/vendor/modernizr/modernizr.js')}}"></script>
     <style>
+        .select2-container--default .select2-selection--single {
+        /* Ajusta la altura a tu preferencia */
+        height: 38px;
+        line-height: inherit;
+        
+        display: flex;
+        align-items: center;
+    }
         .dataTables_filter{
             margin-right: 54px !important;
             margin-bottom: 30px !important;
@@ -83,8 +93,8 @@
                     <a class="sidebar-right-toggle" ></a>
                 </div>
             </header>
+          
             @yield('content')
-           
         </div>
 
     </section>
@@ -92,6 +102,8 @@
     @livewireScripts
     
     <!-- Vendor -->
+    
+
     <script src="{{ asset('assets/admin/vendor/jquery/jquery.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/popper/umd/popper.min.js')}}"></script>
@@ -116,6 +128,10 @@
     <script src="{{ asset('assets/admin/js/theme.init.js')}}"></script><a class="scroll-to-top hidden-mobile" href="#"><i class="fas fa-chevron-up"></i></a>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <script src="{{ asset('assets/admin/vendor/select2//select2.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/vendor/toast/toast.min.js')}}"></script>
+    @include('centers.admin_change_center')
+    @include('layouts.admin.includes.success')
+
     @yield('foot_page')
 </body></html>

@@ -20,6 +20,7 @@ class LaratrustSetupTables extends Migration
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
             $table->boolean('active')->defaul(1);
+            $table->boolean('can_delete')->defaul(1);
             $table->timestamps();
         });
 
