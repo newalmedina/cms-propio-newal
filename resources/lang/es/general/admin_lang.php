@@ -42,6 +42,6 @@ return [
     'filters_exports' => 'Filtros y exportaciones',
     'filter' => 'Filtrar',
     'clean_filter' => 'Limpiar filtros',
-    '' => '',
+    'general_info' => 'Información general',
 
 ];

@@ -121,4 +121,16 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::delete('/centers/delete-image/{photo}', [AdminCenterController::class, 'deleteImage'])->name("admin.centers.deleteImage");
     //admin municipios
     Route::get('/municipios/municipios-list/{id?}', [AdminMunicipioController::class, 'getMunicipioListByProvince']);
+
+    //admin provincias
+    Route::get('/provinces', [AdminProvinceController::class, 'index']);
+    Route::get('/provinces/create', [AdminProvinceController::class, 'create'])->name('admin.provinces.create');
+    Route::get('/provinces/{id}/edit', [AdminProvinceController::class, 'edit'])->name('admin.provinces.edit');
+    Route::get('/provinces/change-state/{id}', [AdminProvinceController::class, 'changeState'])->name('admin.provinces.changeState');
+    Route::get('/provinces/export-excel', [AdminProvinceController::class, 'exportExcel'])->name("admin.provinces.exportExcel");
+    Route::patch('/provinces/{id}', [AdminProvinceController::class, 'update'])->name('admin.provinces.update');
+    Route::post('/provinces', [AdminProvinceController::class, 'store'])->name('admin.provinces.store');
+    Route::post('/provinces/save-filter', [AdminProvinceController::class, 'saveFilter'])->name('admin.provinces.saveFilter');
+    Route::post('/provinces/list', [AdminProvinceController::class, 'getData'])->name('admin.provinces.getData');
+    Route::delete('/provinces/{id}', [AdminProvinceController::class, 'destroy'])->name('admin.provinces.destroy');
 });

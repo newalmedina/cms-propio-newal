@@ -74,8 +74,8 @@
                             </a>
                             <ul class="nav nav-children" style="">
                                 @if(Auth::user()->isAbleTo("admin-provinces"))
-                                    <li  @if (Request::is('admin/users*')) class="nav-active" @endif>                       
-                                        <a class="nav-link" href="{{ url('admin/users') }}">
+                                    <li  @if (Request::is('admin/provinces*')) class="nav-active" @endif>                       
+                                        <a class="nav-link" href="{{ url('admin/provinces') }}">
                                             <i class="fas fa-location-arrow" aria-hidden="true"></i>
                                             <span>{{ trans('provinces/admin_lang.provinces') }}</span>
                                         </a>                        
