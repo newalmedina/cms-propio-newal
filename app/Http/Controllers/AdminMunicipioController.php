@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\MunicipiosExport;
+use App\Exports\AdminMunicipiosExport;
 use App\Http\Requests\AdminMunicipioRequest;
 use App\Models\Municipio;
 use App\Models\Province;
@@ -250,7 +250,7 @@ class AdminMunicipioController extends Controller
 
         ])->leftJoin("provinces", "municipios.province_id", "provinces.id");
         $this->addFilter($query);
-        return Excel::download(new MunicipiosExport($query), strtolower(trans('municipios/admin_lang.municipios')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
+        return Excel::download(new AdminMunicipiosExport($query), strtolower(trans('municipios/admin_lang.municipios')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
     }
 
 

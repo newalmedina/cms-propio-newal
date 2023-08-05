@@ -62,10 +62,12 @@
                     @endif
                     @if(Auth::user()->isAbleTo("admin-provinces") || 
                     Auth::user()->isAbleTo("admin-municipios") || 
+                    Auth::user()->isAbleTo("admin-insurance-carriers") || 
                     Auth::user()->isAbleTo("admin-diagnosis") )
                         <li class="nav-parent 
                             @if (Request::is('admin/provinces*') ||
                                 Request::is('admin/municipios*') ||
+                                Request::is('admin/insurance-carriers*') ||
                                 Request::is('admin/diagnosis*')
                             ) 
                                nav-active
@@ -99,6 +101,14 @@
                                         <a class="nav-link" href="{{ url('admin/diagnosis') }}">
                                             <i class="fas fa-stethoscope" aria-hidden="true"></i>
                                             <span>{{ trans('diagnosis/admin_lang.diagnosis') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-insurance-carriers"))
+                                    <li  @if (Request::is('admin/insurance-carriers*')) class="nav-active" @endif>
+                                        <a class="nav-link" href="{{ url('admin/insurance-carriers') }}">
+                                            <i class="fas fa-house-damage" aria-hidden="true"></i>
+                                            <span>{{ trans('insurance-carriers/admin_lang.insurance-carriers') }}</span>
                                         </a>                        
                                     </li>
                                 @endif

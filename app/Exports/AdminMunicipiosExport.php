@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Events\BeforeSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
+class AdminMunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
 {
 
 

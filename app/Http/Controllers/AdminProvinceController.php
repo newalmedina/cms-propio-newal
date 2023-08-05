@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ProvincesExport;
+use App\Exports\AdminProvincesExport;
 use App\Http\Requests\AdminProvinceRequest;
 use App\Models\Province;
 use Carbon\Carbon;
@@ -206,7 +206,7 @@ class AdminProvinceController extends Controller
             'provinces.name',
 
         ]);
-        return Excel::download(new ProvincesExport($query), strtolower(trans('provinces/admin_lang.provinces')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
+        return Excel::download(new AdminProvincesExport($query), strtolower(trans('provinces/admin_lang.provinces')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
     }
 
 

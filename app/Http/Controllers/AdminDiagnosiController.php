@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\DiagnosisExport;
-use App\Exports\ProvincesExport;
+use App\Exports\AdminDiagnosisExport;
+use App\Exports\AdminProvincesExport;
 use App\Http\Requests\AdminDiagnosiRequest;
 use App\Models\Diagnosi;
 use App\Models\Province;
@@ -208,7 +208,7 @@ class AdminDiagnosiController extends Controller
             'diagnosis.name',
 
         ]);
-        return Excel::download(new DiagnosisExport($query), strtolower(trans('diagnosis/admin_lang.diagnosis')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
+        return Excel::download(new AdminDiagnosisExport($query), strtolower(trans('diagnosis/admin_lang.diagnosis')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
     }
 
 

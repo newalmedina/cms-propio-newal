@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminCenterController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDiagnosiController;
+use App\Http\Controllers\AdminInsuranceCarrierController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
@@ -159,4 +160,23 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::post('/diagnosis/save-filter', [AdminDiagnosiController::class, 'saveFilter'])->name('admin.diagnosis.saveFilter');
     Route::post('/diagnosis/list', [AdminDiagnosiController::class, 'getData'])->name('admin.diagnosis.getData');
     Route::delete('/diagnosis/{id}', [AdminDiagnosiController::class, 'destroy'])->name('admin.diagnosis.destroy');
+
+    //admin insurance-carriers
+    Route::get('/insurance-carriers', [AdminInsuranceCarrierController::class, 'index']);
+    Route::get('/insurance-carriers/create', [AdminInsuranceCarrierController::class, 'create'])->name('admin.insurance-carriers.create');
+    Route::get('/insurance-carriers/{id}/edit', [AdminInsuranceCarrierController::class, 'edit'])->name('admin.insurance-carriers.edit');
+    Route::get('/insurance-carriers/change-state/{id}', [AdminInsuranceCarrierController::class, 'changeState'])->name('admin.insurance-carriers.changeState');
+    Route::get('/insurance-carriers/remove-filter', [AdminInsuranceCarrierController::class, 'removeFilter'])->name('admin.insurance-carriers.removeFilter');
+    Route::patch('/insurance-carriers/{id}', [AdminInsuranceCarrierController::class, 'update'])->name('admin.insurance-carriers.update');
+    Route::post('/insurance-carriers/change-center', [AdminInsuranceCarrierController::class, 'changeCenter'])->name('admin.insurance-carriers.changeCenterUpdate');
+    Route::post('/insurance-carriers', [AdminInsuranceCarrierController::class, 'store'])->name('admin.insurance-carriers.store');
+    Route::post('/insurance-carriers/save-filter', [AdminInsuranceCarrierController::class, 'saveFilter'])->name('admin.insurance-carriers.saveFilter');
+    Route::post('/insurance-carriers/list', [AdminInsuranceCarrierController::class, 'getData'])->name('admin.insurance-carriers.getData');
+    Route::delete('/insurance-carriers/{id}', [AdminInsuranceCarrierController::class, 'destroy'])->name('admin.insurance-carriers.destroy');
+
+    Route::get('/insurance-carriers/aditional-info/{id}', [AdminInsuranceCarrierController::class, 'editAditionalInfo'])->name('admin.insurance-carriers.editAditionalInfo');
+    Route::patch('/insurance-carriers/aditional-info/{id}', [AdminInsuranceCarrierController::class, 'updateAditionalInfo'])->name('admin.insurance-carriers.updateAditionalInfo');
+    Route::get('/insurance-carriers/get-image/{photo}', [AdminInsuranceCarrierController::class, 'getimage'])->name("admin.insurance-carriers.getimage");
+    Route::get('/insurance-carriers/export-excel', [AdminInsuranceCarrierController::class, 'exportExcel'])->name("admin.insurance-carriers.exportExcel");
+    Route::delete('/insurance-carriers/delete-image/{photo}', [AdminInsuranceCarrierController::class, 'deleteImage'])->name("admin.insurance-carriers.deleteImage");
 });

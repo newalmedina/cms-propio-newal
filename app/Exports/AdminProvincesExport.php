@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Events\BeforeSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DiagnosisExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
+class AdminProvincesExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
 {
 
 
@@ -32,8 +32,8 @@ class DiagnosisExport implements FromQuery, WithHeadings, WithMapping, WithTitle
     {
 
         return [
-            trans('diagnosis/admin_lang.fields.name'),
-            trans('diagnosis/admin_lang.fields.active'),
+            trans('provinces/admin_lang.fields.name'),
+            trans('provinces/admin_lang.fields.active'),
         ];
     }
     public function map($fila): array
@@ -48,7 +48,7 @@ class DiagnosisExport implements FromQuery, WithHeadings, WithMapping, WithTitle
 
     public function title(): string
     {
-        return trans('diagnosis/admin_lang.diagnosis');
+        return trans('provinces/admin_lang.provinces');
     }
     public function style(Worksheet $sheet)
     {

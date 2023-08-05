@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class CentersExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
+class AdminCentersExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
 {
 
 
