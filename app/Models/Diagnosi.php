@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Municipio extends Model
+class Diagnosi extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'active', 'province_id'];
+    protected $fillable = ['name', 'active'];
+    protected $table = "diagnosis";
 
     public function scopeActive($query)
     {

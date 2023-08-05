@@ -32,9 +32,9 @@ class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitl
     {
 
         return [
-            trans('provinces/admin_lang.fields.name'),
-            trans('provinces/admin_lang.fields.province_id'),
-            trans('provinces/admin_lang.fields.active'),
+            trans('municipios/admin_lang.fields.name'),
+            trans('municipios/admin_lang.fields.province_id'),
+            trans('municipios/admin_lang.fields.active'),
         ];
     }
     public function map($fila): array
@@ -50,7 +50,7 @@ class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitl
 
     public function title(): string
     {
-        return trans('centers/admin_lang.centers');
+        return trans('municipios/admin_lang.municipios');
     }
     public function style(Worksheet $sheet)
     {

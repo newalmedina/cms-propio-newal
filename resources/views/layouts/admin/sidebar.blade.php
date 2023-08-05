@@ -60,10 +60,13 @@
                             </ul>
                         </li>
                     @endif
-                    @if(Auth::user()->isAbleTo("admin-provinces") || Auth::user()->isAbleTo("admin-municipios") )
+                    @if(Auth::user()->isAbleTo("admin-provinces") || 
+                    Auth::user()->isAbleTo("admin-municipios") || 
+                    Auth::user()->isAbleTo("admin-diagnosis") )
                         <li class="nav-parent 
                             @if (Request::is('admin/provinces*') ||
-                                Request::is('admin/municipios*')
+                                Request::is('admin/municipios*') ||
+                                Request::is('admin/diagnosis*')
                             ) 
                                nav-active
                                nav-expanded
@@ -87,6 +90,15 @@
                                         <a class="nav-link" href="{{ url('admin/municipios') }}">
                                             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                             <span>{{ trans('municipios/admin_lang.municipios') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-diagnosis"))
+                                    <li  @if (Request::is('admin/diagnosis*')) class="nav-active" @endif>
+                            
+                                        <a class="nav-link" href="{{ url('admin/diagnosis') }}">
+                                            <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                                            <span>{{ trans('diagnosis/admin_lang.diagnosis') }}</span>
                                         </a>                        
                                     </li>
                                 @endif

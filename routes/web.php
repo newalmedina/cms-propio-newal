@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminCenterController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminDiagnosiController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
@@ -146,4 +147,16 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::post('/provinces/save-filter', [AdminProvinceController::class, 'saveFilter'])->name('admin.provinces.saveFilter');
     Route::post('/provinces/list', [AdminProvinceController::class, 'getData'])->name('admin.provinces.getData');
     Route::delete('/provinces/{id}', [AdminProvinceController::class, 'destroy'])->name('admin.provinces.destroy');
+
+    //admin provincias
+    Route::get('/diagnosis', [AdminDiagnosiController::class, 'index']);
+    Route::get('/diagnosis/create', [AdminDiagnosiController::class, 'create'])->name('admin.diagnosis.create');
+    Route::get('/diagnosis/{id}/edit', [AdminDiagnosiController::class, 'edit'])->name('admin.diagnosis.edit');
+    Route::get('/diagnosis/change-state/{id}', [AdminDiagnosiController::class, 'changeState'])->name('admin.diagnosis.changeState');
+    Route::get('/diagnosis/export-excel', [AdminDiagnosiController::class, 'exportExcel'])->name("admin.diagnosis.exportExcel");
+    Route::patch('/diagnosis/{id}', [AdminDiagnosiController::class, 'update'])->name('admin.diagnosis.update');
+    Route::post('/diagnosis', [AdminDiagnosiController::class, 'store'])->name('admin.diagnosis.store');
+    Route::post('/diagnosis/save-filter', [AdminDiagnosiController::class, 'saveFilter'])->name('admin.diagnosis.saveFilter');
+    Route::post('/diagnosis/list', [AdminDiagnosiController::class, 'getData'])->name('admin.diagnosis.getData');
+    Route::delete('/diagnosis/{id}', [AdminDiagnosiController::class, 'destroy'])->name('admin.diagnosis.destroy');
 });
