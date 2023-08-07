@@ -62,6 +62,7 @@
                     @endif
                     @if(Auth::user()->isAbleTo("admin-provinces") || 
                     Auth::user()->isAbleTo("admin-municipios") || 
+                    Auth::user()->isAbleTo("admin-medical-specializations") || 
                     Auth::user()->isAbleTo("admin-insurance-carriers") || 
                     Auth::user()->isAbleTo("admin-services") || 
                     Auth::user()->isAbleTo("admin-diagnosis") )
@@ -69,6 +70,7 @@
                             @if (Request::is('admin/provinces*') ||
                                 Request::is('admin/municipios*') ||
                                 Request::is('admin/services*') ||
+                                Request::is('admin/medical-specializations*') ||
                                 Request::is('admin/insurance-carriers*') ||
                                 Request::is('admin/diagnosis*')
                             ) 
@@ -112,6 +114,15 @@
                                         <a class="nav-link" href="{{ url('admin/diagnosis') }}">
                                             <i class="fas fa-stethoscope" aria-hidden="true"></i>
                                             <span>{{ trans('diagnosis/admin_lang.diagnosis') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-medical-specializations"))
+                                    <li  @if (Request::is('admin/medical-specializations*')) class="nav-active" @endif>
+                            
+                                        <a class="nav-link" href="{{ url('admin/medical-specializations') }}">
+                                            <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                                            <span>{{ trans('medical-specializations/admin_lang.medical-specializations') }}</span>
                                         </a>                        
                                     </li>
                                 @endif

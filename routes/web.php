@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminCenterController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDiagnosiController;
 use App\Http\Controllers\AdminInsuranceCarrierController;
+use App\Http\Controllers\AdminMedicalSpecializationController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
@@ -164,7 +165,19 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::post('/provinces/list', [AdminProvinceController::class, 'getData'])->name('admin.provinces.getData');
     Route::delete('/provinces/{id}', [AdminProvinceController::class, 'destroy'])->name('admin.provinces.destroy');
 
-    //admin provincias
+    //admin especializaciones medicas
+    Route::get('/medical-specializations', [AdminMedicalSpecializationController::class, 'index']);
+    Route::get('/medical-specializations/create', [AdminMedicalSpecializationController::class, 'create'])->name('admin.medical-specializations.create');
+    Route::get('/medical-specializations/{id}/edit', [AdminMedicalSpecializationController::class, 'edit'])->name('admin.medical-specializations.edit');
+    Route::get('/medical-specializations/change-state/{id}', [AdminMedicalSpecializationController::class, 'changeState'])->name('admin.medical-specializations.changeState');
+    Route::get('/medical-specializations/export-excel', [AdminMedicalSpecializationController::class, 'exportExcel'])->name("admin.medical-specializations.exportExcel");
+    Route::patch('/medical-specializations/{id}', [AdminMedicalSpecializationController::class, 'update'])->name('admin.medical-specializations.update');
+    Route::post('/medical-specializations', [AdminMedicalSpecializationController::class, 'store'])->name('admin.medical-specializations.store');
+    Route::post('/medical-specializations/save-filter', [AdminMedicalSpecializationController::class, 'saveFilter'])->name('admin.medical-specializations.saveFilter');
+    Route::post('/medical-specializations/list', [AdminMedicalSpecializationController::class, 'getData'])->name('admin.medical-specializations.getData');
+    Route::delete('/medical-specializations/{id}', [AdminMedicalSpecializationController::class, 'destroy'])->name('admin.medical-specializations.destroy');
+
+    //admin diagnosis
     Route::get('/diagnosis', [AdminDiagnosiController::class, 'index']);
     Route::get('/diagnosis/create', [AdminDiagnosiController::class, 'create'])->name('admin.diagnosis.create');
     Route::get('/diagnosis/{id}/edit', [AdminDiagnosiController::class, 'edit'])->name('admin.diagnosis.edit');
