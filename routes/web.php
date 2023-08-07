@@ -62,17 +62,28 @@ Route::group(array('prefix' => 'front', 'middleware' => []), function () {
 
     Route::get('/settings/get-image/{image}', [FrontSettingsController::class, 'getImage'])->name("front.settings-get-image");
 });
+Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active', 'avaible.site']), function () {
 
-Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active', 'avaible.site'/* , 'selected.center' */]), function () {
+    Route::get('/profile/personal-info', [AdminUserProfileController::class, 'personalInfo']);
+    Route::post('/profile/personal-info/store', [AdminUserProfileController::class, 'updatePersonalInfo'])->name("admin.updateProfilePersonalInfo");
+    Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
+
+    Route::get('/settings/get-image/{image}', [AdminSettingsController::class, 'getImage'])->name("admin.settings-get-image");
+
+    Route::get('/municipios/municipios-list/{id?}', [AdminMunicipioController::class, 'getMunicipioListByProvince']);
+});
+
+Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'check.active', 'profile.complete', 'avaible.site'/* , 'selected.center' */]), function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name("admin.dashboard");
 
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name("admin.settings");
     Route::patch('/settings', [AdminSettingsController::class, 'update'])->name("admin.settings.update");
-    Route::get('/settings/get-image/{image}', [AdminSettingsController::class, 'getImage'])->name("admin.settings-get-image");
     Route::delete('/settings/delete-image/{image}', [AdminSettingsController::class, 'deleteImage'])->name("admin.settings.deleteImage");
+
     //Admin Profile
     Route::get('/profile', [AdminUserProfileController::class, 'edit']);
-    Route::get('/profile/getphoto/{photo}', [AdminUserProfileController::class, 'getPhoto'])->name("admin.getPhoto");
+
+    Route::delete('/profile/delete-image/{id}', [AdminUserProfileController::class, 'deleteImage'])->name("admin.profile.deleteImage");
     Route::post('/profile/store', [AdminUserProfileController::class, 'store'])->name("admin.updateProfile");
 
 
@@ -104,6 +115,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::patch('/users/roles/{id}', [AdminUserController::class, 'updateRoles'])->name('admin.users.updateRoles');
     Route::get('/users/centers/{id}', [AdminUserController::class, 'editCenters'])->name('admin.users.editCenters');
     Route::patch('/users/centers/{id}', [AdminUserController::class, 'updateCenters'])->name('admin.users.updateCenters');
+
+    Route::get('/users/personal-info/{id}', [AdminUserController::class, 'personalInfo']);
+    Route::post('/users/personal-info/store/{id}', [AdminUserController::class, 'updatePersonalInfo'])->name("admin.users.updatePersonalInfo");
     //admin centers
     Route::get('/centers', [AdminCenterController::class, 'index']);
     Route::get('/centers/create', [AdminCenterController::class, 'create'])->name('admin.centers.create');
@@ -124,7 +138,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::delete('/centers/delete-image/{photo}', [AdminCenterController::class, 'deleteImage'])->name("admin.centers.deleteImage");
 
     //admin municipios
-    Route::get('/municipios/municipios-list/{id?}', [AdminMunicipioController::class, 'getMunicipioListByProvince']);
+
     Route::get('/municipios', [AdminMunicipioController::class, 'index']);
     Route::get('/municipios/create', [AdminMunicipioController::class, 'create'])->name('admin.municipios.create');
     Route::get('/municipios/{id}/edit', [AdminMunicipioController::class, 'edit'])->name('admin.municipios.edit');

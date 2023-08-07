@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminUserRequest;
 use App\Models\Center;
+use App\Models\Municipio;
 use App\Models\PermissionsTree;
+use App\Models\Province;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -318,6 +320,82 @@ class AdminUserController extends Controller
             'selected_center'
         ))
             ->with('tab', $tab);
+    }
+
+
+    public function personalInfo($id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        //Obtengo la información del usuario para pasarsela al formulario
+        $user = User::with('userProfile')->find($id);
+        $tab = 'tab_4';
+        $pageTitle =  trans('profile/admin_lang.my_profile');
+        $title =  trans('profile/admin_lang.personal_information');
+
+        $genders = [
+            "male" => trans("general/admin_lang.male"),
+            "female" => trans("general/admin_lang.female")
+        ];
+
+        $provincesList = Province::active()->get();
+        $municipiosList = Municipio::active()->where("province_id", $user->userProfile->province_id)->get();
+
+        return view(
+            'users.admin_edit_personal_info',
+            compact(
+                'pageTitle',
+                'title',
+                'user',
+                'provincesList',
+                'municipiosList',
+                'genders'
+            )
+        )->with('tab', $tab);
+    }
+
+    public function updatePersonalInfo(Request $request, $id)
+    {
+        if (!auth()->user()->isAbleTo('admin-users-update')) {
+            app()->abort(403);
+        }
+        // Id actual
+        // Creamos un nuevo objeto para nuestro nuevo usuario
+        $user = User::with('userProfile')->find($id);
+        // dd($user);
+        // Si el usuario no existe entonces lanzamos un error 404 :(
+        if (is_null($user)) {
+            app()->abort(404);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user->userProfile->birthday = !empty($request->input('user_profile.birthday')) ? Carbon::createFromFormat("d/m/Y", $request->input('user_profile.birthday'))->format("Y-m-d") : null;
+            $user->userProfile->identification = $request->input('user_profile.identification');
+            $user->userProfile->phone = $request->input('user_profile.phone');
+            $user->userProfile->mobile = $request->input('user_profile.mobile');
+            $user->userProfile->gender = $request->input('user_profile.gender');
+            $user->userProfile->province_id = $request->input('user_profile.province_id');
+            $user->userProfile->municipio_id = $request->input('user_profile.municipio_id');
+            $user->userProfile->address = $request->input('user_profile.address');
+
+            $user->userProfile->save();
+
+            // Redirect to the new user page
+            DB::commit();
+
+
+            // Y Devolvemos una redirección a la acción show para mostrar el usuario
+            return redirect('admin/users/personal-info/' . $id)->with('success', trans('general/admin_lang.save_ok'));
+        } catch (\PDOException $e) {
+            // Woopsy
+            dd($e);
+            DB::rollBack();
+
+            return redirect('users'); // ->with('error-alert', trans('general/admin_lang.save_ko') . ' - ' . $e->getMessage());
+        }
     }
 
     public function updateCenters(Request $request, $id)

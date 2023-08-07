@@ -44,5 +44,8 @@ return [
     'clean_filter' => 'Limpiar filtros',
     'general_info' => 'Información general',
     'required_files' => 'Valide los campos obligatorios',
+    'male' => 'Hombre',
+    'female' => 'Mujer',
+
 
 ];
