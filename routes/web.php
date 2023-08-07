@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminInsuranceCarrierController;
 use App\Http\Controllers\AdminMunicipioController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminServiceController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminSuplantacionController;
 use App\Http\Controllers\AdminUserController;
@@ -179,4 +180,19 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/insurance-carriers/get-image/{photo}', [AdminInsuranceCarrierController::class, 'getimage'])->name("admin.insurance-carriers.getimage");
     Route::get('/insurance-carriers/export-excel', [AdminInsuranceCarrierController::class, 'exportExcel'])->name("admin.insurance-carriers.exportExcel");
     Route::delete('/insurance-carriers/delete-image/{photo}', [AdminInsuranceCarrierController::class, 'deleteImage'])->name("admin.insurance-carriers.deleteImage");
+
+
+    //admin services
+    Route::get('/services', [AdminServiceController::class, 'index']);
+    Route::get('/services/create', [AdminServiceController::class, 'create'])->name('admin.services.create');
+    Route::get('/services/{id}/edit', [AdminServiceController::class, 'edit'])->name('admin.services.edit');
+    Route::get('/services/change-state/{id}', [AdminServiceController::class, 'changeState'])->name('admin.services.changeState');
+    Route::patch('/services/{id}', [AdminServiceController::class, 'update'])->name('admin.services.update');
+    Route::post('/services', [AdminServiceController::class, 'store'])->name('admin.services.store');
+    Route::post('/services/list', [AdminServiceController::class, 'getData'])->name('admin.services.getData');
+    Route::delete('/services/{id}', [AdminServiceController::class, 'destroy'])->name('admin.services.destroy');
+
+    Route::get('/services/aditional-info/{id}', [AdminServiceController::class, 'editAditionalInfo'])->name('admin.services.editAditionalInfo');
+    Route::patch('/services/aditional-info/{id}', [AdminServiceController::class, 'updateAditionalInfo'])->name('admin.services.updateAditionalInfo');
+    Route::get('/services/export-excel', [AdminServiceController::class, 'exportExcel'])->name("admin.services.exportExcel");
 });

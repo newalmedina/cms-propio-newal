@@ -25,4 +25,8 @@ class InsuranceCarrier extends Model
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
     }
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_insurance_carriers', 'insurance_carrier_id', 'service_id');
+    }
 }

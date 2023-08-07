@@ -210,7 +210,7 @@ class AdminInsuranceCarrierController extends Controller
             $state = $data->active ? "checked" : "";
 
             return  '<div class="form-check form-switch ">
-                <input class="form-check-input" nclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
+                <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
             </div>';
         });
 

@@ -33,7 +33,7 @@ class AdminInsuranceCarrierRequest extends FormRequest
             'email' => 'required|email',
             'province_id' => 'required',
             'municipio_id' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'image' => 'nullable|image',
         ];
     }

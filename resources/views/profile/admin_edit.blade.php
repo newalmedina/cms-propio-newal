@@ -71,13 +71,13 @@
                                 <div class="col-lg-6">
                                  
                                     <div class="form-group">
-                                        <label for="first_name"> {{ trans('profile/admin_lang.fields.first_name') }}</label><span class="text-danger">*</span>
+                                        <label for="first_name"> {{ trans('profile/admin_lang.fields.first_name') }}<span class="text-danger">*</span></label>
                                         <input value="{{ $user->userProfile->first_name }}" type="text" class="form-control" name="user_profile[first_name]"  placeholder="{{ trans('profile/admin_lang.fields.first_name_helper') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="last_name"> {{ trans('profile/admin_lang.fields.last_name') }}</label><span class="text-danger">*</span>
+                                        <label for="last_name"> {{ trans('profile/admin_lang.fields.last_name') }}<span class="text-danger">*</span></label>
                                         <input  value="{{ $user->userProfile->last_name }}"  type="text" class="form-control" name="user_profile[last_name]"  id="last_name" placeholder="{{ trans('profile/admin_lang.fields.last_name_helper') }}">
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                             </div>
                             <h4 class="mb-3">{{ trans('profile/admin_lang.access_data') }}</h4>
                             <div class=" form-group">
-                                <label for="email"> {{ trans('profile/admin_lang.fields.email') }}</label><span class="text-danger">*</span>
+                                <label for="email"> {{ trans('profile/admin_lang.fields.email') }}<span class="text-danger">*</span></label>
                                 <input  value="{{ $user->email }}"  type="text" class="form-control" name="email" id="email" placeholder="{{ trans('profile/admin_lang.fields.email_helper') }}">
                             </div>
                             <div class="row form-group">

@@ -23,8 +23,8 @@
             <div class="row form-group mb-3">
                 <div class="col-12 ">                     
                     <div class="form-group">
-                        <label for="center_id"> {{ trans('users/admin_lang.centers_asigned') }}</label>
-                        <select class="form-control select2" multiple name="center_id[]" id="center_id">
+                        <label for="center_id" class="col-12"> {{ trans('users/admin_lang.centers_asigned') }}</label>
+                        <select class="col-12 form-control select2" style="width:100%" multiple name="center_id[]" id="center_id">
                             <option value="">{{ trans('users/admin_lang.centers_helper') }}</option>   
                             @foreach ($centers as $center)
                                 <option value="{{ $center->id }}" @if(in_array($center->id,$selected_center)) selected @endif >{{ $center->name }} 

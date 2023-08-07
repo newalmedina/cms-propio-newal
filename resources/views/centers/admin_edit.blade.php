@@ -32,7 +32,7 @@
                     <div class="col-12">
                      
                         <div class="form-group">
-                            <label for="name"> {{ trans('centers/admin_lang.fields.name') }}</label><span class="text-danger">*</span>
+                            <label for="name"> {{ trans('centers/admin_lang.fields.name') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($center->name) ? $center->name :null }}" type="text" class="form-control" name="name"  placeholder="{{ trans('centers/admin_lang.fields.name_helper') }}">
                         </div>
                     </div>      
@@ -54,13 +54,13 @@
                 <div class="row form-group mb-3">
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="phone"> {{ trans('centers/admin_lang.fields.phone') }}</label><span class="text-danger">*</span>
+                            <label for="phone"> {{ trans('centers/admin_lang.fields.phone') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($center->phone) ? $center->phone :null }}" type="text" class="form-control" name="phone"  placeholder="{{ trans('centers/admin_lang.fields.phone_helper') }}">
                         </div>
                     </div>    
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="email"> {{ trans('centers/admin_lang.fields.email') }}</label><span class="text-danger">*</span>
+                            <label for="email"> {{ trans('centers/admin_lang.fields.email') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($center->email) ? $center->email :null }}" type="text" class="form-control" name="email"  placeholder="{{ trans('centers/admin_lang.fields.email_helper') }}">
                         </div>
                     </div>                        
@@ -71,7 +71,7 @@
                 <div class="row form-group mb-3">
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="province_id"> {{ trans('centers/admin_lang.fields.province_id') }}</label><span class="text-danger">*</span>
+                            <label for="province_id" class="col-12"> {{ trans('centers/admin_lang.fields.province_id') }}<span class="text-danger">*</span></label>
                             <select class="form-control select2" name="province_id" id="province_id">
                                 <option value="">{{ trans('centers/admin_lang.fields.province_id_helper') }}</option>   
                                 @foreach ($provincesList as $province)
@@ -83,7 +83,7 @@
                     </div>    
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="municipio_id"> {{ trans('centers/admin_lang.fields.municipio_id') }}</label><span class="text-danger">*</span>
+                            <label for="municipio_id" class="col-12"> {{ trans('centers/admin_lang.fields.municipio_id') }} <span class="text-danger">*</span> </label>
                             <select class="form-control select2" name="municipio_id" id="municipio_id">
                                 <option value="">{{ trans('centers/admin_lang.fields.municipio_id_helper') }}</option>   
                                 @foreach ($municipiosList as $municipio)
@@ -96,7 +96,7 @@
                 <div class="row form-group mb-3">
                     <div class="col-12">                     
                         <div class="form-group">
-                            <label for="address"> {{ trans('centers/admin_lang.fields.address') }}</label><span class="text-danger">*</span>
+                            <label for="address"> {{ trans('centers/admin_lang.fields.address') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($center->address) ? $center->address :null }}" type="text" class="form-control" name="address"  placeholder="{{ trans('centers/admin_lang.fields.address_helper') }}">
                         </div>
                     </div>                      

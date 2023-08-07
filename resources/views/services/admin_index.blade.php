@@ -23,59 +23,9 @@
  
         @include('layouts.admin.includes.errors')        
     </div>
-    <!-- start: page -->  
-       
-    <div class="row">
-        <div class="col">
-            <form id="formData" enctype="multipart/form-data" action=" {{ route("admin.municipios.saveFilter") }}" method="post"  novalidate="false">
-                @csrf
-                @method("post")
-            <section class="card card-featured-top card-featured-primary">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle=""></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss=""></a>
-                    </div>
-                    <h2 class="card-title">{!! trans('general/admin_lang.filters_exports') !!}</h2>
-                </header>
-            
-                <div class="card-body py-4">  
-                    <div class="row">
-                        <div class="col-12 col-md-4">                     
-                            <div class="form-group">
-                                <label for="province_id" class="col-12"> {{ trans('municipios/admin_lang.fields.province_id') }}</label>
-                                <select class="form-control select2" name="province_id" id="province_id">
-                                    <option value="">{{ trans('municipios/admin_lang.fields.province_id_helper') }}</option>   
-                                    @foreach ($provincesList as $province)
-                                        <option value="{{ $province->id }}" @if( $province->id==$filtProvinceId)  selected @endif >{{ $province->name }}</option>
-                                    @endforeach 
-                                </select>    
-                            
-                            </div>
-                        </div>     
-                    </div>                       
-                </div>
-                <div class="card-footer">  
-                    <div class="row ">
-                        <div class="col-12 col-md-6 d-flex justify-content-start">
-                            <button class="btn btn-success btn-xs " type="submit"> {!! trans('general/admin_lang.filter') !!}</button>
-                            <a href="{{ url('admin/municipios/remove-filter') }}" class="ms-2 btn btn-danger btn-xs">
-                                {!! trans('general/admin_lang.clean_filter') !!}
-                            </a>
-                        </div>
-                        @if ( Auth::user()->isAbleTo("admin-municipios-list") ) 
-                        <div class="col-12 col-md-6 d-flex justify-content-end">
-                            <a href="{{ url('admin/municipios/export-excel') }}" class="text-success">
-                                <i class="far fa-file-excel fa-2x"></i>
-                            </a>
-                        </div>
-                        @endif
-                    </div>                       
-                </div>
-            </section>
-            </form>
-        </div>
-    </div>
+    <!-- start: page -->
+   
+
         <div class="row">
             <div class="col">
                 <section class="card card-featured-top card-featured-primary">
@@ -89,9 +39,9 @@
                     </header>
                     <div class="card-body">  
                         <div class="text-end">
-                            @if(Auth::user()->isAbleTo("admin-municipios-create"))
-                              <a href="{{ url('admin/municipios/create') }}" class="btn btn-outline-success">
-                                {{ trans('municipios/admin_lang.new') }}
+                            @if(Auth::user()->isAbleTo("admin-services-create"))
+                              <a href="{{ url('admin/services/create') }}" class="btn btn-outline-success">
+                                {{ trans('services/admin_lang.new') }}
                               </a>
                             @endif
                           </div>
@@ -100,7 +50,7 @@
                     <div class="card-body">  
                         <div class="row">
                             <div class="col-12 table-responsive">
-                                @if ( Auth::user()->isAbleTo("admin-municipios-list") ) 
+                                @if ( Auth::user()->isAbleTo("admin-services-list") ) 
                                 <table id="table_users" class="table table-bordered table-striped" style="width: 100%" aria-hidden="true">
                                     <thead>
                                         <tr>
@@ -109,7 +59,6 @@
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
-                                          
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,7 +66,6 @@
                                     <tfoot>
                                         <tr>
                                             {{-- <th scope="col"> --}}
-                                          
                                             <th scope="col">
                                             <th scope="col">
                                             <th scope="col">
@@ -134,7 +82,7 @@
                 </section>
             </div>
         </div>
-        {{-- @if ( Auth::user()->isAbleTo("admin-municipios-list") ) 
+        @if ( Auth::user()->isAbleTo("admin-services-list") ) 
             <div class="row">
                 <div class="col">
                     <section class="card card-featured-top card-featured-primary">
@@ -150,7 +98,7 @@
                         <div class="card-body">  
                             <div class="row">
                                 <div class="col-12 ">
-                                    <a href="{{ url('admin/municipios/export-excel') }}" class="text-success">
+                                    <a href="{{ url('admin/services/export-excel') }}" class="text-success">
                                         <i class="far fa-file-excel fa-4x"></i>
                                     </a>
                                 </div>
@@ -159,7 +107,7 @@
                     </section>
                 </div>
             </div>
-        @endif --}}
+        @endif
     <!-- end: page -->
 </section>   
 @endsection
@@ -176,7 +124,7 @@
       
     });
     var oTable = '';
-    @if ( Auth::user()->isAbleTo("admin-municipios-list") )    
+    @if ( Auth::user()->isAbleTo("admin-services-list") )    
         $(function() {
             oTable = $('#table_users').DataTable({
                 "stateSave": true,
@@ -188,7 +136,7 @@
                     "headers": {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    url: "{{ url('admin/municipios/list') }}",
+                    url: "{{ url('admin/services/list') }}",
                     type: "POST"
                 },
             /* order: [
@@ -203,21 +151,22 @@
                         name: 'active',
                         sWidth: '80px'
                     },
-                   
+                    
                     {
-                        "title": "{!! trans('municipios/admin_lang.fields.name') !!}",
+                        "title": "{!! trans('services/admin_lang.fields.name') !!}",
                         orderable: true,
                         searchable: true,
                         data: 'name',
-                        name: 'municipios.name',
+                        name: 'services.name',
                         sWidth: ''
                     },
+                   
                     {
-                        "title": "{!! trans('municipios/admin_lang.fields.province_id') !!}",
+                        "title": "{!! trans('services/admin_lang.fields.price') !!}",
                         orderable: true,
                         searchable: true,
-                        data: 'name',
-                        name: 'provinces.name',
+                        data: 'price',
+                        name: 'services.price',
                         sWidth: ''
                     },
                    
@@ -267,7 +216,7 @@
         });
         function changeState(id){
             $.ajax({
-                url     : "{{ url('admin/municipios/change-state/') }}/"+id,
+                url     : "{{ url('admin/services/change-state/') }}/"+id,
                 type    : 'GET',
                 success : function(data) {
                     console.log("estado actalizado");           
@@ -316,7 +265,8 @@
 
         });
         return false;
-    }   
+    }
+   
 </script>
 
 @stop

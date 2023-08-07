@@ -17,6 +17,7 @@ return [
     'changed' => 'Centro Cambiado Correctamente',
     'quit_image' => 'Quitar imagen',
     'fields' => [
+        'price' => 'precio',
         'id' => 'Id',
 
         'name' => 'Nombre',
@@ -62,5 +63,6 @@ return [
         'image_format' => 'Formato de la imagen no es correcto',
 
     ],
+
 
 ];

@@ -43,8 +43,8 @@
                     <div class="row">
                         <div class="col-12 col-md-4">                     
                             <div class="form-group">
-                                <label for="province_id"> {{ trans('insurance-carriers/admin_lang.fields.province_id') }}</label>
-                                <select class="form-control select2" name="province_id" id="province_id">
+                                <label for="province_id" class="col-12" > {{ trans('insurance-carriers/admin_lang.fields.province_id') }}</label>
+                                <select class="form-control select2 col-12" style="width: 100%" name="province_id" id="province_id">
                                     <option value="">{{ trans('insurance-carriers/admin_lang.fields.province_id_helper') }}</option>   
                                     @foreach ($provincesList as $province)
                                         <option value="{{ $province->id }}" @if( $province->id==$filtProvinceId)  selected @endif >{{ $province->name }}</option>
@@ -55,8 +55,8 @@
                         </div>   
                         <div class="col-12 col-md-4">                     
                             <div class="form-group">
-                                <label for="municipio_id"> {{ trans('insurance-carriers/admin_lang.fields.municipio_id') }}</label><span class="text-danger">*</span>
-                                <select class="form-control select2" name="municipio_id" id="municipio_id">
+                                <label for="municipio_id" class="col-12"> {{ trans('insurance-carriers/admin_lang.fields.municipio_id') }}</label>
+                                <select class="form-control select2 col-12" style="width: 100%" name="municipio_id" id="municipio_id">
                                     <option value="">{{ trans('insurance-carriers/admin_lang.fields.municipio_id_helper') }}</option>   
                                     @foreach ($municipiosList as $municipio)
                                         <option value="{{ $municipio->id }}"  @if( $municipio->id==$filtMunicipioId)  selected @endif >{{ $municipio->name }}</option>

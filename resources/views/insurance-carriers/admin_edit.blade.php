@@ -32,7 +32,7 @@
                     <div class="col-12">
                      
                         <div class="form-group">
-                            <label for="name"> {{ trans('insurance-carriers/admin_lang.fields.name') }}</label><span class="text-danger">*</span>
+                            <label for="name"> {{ trans('insurance-carriers/admin_lang.fields.name') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($insuranceCarrier->name) ? $insuranceCarrier->name :null }}" type="text" class="form-control" name="name"  placeholder="{{ trans('insurance-carriers/admin_lang.fields.name_helper') }}">
                         </div>
                     </div>      
@@ -54,13 +54,13 @@
                 <div class="row form-group mb-3">
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="phone"> {{ trans('insurance-carriers/admin_lang.fields.phone') }}</label><span class="text-danger">*</span>
+                            <label for="phone"> {{ trans('insurance-carriers/admin_lang.fields.phone') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($insuranceCarrier->phone) ? $insuranceCarrier->phone :null }}" type="text" class="form-control" name="phone"  placeholder="{{ trans('insurance-carriers/admin_lang.fields.phone_helper') }}">
                         </div>
                     </div>    
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="email"> {{ trans('insurance-carriers/admin_lang.fields.email') }}</label><span class="text-danger">*</span>
+                            <label for="email"> {{ trans('insurance-carriers/admin_lang.fields.email') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($insuranceCarrier->email) ? $insuranceCarrier->email :null }}" type="text" class="form-control" name="email"  placeholder="{{ trans('insurance-carriers/admin_lang.fields.email_helper') }}">
                         </div>
                     </div>                        
@@ -71,8 +71,8 @@
                 <div class="row form-group mb-3">
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="province_id"> {{ trans('insurance-carriers/admin_lang.fields.province_id') }}</label><span class="text-danger">*</span>
-                            <select class="form-control select2" name="province_id" id="province_id">
+                            <label for="province_id" class="col-12"> {{ trans('insurance-carriers/admin_lang.fields.province_id') }}<span class="text-danger">*</span></label>
+                            <select class="form-control select2 col-12" style="width: 100%" name="province_id" id="province_id">
                                 <option value="">{{ trans('insurance-carriers/admin_lang.fields.province_id_helper') }}</option>   
                                 @foreach ($provincesList as $province)
                                     <option value="{{ $province->id }}" @if($insuranceCarrier->province_id ==$province->id) selected @endif>{{ $province->name }}</option>
@@ -83,8 +83,8 @@
                     </div>    
                     <div class="col-12 col-md-6">                     
                         <div class="form-group">
-                            <label for="municipio_id"> {{ trans('insurance-carriers/admin_lang.fields.municipio_id') }}</label><span class="text-danger">*</span>
-                            <select class="form-control select2" name="municipio_id" id="municipio_id">
+                            <label for="municipio_id" class="col-12"> {{ trans('insurance-carriers/admin_lang.fields.municipio_id') }}<span class="text-danger">*</span></label>
+                            <select class="form-control select2 col-12" style="width: 100%" name="municipio_id" id="municipio_id">
                                 <option value="">{{ trans('insurance-carriers/admin_lang.fields.municipio_id_helper') }}</option>   
                                 @foreach ($municipiosList as $municipio)
                                     <option value="{{ $municipio->id }}" @if($insuranceCarrier->municipio_id ==$municipio->id) selected @endif>{{ $municipio->name }}</option>
@@ -96,7 +96,7 @@
                 <div class="row form-group mb-3">
                     <div class="col-12">                     
                         <div class="form-group">
-                            <label for="address"> {{ trans('insurance-carriers/admin_lang.fields.address') }}</label><span class="text-danger">*</span>
+                            <label for="address"> {{ trans('insurance-carriers/admin_lang.fields.address') }}</label>
                             <input value="{{!empty($insuranceCarrier->address) ? $insuranceCarrier->address :null }}" type="text" class="form-control" name="address"  placeholder="{{ trans('insurance-carriers/admin_lang.fields.address_helper') }}">
                         </div>
                     </div>                      

@@ -63,10 +63,12 @@
                     @if(Auth::user()->isAbleTo("admin-provinces") || 
                     Auth::user()->isAbleTo("admin-municipios") || 
                     Auth::user()->isAbleTo("admin-insurance-carriers") || 
+                    Auth::user()->isAbleTo("admin-services") || 
                     Auth::user()->isAbleTo("admin-diagnosis") )
                         <li class="nav-parent 
                             @if (Request::is('admin/provinces*') ||
                                 Request::is('admin/municipios*') ||
+                                Request::is('admin/services*') ||
                                 Request::is('admin/insurance-carriers*') ||
                                 Request::is('admin/diagnosis*')
                             ) 
@@ -92,6 +94,15 @@
                                         <a class="nav-link" href="{{ url('admin/municipios') }}">
                                             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                             <span>{{ trans('municipios/admin_lang.municipios') }}</span>
+                                        </a>                        
+                                    </li>
+                                @endif
+                                @if(Auth::user()->isAbleTo("admin-services"))
+                                    <li  @if (Request::is('admin/services*')) class="nav-active" @endif>
+                            
+                                        <a class="nav-link" href="{{ url('admin/services') }}">
+                                            <i class="fas fa-list" aria-hidden="true"></i>
+                                            <span>{{ trans('services/admin_lang.services') }}</span>
                                         </a>                        
                                     </li>
                                 @endif
