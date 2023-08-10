@@ -19,7 +19,7 @@ class CreateMunicipiosTable extends Migration
             // $table->string("slug")->unique();
             $table->string("name");
             // $table->string("api_code", 10)->nullable();
-            $table->string("active")->default(0);
+            $table->boolean("active")->default(0);
             $table->timestamps();
             $table->softDeletes();
 

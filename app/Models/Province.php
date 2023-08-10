@@ -11,7 +11,7 @@ class Province extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'slug', 'api_code', 'active'];
+    protected $fillable = ['name',  'active'];
 
     public function scopeActive($query)
     {

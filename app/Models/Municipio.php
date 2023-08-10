@@ -11,7 +11,7 @@ class Municipio extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'slug', 'api_code', 'active', 'province_id'];
+    protected $fillable = ['name', 'active', 'province_id'];
 
     public function scopeActive($query)
     {

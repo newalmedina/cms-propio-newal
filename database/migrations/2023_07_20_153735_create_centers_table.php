@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger("province_id")->nullable();
             $table->unsignedBigInteger("municipio_id")->nullable();
-            $table->string("active")->default(0);
+            $table->boolean("active")->default(0);
             $table->string("default")->default(0);
             $table->timestamps();
             $table->softDeletes();

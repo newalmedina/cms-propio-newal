@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-12 col-md-4">                     
                             <div class="form-group">
-                                <label for="province_id"> {{ trans('municipios/admin_lang.fields.province_id') }}</label>
+                                <label for="province_id" class="col-12"> {{ trans('municipios/admin_lang.fields.province_id') }}</label>
                                 <select class="form-control select2" name="province_id" id="province_id">
                                     <option value="">{{ trans('municipios/admin_lang.fields.province_id_helper') }}</option>   
                                     @foreach ($provincesList as $province)

@@ -47,14 +47,14 @@
                                 <div class="col-12 col-md-6">   
                                  
                                     <div class="form-group">
-                                        <label for="name"> {{ trans('municipios/admin_lang.fields.name') }}</label><span class="text-danger">*</span>
+                                        <label for="name"> {{ trans('municipios/admin_lang.fields.name') }} <span class="text-danger">*</span> </label>
                                         <input value="{{!empty($municipio->name) ? $municipio->name :null }}" type="text" class="form-control" name="name"  placeholder="{{ trans('municipios/admin_lang.fields.name_helper') }}">
                                     </div>
                                 </div>   
                                 <div class="col-12 col-md-6">                     
                                     <div class="form-group">
-                                        <label for="province_id"> {{ trans('centers/admin_lang.fields.province_id') }}</label><span class="text-danger">*</span>
-                                        <select class="form-control select2" name="province_id" id="province_id">
+                                        <label for="province_id" class=" col-12"> {{ trans('centers/admin_lang.fields.province_id') }}<span class="text-danger">*</span></label>
+                                        <select class="form-control select2 col-12" style="width:100%" name="province_id" id="province_id">
                                             <option value="">{{ trans('centers/admin_lang.fields.province_id_helper') }}</option>   
                                             @foreach ($provincesList as $province)
                                                 <option value="{{ $province->id }}" @if($municipio->province_id ==$province->id) selected @endif>{{ $province->name }}</option>

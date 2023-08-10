@@ -47,7 +47,7 @@
                                 <div class="col-12">
                                  
                                     <div class="form-group">
-                                        <label for="name"> {{ trans('provinces/admin_lang.fields.name') }}</label><span class="text-danger">*</span>
+                                        <label for="name"> {{ trans('provinces/admin_lang.fields.name') }}<span class="text-danger">*</span></label>
                                         <input value="{{!empty($province->name) ? $province->name :null }}" type="text" class="form-control" name="name"  placeholder="{{ trans('provinces/admin_lang.fields.name_helper') }}">
                                     </div>
                                 </div>      

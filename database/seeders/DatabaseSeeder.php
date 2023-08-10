@@ -24,7 +24,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminRolesPremissionSeeder::class);
         $this->call(AdminMunicipiosPremissionSeeder::class);
         $this->call(AdminProvincesPremissionSeeder::class);
+        $this->call(AdminServicesPremissionSeeder::class);
+        $this->call(AdminDiagnosisPremissionSeeder::class);
+        $this->call(AdminInsuranceCarriersPremissionSeeder::class);
         $this->call(AdminCentersPremissionSeeder::class);
+        $this->call(AdminMedicalSpecializationsPremissionSeeder::class);
 
 
         $this->call(InsertProvinceMunicipDataSeeder::class);

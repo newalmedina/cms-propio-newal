@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'check.active' => \App\Http\Middleware\CheckUserIsActive::class,
         'selected.center' => \App\Http\Middleware\CheckSelectedCenter::class,
         'avaible.site' => \App\Http\Middleware\AvailableSite::class,
+        'profile.complete' => \App\Http\Middleware\ProfileComplete::class,
     ];
 }

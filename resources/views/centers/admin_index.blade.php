@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-12 col-md-4">                     
                             <div class="form-group">
-                                <label for="province_id"> {{ trans('centers/admin_lang.fields.province_id') }}</label>
+                                <label for="province_id"  class="col-12"> {{ trans('centers/admin_lang.fields.province_id') }}</label>
                                 <select class="form-control select2" name="province_id" id="province_id">
                                     <option value="">{{ trans('centers/admin_lang.fields.province_id_helper') }}</option>   
                                     @foreach ($provincesList as $province)
@@ -55,7 +55,7 @@
                         </div>   
                         <div class="col-12 col-md-4">                     
                             <div class="form-group">
-                                <label for="municipio_id"> {{ trans('centers/admin_lang.fields.municipio_id') }}</label><span class="text-danger">*</span>
+                                <label for="municipio_id" class="col-12"> {{ trans('centers/admin_lang.fields.municipio_id') }} </label>
                                 <select class="form-control select2" name="municipio_id" id="municipio_id">
                                     <option value="">{{ trans('centers/admin_lang.fields.municipio_id_helper') }}</option>   
                                     @foreach ($municipiosList as $municipio)

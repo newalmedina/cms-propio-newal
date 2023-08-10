@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\CentersExport;
+use App\Exports\AdminCentersExport;
 use App\Http\Requests\AdminCenterRequest;
 use App\Http\Requests\AdminChangeCenterRequest;
 use App\Models\Center;
@@ -209,7 +209,7 @@ class AdminCenterController extends Controller
             $state = $data->active ? "checked" : "";
 
             return  '<div class="form-check form-switch ">
-                <input class="form-check-input" nclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
+                <input class="form-check-input" onclick="changeState(' . $data->id . ')" ' . $state . '  ' . $permision . '  value="1" name="active" type="checkbox" id="active">
             </div>';
         });
 
@@ -390,7 +390,7 @@ class AdminCenterController extends Controller
         ])
             ->leftJoin("provinces", "centers.province_id", "=", "provinces.id")
             ->leftJoin("municipios", "centers.municipio_id", "=", "municipios.id");
-        return Excel::download(new CentersExport($query), strtolower(trans('centers/admin_lang.centers')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
+        return Excel::download(new AdminCentersExport($query), strtolower(trans('centers/admin_lang.centers')) . '_' . Carbon::now()->format("dmYHis") . '.xlsx');
     }
 
     public function changeCenter(AdminChangeCenterRequest $request)
