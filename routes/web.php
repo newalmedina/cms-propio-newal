@@ -98,22 +98,27 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::get('/users/{id}/show', [AdminUserController::class, 'show'])->name('admin.users.show');
     Route::get('/users/change-state/{id}', [AdminUserController::class, 'changeState'])->name('admin.users.changeState');
     Route::patch('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
     Route::post('/users/list', [AdminUserController::class, 'getData'])->name('admin.users.getData');
     Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/users/roles/{id}', [AdminUserController::class, 'editRoles'])->name('admin.users.editRoles');
+    Route::get('/users/roles/{id}/show', [AdminUserController::class, 'showRoles'])->name('admin.users.showRoles');
     Route::patch('/users/roles/{id}', [AdminUserController::class, 'updateRoles'])->name('admin.users.updateRoles');
     Route::get('/users/centers/{id}', [AdminUserController::class, 'editCenters'])->name('admin.users.editCenters');
+    Route::get('/users/centers/{id}/show', [AdminUserController::class, 'showCenters'])->name('admin.users.showCenters');
     Route::patch('/users/centers/{id}', [AdminUserController::class, 'updateCenters'])->name('admin.users.updateCenters');
 
     Route::get('/users/personal-info/{id}', [AdminUserController::class, 'personalInfo']);
+    Route::get('/users/personal-info/{id}/show', [AdminUserController::class, 'ShowPersonalInfo']);
     Route::post('/users/personal-info/store/{id}', [AdminUserController::class, 'updatePersonalInfo'])->name("admin.users.updatePersonalInfo");
     //admin centers
     Route::get('/centers', [AdminCenterController::class, 'index']);
     Route::get('/centers/create', [AdminCenterController::class, 'create'])->name('admin.centers.create');
     Route::get('/centers/{id}/edit', [AdminCenterController::class, 'edit'])->name('admin.centers.edit');
+    Route::get('/centers/{id}/show', [AdminCenterController::class, 'show'])->name('admin.centers.show');
     Route::get('/centers/change-state/{id}', [AdminCenterController::class, 'changeState'])->name('admin.centers.changeState');
     Route::get('/centers/remove-filter', [AdminCenterController::class, 'removeFilter'])->name('admin.centers.removeFilter');
     Route::patch('/centers/{id}', [AdminCenterController::class, 'update'])->name('admin.centers.update');
@@ -124,6 +129,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::delete('/centers/{id}', [AdminCenterController::class, 'destroy'])->name('admin.centers.destroy');
 
     Route::get('/centers/aditional-info/{id}', [AdminCenterController::class, 'editAditionalInfo'])->name('admin.centers.editAditionalInfo');
+    Route::get('/centers/aditional-info/{id}/show', [AdminCenterController::class, 'showAditionalInfo'])->name('admin.centers.showAditionalInfo');
     Route::patch('/centers/aditional-info/{id}', [AdminCenterController::class, 'updateAditionalInfo'])->name('admin.centers.updateAditionalInfo');
     Route::get('/centers/get-image/{photo}', [AdminCenterController::class, 'getimage'])->name("admin.centers.getimage");
     Route::get('/centers/export-excel', [AdminCenterController::class, 'exportExcel'])->name("admin.centers.exportExcel");
@@ -134,6 +140,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/municipios', [AdminMunicipioController::class, 'index']);
     Route::get('/municipios/create', [AdminMunicipioController::class, 'create'])->name('admin.municipios.create');
     Route::get('/municipios/{id}/edit', [AdminMunicipioController::class, 'edit'])->name('admin.municipios.edit');
+    Route::get('/municipios/{id}/show', [AdminMunicipioController::class, 'show'])->name('admin.municipios.show');
     Route::get('/municipios/change-state/{id}', [AdminMunicipioController::class, 'changeState'])->name('admin.municipios.changeState');
     Route::get('/municipios/export-excel', [AdminMunicipioController::class, 'exportExcel'])->name("admin.municipios.exportExcel");
     Route::get('/municipios/remove-filter', [AdminMunicipioController::class, 'removeFilter'])->name('admin.municipios.removeFilter');
@@ -150,6 +157,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth', 'verified', 'ch
     Route::get('/provinces', [AdminProvinceController::class, 'index']);
     Route::get('/provinces/create', [AdminProvinceController::class, 'create'])->name('admin.provinces.create');
     Route::get('/provinces/{id}/edit', [AdminProvinceController::class, 'edit'])->name('admin.provinces.edit');
+    Route::get('/provinces/{id}/show', [AdminProvinceController::class, 'show'])->name('admin.provinces.show');
     Route::get('/provinces/change-state/{id}', [AdminProvinceController::class, 'changeState'])->name('admin.provinces.changeState');
     Route::get('/provinces/export-excel', [AdminProvinceController::class, 'exportExcel'])->name("admin.provinces.exportExcel");
     Route::patch('/provinces/{id}', [AdminProvinceController::class, 'update'])->name('admin.provinces.update');
