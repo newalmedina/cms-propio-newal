@@ -121,7 +121,7 @@
                                     <li  @if (Request::is('admin/medical-specializations*')) class="nav-active" @endif>
                             
                                         <a class="nav-link" href="{{ url('admin/medical-specializations') }}">
-                                            <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                                             <span>{{ trans('medical-specializations/admin_lang.medical-specializations') }}</span>
                                         </a>                        
                                     </li>
