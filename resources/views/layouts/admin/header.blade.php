@@ -20,9 +20,9 @@
 
     <!-- start: search & user box -->
     <div class="header-right">
-        {{-- <span class="separator"></span>
+        <span class="separator"></span>
                   @include('layouts.admin.includes.locale')
-       --}}
+      
        @if(session()->has("original-user-suplantar"))
             <div id="userbox" class="userbox">
         

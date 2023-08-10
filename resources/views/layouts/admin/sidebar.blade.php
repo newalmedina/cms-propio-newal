@@ -99,41 +99,7 @@
                                         </a>                        
                                     </li>
                                 @endif
-                                @if(Auth::user()->isAbleTo("admin-services"))
-                                    <li  @if (Request::is('admin/services*')) class="nav-active" @endif>
                             
-                                        <a class="nav-link" href="{{ url('admin/services') }}">
-                                            <i class="fas fa-list" aria-hidden="true"></i>
-                                            <span>{{ trans('services/admin_lang.services') }}</span>
-                                        </a>                        
-                                    </li>
-                                @endif
-                                @if(Auth::user()->isAbleTo("admin-diagnosis"))
-                                    <li  @if (Request::is('admin/diagnosis*')) class="nav-active" @endif>
-                            
-                                        <a class="nav-link" href="{{ url('admin/diagnosis') }}">
-                                            <i class="fas fa-stethoscope" aria-hidden="true"></i>
-                                            <span>{{ trans('diagnosis/admin_lang.diagnosis') }}</span>
-                                        </a>                        
-                                    </li>
-                                @endif
-                                @if(Auth::user()->isAbleTo("admin-medical-specializations"))
-                                    <li  @if (Request::is('admin/medical-specializations*')) class="nav-active" @endif>
-                            
-                                        <a class="nav-link" href="{{ url('admin/medical-specializations') }}">
-                                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                                            <span>{{ trans('medical-specializations/admin_lang.medical-specializations') }}</span>
-                                        </a>                        
-                                    </li>
-                                @endif
-                                @if(Auth::user()->isAbleTo("admin-insurance-carriers"))
-                                    <li  @if (Request::is('admin/insurance-carriers*')) class="nav-active" @endif>
-                                        <a class="nav-link" href="{{ url('admin/insurance-carriers') }}">
-                                            <i class="fas fa-house-damage" aria-hidden="true"></i>
-                                            <span>{{ trans('insurance-carriers/admin_lang.insurance-carriers') }}</span>
-                                        </a>                        
-                                    </li>
-                                @endif
                             </ul>
                         </li>
                     @endif
