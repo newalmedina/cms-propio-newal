@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class CentersExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
+class AdminServicesExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
 {
 
 
@@ -29,37 +29,26 @@ class CentersExport implements FromQuery, WithHeadings, WithMapping, WithTitle, 
     {
 
         return [
-            trans('centers/admin_lang.fields.name'),
-            trans('centers/admin_lang.fields.phone'),
-            trans('centers/admin_lang.fields.email'),
-            trans('centers/admin_lang.fields.province_id'),
-            trans('centers/admin_lang.fields.municipio_id'),
-            trans('centers/admin_lang.fields.address'),
-            trans('centers/admin_lang.fields.active'),
-            trans('centers/admin_lang.fields.default'),
-            trans('centers/admin_lang.fields.schedule'),
-            trans('centers/admin_lang.fields.specialities'),
+            trans('services/admin_lang.fields.name'),
+            trans('services/admin_lang.fields.price'),
+            trans('services/admin_lang.fields.description'),
+            trans('services/admin_lang.fields.active')
         ];
     }
     public function map($fila): array
     {
         return [
             $fila->name,
-            $fila->phone,
-            $fila->email,
-            $fila->province,
-            $fila->municipio,
-            $fila->address,
+            $fila->price,
+            $fila->description,
             $fila->active ? trans('general/admin_lang.yes') : trans('general/admin_lang.no'),
-            $fila->default ? trans('general/admin_lang.yes') : trans('general/admin_lang.no'),
-            $fila->schedule,
-            $fila->specialities,
+
         ];
     }
 
     public function title(): string
     {
-        return trans('centers/admin_lang.centers');
+        return trans('services/admin_lang.services');
     }
 
     public function registerEvents(): array

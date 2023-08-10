@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Events\BeforeSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
+class AdminProvincesExport implements FromQuery, WithHeadings, WithMapping, WithTitle, WithStrictNullComparison
 {
 
 
@@ -33,7 +33,6 @@ class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitl
 
         return [
             trans('provinces/admin_lang.fields.name'),
-            trans('provinces/admin_lang.fields.province_id'),
             trans('provinces/admin_lang.fields.active'),
         ];
     }
@@ -41,7 +40,6 @@ class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitl
     {
         return [
             $fila->name,
-            $fila->province,
 
             $fila->active ? trans('general/admin_lang.yes') : trans('general/admin_lang.no'),
 
@@ -50,7 +48,7 @@ class MunicipiosExport implements FromQuery, WithHeadings, WithMapping, WithTitl
 
     public function title(): string
     {
-        return trans('centers/admin_lang.centers');
+        return trans('provinces/admin_lang.provinces');
     }
     public function style(Worksheet $sheet)
     {

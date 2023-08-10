@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/select2/select2.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/toast/toast.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}">
+    
     <!-- Head Libs -->
     <script src="{{ asset('assets/admin/vendor/modernizr/modernizr.js')}}"></script>
     <style>
@@ -108,7 +110,6 @@
     <script src="{{ asset('assets/admin/vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/popper/umd/popper.min.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('assets/admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/common/common.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/nanoscroller/nanoscroller.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/magnific-popup/jquery.magnific-popup.js')}}"></script>
@@ -128,7 +129,9 @@
     <script src="{{ asset('assets/admin/js/theme.init.js')}}"></script><a class="scroll-to-top hidden-mobile" href="#"><i class="fas fa-chevron-up"></i></a>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/admin/vendor/select2//select2.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/vendor/select2/select2.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{ asset('assets/admin/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('assets/admin/vendor/toast/toast.min.js')}}"></script>
     @include('centers.admin_change_center')
     @include('layouts.admin.includes.success')

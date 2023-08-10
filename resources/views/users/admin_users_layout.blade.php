@@ -67,7 +67,17 @@
                         </a>
                     </li>
             
-                
+                    @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
+                        <li class="nav-item @if ($tab == 'tab_4') active @endif">
+                            <a id="tab_4" class="nav-link" data-bs-target="#tab_4-4"
+                            data-bs-toggle="tabajax" href="{{ url('admin/users/personal-info/'.$user->id) }}" data-target="#tab_4-4"
+                            aria-controls="tab_4-4" aria-selected="true" >
+                                {{ trans('users/admin_lang.personal_info') }}
+                            </a>
+                        </li>
+                    
+                    @endif
+
                     @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
                         <li class="nav-item @if ($tab == 'tab_3') active @endif">
                             <a id="tab_3" class="nav-link" data-bs-target="#tab_3-3"
@@ -78,6 +88,7 @@
                         </li>
                     
                     @endif
+                    
                     @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
                         <li class="nav-item @if ($tab == 'tab_2') active @endif">
                             <a id="tab_2" class="nav-link" data-bs-target="#tab_2-2"
@@ -95,6 +106,11 @@
                         @yield('tab_content_1')
                     </div>
             
+                    @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
+                        <div id="tab_4-4" class="tab-pane  @if ($tab == 'tab_4') active @endif">
+                            @yield('tab_content_4')
+                        </div>
+                    @endif
                     @if (!empty($user->id) &&  Auth::user()->isAbleTo("admin-users-update") )
                         <div id="tab_3-3" class="tab-pane  @if ($tab == 'tab_3') active @endif">
                             @yield('tab_content_3')

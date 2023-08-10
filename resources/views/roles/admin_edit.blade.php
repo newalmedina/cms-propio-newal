@@ -27,7 +27,7 @@
                     <div class="col-lg-12">
                      
                         <div class="form-group">
-                            <label for="display_name"> {{ trans('roles/admin_lang.fields.display_name') }}</label><span class="text-danger">*</span>
+                            <label for="display_name"> {{ trans('roles/admin_lang.fields.display_name') }}<span class="text-danger">*</span></label>
                             <input value="{{ $role->display_name }}" type="text" class="form-control" name="display_name"  placeholder="{{ trans('roles/admin_lang.fields.display_name_helper') }}">
                         </div>
                     </div>                    

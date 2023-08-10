@@ -32,7 +32,7 @@
                     <div class="col-12 col-md-6">
                      
                         <div class="form-group">
-                            <label for="first_name"> {{ trans('users/admin_lang.fields.first_name') }}</label><span class="text-danger">*</span>
+                            <label for="first_name"> {{ trans('users/admin_lang.fields.first_name') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($user->userProfile->first_name) ? $user->userProfile->first_name :null }}" type="text" class="form-control" name="user_profile[first_name]"  placeholder="{{ trans('users/admin_lang.fields.first_name_helper') }}">
                         </div>
                     </div>    
@@ -40,7 +40,7 @@
                     <div class="col-12 col-md-6">
                      
                         <div class="form-group">
-                            <label for="last_name"> {{ trans('users/admin_lang.fields.last_name') }}</label><span class="text-danger">*</span>
+                            <label for="last_name"> {{ trans('users/admin_lang.fields.last_name') }}<span class="text-danger">*</span></label>
                             <input value="{{!empty($user->userProfile->last_name) ? $user->userProfile->last_name :null }}" type="text" class="form-control" name="user_profile[last_name]"  placeholder="{{ trans('users/admin_lang.fields.last_name_helper') }}">
                         </div>
                     </div>     
@@ -50,7 +50,7 @@
                     <div class="col-12">
                      
                         <div class="form-group">
-                            <label for="email"> {{ trans('users/admin_lang.fields.email') }}</label><span class="text-danger">*</span>
+                            <label for="email"> {{ trans('users/admin_lang.fields.email') }}<span class="text-danger">*</span></label>
                             <input value="{{ $user->email }}" type="text" class="form-control" name="email"  placeholder="{{ trans('users/admin_lang.fields.email_helper') }}">
                         </div>
                     </div>                    
@@ -59,14 +59,14 @@
                     <div class="col-12 col-md-6">
                      
                         <div class="form-group">
-                            <label for="password"> {{ trans('users/admin_lang.fields.password') }}</label><span class="text-danger">*</span>
+                            <label for="password"> {{ trans('users/admin_lang.fields.password') }}<span class="text-danger">*</span></label>
                             <input value="" type="text" class="form-control" id="password" name="password"  placeholder="{{ trans('users/admin_lang.fields.password_helper') }}">
                         </div>
                     </div>  
                     <div class="col-12 col-md-6">
                      
                         <div class="form-group">
-                            <label for="password_confirm"> {{ trans('users/admin_lang.fields.password_confirm') }}</label><span class="text-danger">*</span>
+                            <label for="password_confirm"> {{ trans('users/admin_lang.fields.password_confirm') }}<span class="text-danger">*</span></label>
                             <input value="" type="text" class="form-control" id="password_confirm" name="password_confirm"  placeholder="{{ trans('users/admin_lang.fields.password_confirm_helper') }}">
                         </div>
                     </div>                    

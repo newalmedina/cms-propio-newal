@@ -14,7 +14,7 @@
 @endif
 
 @if(Session::has('error-alert'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
         <strong>{{ date('d/m/Y H:i:s') }}</strong>
         {{ Session::get('error-alert') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true" aria-label="Close"></button>

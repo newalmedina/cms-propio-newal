@@ -15,6 +15,8 @@ return [
     'users_management' => 'Gestión de usuarios',
     'generate_password' => 'Generar contraseña',
     'user_not_selected_center' => 'Debes de seleccionar un centro para poder utilizar la mayoria de funcionalidades del sistema.',
+    'personal_info' => 'Información personal',
+    'complete_personal_information' => 'Complete toda la información personal para poder continuar',
 
     'fields' => [
         'id' => 'Id',
@@ -44,6 +46,38 @@ return [
         'password_confirm' => 'Repetir contraseña',
         'password_confirm_helper' => 'Introduce rçepetir contraseña',
         'password_confirm_required' => 'El campo rçepetir contraseña es obligatorio',
+
+        'identification' => 'Identificación',
+        'identification_helper' => 'Introduce indentificación',
+        'identification_required' => 'El campo indentificación es obligatorio',
+
+        'birthday' => 'Fecha nacimiento',
+        'birthday_helper' => 'Introduce fecha nacimiento',
+        'birthday_required' => 'El campo fecha nacimiento es obligatorio',
+
+        'province_id' => 'Provincia',
+        'province_id_helper' => 'Introduce provincia ',
+        'province_id_required' => 'El campo provincia  es obligatorio',
+
+        'municipio_id' => 'Municipio',
+        'municipio_id_helper' => 'Introduce municipio',
+        'municipio_id_required' => 'El campo municipio es obligatorio',
+
+        'address' => 'Dirección',
+        'address_helper' => 'Introduce dirección',
+        'address_required' => 'El campo dirección es obligatorio',
+
+        'phone' => 'Teléfono',
+        'phone_helper' => 'Introduce teléfono',
+        'phone_required' => 'El campo teléfono es obligatorio',
+
+        'gender' => 'Sexo',
+        'gender_helper' => 'Introduce sexo',
+        'gender_required' => 'El campo sexo es obligatorio',
+
+        'mobile' => 'Segundo teléfono',
+        'mobile_helper' => 'Introduce segundo teléfono',
+        'mobile_required' => 'El campo segundo teléfono es obligatorio',
 
     ],
 

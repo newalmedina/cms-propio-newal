@@ -2,7 +2,7 @@
 
 
 return [
-    'actions' => 'acciones',
+    'actions' => 'Acciones',
     'save_ok' => 'Registro guardado correctamente',
     'save_ko' => 'Error al intentar guardar registro',
     'cancel' => 'Cancelar',
@@ -43,5 +43,9 @@ return [
     'filter' => 'Filtrar',
     'clean_filter' => 'Limpiar filtros',
     'general_info' => 'Información general',
+    'required_files' => 'Valide los campos obligatorios',
+    'male' => 'Hombre',
+    'female' => 'Mujer',
+
 
 ];

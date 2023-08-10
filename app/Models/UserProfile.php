@@ -31,10 +31,10 @@ class UserProfile extends Model
         return trim(ucfirst($this->attributes['first_name']) . " " . ucfirst($this->attributes['last_name']));
     }
 
-    public function getBirthdateFormattedAttribute()
+    public function getBirthdayFormattedAttribute()
     {
-        if (!empty($this->birthdate)) {
-            return (Carbon::createFromFormat('Y-m-d', $this->birthdate))->format('d/m/Y');
+        if (!empty($this->birthday)) {
+            return (Carbon::createFromFormat('Y-m-d', $this->birthday))->format('d/m/Y');
         }
 
         return '';
