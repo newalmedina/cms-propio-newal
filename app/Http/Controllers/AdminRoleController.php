@@ -20,6 +20,7 @@ class AdminRoleController extends Controller
             app()->abort(403);
         }
 
+        
         $pageTitle = trans('roles/admin_lang.roles');
         $title = trans('roles/admin_lang.list');
         $roles = Role::orderBy('id', 'asc')->get();
